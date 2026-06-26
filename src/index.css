@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Akro Ventures  -  High-end consultant palette (light mode only) */
+    --background: 0 0% 100%;
+    --surface-alt: 210 17% 98%;
+    --foreground: 180 36% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 36% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 36% 15%;
+
+    --primary: 180 36% 25%;             /* #295757 deep teal */
+    --primary-foreground: 0 0% 100%;
+    --primary-mid: 180 30% 32%;
+
+    --accent: 46 65% 52%;               /* #d4af35 gold */
+    --accent-foreground: 180 36% 15%;
+    --accent-glow: 46 80% 62%;
+
+    --secondary: 210 17% 96%;
+    --secondary-foreground: 180 36% 15%;
+
+    --muted: 210 17% 96%;
+    --muted-foreground: 215 15% 40%;
+
+    --gold: 46 65% 52%;
+    --gold-foreground: 180 36% 15%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 46 65% 52%;
+
+    --radius: 0.25rem;
+
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* Shadows */
+    --shadow-glow: 0 0 24px hsl(46 65% 52% / 0.35), 0 4px 16px hsl(46 65% 52% / 0.2);
+    --shadow-soft: 0 4px 24px hsl(180 36% 15% / 0.08), 0 1px 4px hsl(180 36% 15% / 0.05);
+    --shadow-card: 0 2px 12px hsl(180 36% 15% / 0.06);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv11', 'ss01';
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', 'Inter', serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection { background: hsl(var(--accent) / 0.3); color: hsl(var(--primary)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-magnetic {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 font-semibold text-sm uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 2px;
+    transition: background 0.25s var(--transition-smooth), color 0.25s var(--transition-smooth), border-color 0.25s var(--transition-smooth);
+    will-change: auto;
+  }
+
+  .btn-teal {
+    background: hsl(var(--accent));
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--accent));
+  }
+  .btn-teal:hover {
+    background: transparent;
+    color: hsl(var(--accent));
+  }
+
+  .btn-ghost-light {
+    border: 1px solid hsl(var(--accent));
+    color: hsl(var(--accent));
+    background: transparent;
+  }
+  .btn-ghost-light:hover {
+    background: hsl(var(--accent));
+    color: hsl(var(--primary));
+  }
+
+  .nav-link {
+    @apply relative text-sm font-medium px-1 py-2 uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--foreground));
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: hsl(var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--transition-smooth);
+  }
+  .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+  .nav-link.active { color: hsl(var(--accent)); }
+
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 3rem;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    flex-shrink: 0;
+    animation: marquee 40s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+  /* ── Hero entrance animations (CSS-only, always fire) ──── */
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes line-draw {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* Divider draw when its parent reveal becomes visible */
+  .reveal.in .divider-gold,
+  .reveal-left.in .divider-gold,
+  .reveal-right.in .divider-gold {
+    transform-origin: left;
+    animation: line-draw 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  }
+
+  /* ── Scroll animations ───────────────────────────────────── */
+
+  /* Base  -  rise from below */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Slide from left */
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-48px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-left.in { opacity: 1; transform: none; }
+
+  /* Slide from right */
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(48px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-right.in { opacity: 1; transform: none; }
+
+  /* Scale in  -  for featured cards / hero widgets */
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-scale.in { opacity: 1; transform: none; }
+
+  /* Stagger  -  cascade delay only while animating in, not on hover/focus */
+  .stagger > *:not(.in):nth-child(2) { transition-delay: 0.1s; }
+  .stagger > *:not(.in):nth-child(3) { transition-delay: 0.2s; }
+  .stagger > *:not(.in):nth-child(4) { transition-delay: 0.3s; }
+  .stagger > *:not(.in):nth-child(5) { transition-delay: 0.4s; }
+  .stagger > *:not(.in):nth-child(6) { transition-delay: 0.5s; }
+
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  .card-editorial {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-left: 2px solid hsl(var(--accent));
+    transition: border-color 0.3s var(--transition-smooth);
+  }
+  .card-editorial:hover { border-color: hsl(var(--accent)); }
+
+  .divider-gold {
+    height: 1px;
+    background: hsl(var(--accent));
+    width: 60px;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase;
+    letter-spacing: 0.25em;
+    color: hsl(var(--accent));
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* WhatsApp float pulse ring */
+  .pulse-ring { position: relative; }
+  .pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--accent) / 0.5);
+    animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  @keyframes pulse-ring {
+    0%   { transform: scale(1); opacity: 0.6; }
+    70%  { transform: scale(1.18); opacity: 0; }
+    100% { transform: scale(1.18); opacity: 0; }
+  }
+
+  /* ── Subtle background textures ──────────────────────────── */
+
+  /* Dot grid  -  used on light sections */
+  .bg-dot-grid {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Diagonal lines  -  used on teal/dark sections */
+  .bg-diagonal-lines {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      hsl(var(--accent) / 0.04) 0px,
+      hsl(var(--accent) / 0.04) 1px,
+      transparent 1px,
+      transparent 12px
+    );
+  }
+
+  /* Gold corner accent  -  decorative top-right glow */
+  .bg-glow-corner {
+    position: relative;
+    overflow: hidden;
+  }
+  .bg-glow-corner::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, hsl(var(--accent) / 0.12) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-corner > * { position: relative; z-index: 1; }
+
+  /* ── Per-page hero textures  -  CSS-only, no stock images ───── */
+
+  /* Home: diagonal lines  -  precision, structure, forward motion */
+  /* (uses existing .bg-diagonal-lines) */
+
+  /* About: horizontal ledger lines  -  financial records, transparency, history */
+  .hero-ledger {
+    background-image: repeating-linear-gradient(
+      0deg,
+      hsl(var(--accent) / 0.08) 0px,
+      hsl(var(--accent) / 0.08) 1px,
+      transparent 1px,
+      transparent 52px
+    );
+  }
+
+  /* Services: vertical column dividers  -  six structured options */
+  .hero-columns {
+    background-image: repeating-linear-gradient(
+      90deg,
+      hsl(var(--accent) / 0.07) 0px,
+      hsl(var(--accent) / 0.07) 1px,
+      transparent 1px,
+      transparent 80px
+    );
+  }
+
+  /* Resources: fine dot matrix  -  clarity, knowledge, open thinking */
+  .hero-dot-fine {
+    background-image: radial-gradient(
+      hsl(var(--accent) / 0.18) 1.5px,
+      transparent 1.5px
+    );
+    background-size: 26px 26px;
+  }
+
+  /* Calculator: graph-paper grid  -  numerical precision, financial modelling */
+  .hero-graph {
+    background-image:
+      linear-gradient(hsl(var(--accent) / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--accent) / 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Contact: warm central bloom from below  -  invitation, approachability */
+  .hero-bloom {
+    background: radial-gradient(
+      ellipse 90% 70% at 50% 115%,
+      hsl(var(--accent) / 0.18) 0%,
+      transparent 65%
+    );
+  }
+
+  /* ── How It Works connector line ─────────────────────────────── */
+  .steps-connector.in .steps-line-fill {
+    animation: line-expand 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+  @keyframes line-expand {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+
+  /* Loan Audit: concentric score arcs rising from below  -  assessment loading */
+  .hero-arcs {
+    background-image:
+      radial-gradient(ellipse 130% 65% at 50% 120%, hsl(var(--accent) / 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 85% 40% at 50% 120%, hsl(var(--accent) / 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 22% at 50% 120%, hsl(var(--accent) / 0.06) 0%, transparent 55%);
+  }
+}
