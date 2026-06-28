@@ -86,8 +86,10 @@ export function Navbar() {
                     className={({ isActive }) =>
                       cn(
                         'relative px-3 py-2 text-[0.75rem] font-semibold uppercase tracking-[0.08em] transition-colors duration-200',
-                        'text-foreground/80 hover:text-foreground',
-                        isActive && 'text-foreground',
+                        scrolled
+                          ? 'text-foreground/80 hover:text-foreground'
+                          : 'text-white/80 hover:text-white',
+                        isActive && (scrolled ? 'text-foreground' : 'text-white'),
                         'group'
                       )
                     }
@@ -113,7 +115,10 @@ export function Navbar() {
             <div className="hidden lg:flex items-center gap-4">
               <Link
                 to="/portal"
-                className="text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className={cn(
+                  'text-[0.6875rem] font-semibold uppercase tracking-[0.08em] transition-colors duration-200',
+                  scrolled ? 'text-muted-foreground hover:text-foreground' : 'text-white/50 hover:text-white'
+                )}
               >
                 Login
               </Link>

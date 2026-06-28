@@ -4,11 +4,8 @@ import {
   ArrowRight, Target, TrendingUp, FileText, BookOpen, Users,
   Globe, Landmark, ChevronDown, ChevronRight,
 } from 'lucide-react'
-import BlurText from '@/components/motion/BlurText'
 
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
-const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4'
-
 // ── Fade-up helper ──────────────────────────────────────────────────────────
 function FadeUp({
   children,
@@ -137,17 +134,39 @@ function HeroSection() {
   return (
     <section
       className="relative flex flex-col items-center justify-center text-center px-6 overflow-hidden"
-      style={{ minHeight: '70vh', background: 'rgba(30,30,30,0.72)' }}
+      style={{
+        minHeight: '72vh',
+        background: 'linear-gradient(145deg, #0f2224 0%, #1a3538 35%, #2B2B2B 75%, #1e1e1e 100%)',
+      }}
     >
+      {/* Subtle grid texture */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
+          backgroundSize: '36px 36px',
+        }}
+      />
+      {/* Teal glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          width: 600, height: 600,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(63,111,115,0.18) 0%, transparent 70%)',
+          top: '50%', left: '50%',
+          transform: 'translate(-50%, -60%)',
+        }}
+      />
 
       <div className="relative z-10 max-w-4xl mx-auto pt-28 pb-20">
         <FadeUp delay={0.1}>
-          <p className="t-label text-white/50 mb-6 tracking-[0.2em]">For Founders</p>
+          <p className="t-label text-white/40 mb-6 tracking-[0.2em]">For Founders</p>
         </FadeUp>
 
-        <div className="mb-6">
-          <BlurText
-            text="We don't just connect you to investors. We make sure you're ready for them."
+        <FadeUp delay={0.2}>
+          <h1
+            className="mb-6"
             style={{
               fontFamily: 'Cormorant Garamond, Georgia, serif',
               fontSize: 'clamp(2.25rem, 5.5vw, 4.25rem)',
@@ -157,17 +176,20 @@ function HeroSection() {
               lineHeight: 1.08,
               letterSpacing: '-0.025em',
             }}
-          />
-        </div>
+          >
+            We don't just connect you to investors.<br />
+            We make sure you're ready for them.
+          </h1>
+        </FadeUp>
 
-        <FadeUp delay={0.6}>
+        <FadeUp delay={0.4}>
           <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-10">
             Whether you're a founder building your first raise or a business owner looking to access
-            capital — Akro works with you end to end.
+            capital, Akro works with you end to end.
           </p>
         </FadeUp>
 
-        <FadeUp delay={0.8}>
+        <FadeUp delay={0.6}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#startup-founders" className="btn-slide">
               <span>Startup Founders</span>
@@ -369,7 +391,7 @@ function ReadinessCalculator() {
 // ── Track A ────────────────────────────────────────────────────────────────
 function TrackASection() {
   return (
-    <section id="startup-founders" className="section-y" style={{ background: 'rgba(244,246,242,0.93)' }}>
+    <section id="startup-founders" className="section-y" style={{ background: '#F4F6F2' }}>
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">For Startup Founders</p>
@@ -381,7 +403,7 @@ function TrackASection() {
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed max-w-2xl mb-12">
             We don't start with investor intros. We start with your business. Akro works alongside you to
-            strengthen your model, sharpen your story, and prepare every document investors expect — so
+            strengthen your model, sharpen your story, and prepare every document investors expect, so
             when you walk into a room, you're ready.
           </p>
         </FadeUp>
@@ -542,7 +564,7 @@ function TrackBSection() {
   const [active, setActive] = useState(0)
 
   return (
-    <section id="growing-businesses" className="section-y" style={{ background: 'rgba(255,255,255,0.92)' }}>
+    <section id="growing-businesses" className="section-y" style={{ background: '#ffffff' }}>
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label mb-3" style={{ color: '#F2B705' }}>For Growing Businesses</p>
@@ -624,7 +646,7 @@ function TrackBSection() {
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section className="section-y border-t border-border" style={{ background: 'rgba(255,255,255,0.92)' }}>
+    <section className="section-y border-t border-border" style={{ background: '#ffffff' }}>
       <div className="mx-auto max-w-3xl px-6">
         <FadeUp>
           <h2
@@ -698,20 +720,6 @@ function CtaStrip() {
 export default function Founders() {
   return (
     <>
-      {/* Fixed video — stays behind everything as scrollable texture */}
-      <div className="fixed inset-0 z-[-1] overflow-hidden" style={{ background: '#2B2B2B' }}>
-        <video
-          src={HERO_VIDEO}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-          style={{ filter: 'blur(18px)', transform: 'scale(1.12)' }}
-          aria-hidden="true"
-        />
-      </div>
-
       <HeroSection />
       <TrackASection />
       <TrackBSection />

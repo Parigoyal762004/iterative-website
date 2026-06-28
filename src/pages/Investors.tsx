@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, FileText, Users, Mail, TrendingUp, Bell, BarChart2, ChevronDown } from 'lucide-react'
-import BlurText from '@/components/motion/BlurText'
 
 // ── Fade-up helper ──────────────────────────────────────────────────────────
 function FadeUp({
@@ -106,23 +105,44 @@ const FAQS = [
   { q: 'How many deals will I get access to?', a: 'We prioritise quality over volume. Network members typically see 2–4 curated opportunities per month, each with a full deal memo and Akro\'s diligence summary.' },
 ]
 
-const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4'
-
 // ── Hero ───────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
     <section
       className="relative flex flex-col items-center justify-center text-center px-6 overflow-hidden"
-      style={{ minHeight: '65vh', background: 'rgba(30,30,30,0.72)' }}
+      style={{
+        minHeight: '68vh',
+        background: 'linear-gradient(145deg, #1a1510 0%, #1e1a0e 30%, #2B2B2B 70%, #1e1e1e 100%)',
+      }}
     >
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.08) 1px, transparent 0)',
+          backgroundSize: '40px 40px',
+        }}
+      />
+      {/* Mustard glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          width: 700, height: 500,
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(242,183,5,0.10) 0%, transparent 70%)',
+          top: '50%', left: '50%',
+          transform: 'translate(-50%, -65%)',
+        }}
+      />
+
       <div className="relative z-10 max-w-3xl mx-auto pt-24 pb-16">
         <FadeUp delay={0.1}>
-          <p className="t-label text-primary mb-6">For Investors</p>
+          <p className="t-label mb-6" style={{ color: '#F2B705', opacity: 0.7 }}>For Investors</p>
         </FadeUp>
 
-        <div className="mb-5">
-          <BlurText
-            text="The deals you want. None of the noise."
+        <FadeUp delay={0.2}>
+          <h1
+            className="mb-5"
             style={{
               fontFamily: 'Cormorant Garamond, Georgia, serif',
               fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
@@ -132,19 +152,21 @@ function HeroSection() {
               lineHeight: 1.06,
               letterSpacing: '-0.03em',
             }}
-          />
-        </div>
+          >
+            The deals you want.<br />None of the noise.
+          </h1>
+        </FadeUp>
 
-        <FadeUp delay={0.6}>
-          <p className="text-white/65 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto mb-10">
+        <FadeUp delay={0.4}>
+          <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto mb-10">
             Akro's investor network is curated, not open. Every member is vetted before they see a single deal.
           </p>
         </FadeUp>
 
-        <FadeUp delay={0.8}>
+        <FadeUp delay={0.6}>
           <a
             href="#apply"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-bold text-sm text-foreground hover:scale-105 active:scale-95 transition-transform"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-bold text-sm text-foreground hover:opacity-90 active:scale-95 transition-all"
             style={{ background: '#F2B705' }}
           >
             Apply to Join <ArrowRight size={16} />
@@ -158,7 +180,7 @@ function HeroSection() {
 // ── Benefits ───────────────────────────────────────────────────────────────
 function BenefitsSection() {
   return (
-    <section className="section-y" style={{ background: 'rgba(255,255,255,0.92)' }}>
+    <section className="section-y" style={{ background: '#ffffff' }}>
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">The Network</p>
@@ -198,7 +220,7 @@ function BenefitsSection() {
 // ── Vetting Process ────────────────────────────────────────────────────────
 function VettingSection() {
   return (
-    <section className="section-y" style={{ background: 'rgba(244,246,242,0.93)' }}>
+    <section className="section-y" style={{ background: '#F4F6F2' }}>
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Due Diligence</p>
@@ -244,7 +266,7 @@ function VettingSection() {
 // ── Deal Flow ──────────────────────────────────────────────────────────────
 function DealFlowSection() {
   return (
-    <section className="section-y" style={{ background: 'rgba(255,255,255,0.92)' }}>
+    <section className="section-y" style={{ background: '#ffffff' }}>
       <div className="mx-auto max-w-4xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Process</p>
@@ -282,7 +304,7 @@ function DealFlowSection() {
 // ── Portfolio Monitoring ───────────────────────────────────────────────────
 function PortfolioSection() {
   return (
-    <section className="section-y" style={{ background: 'rgba(43,43,43,0.88)' }}>
+    <section className="section-y" style={{ background: '#2B2B2B' }}>
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Portfolio</p>
@@ -329,7 +351,7 @@ function PortfolioSection() {
 // ── Deal Types ─────────────────────────────────────────────────────────────
 function DealTypesSection() {
   return (
-    <section className="section-y" style={{ background: 'rgba(244,246,242,0.93)' }}>
+    <section className="section-y" style={{ background: '#F4F6F2' }}>
       <div className="mx-auto max-w-4xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Deal Coverage</p>
@@ -519,7 +541,7 @@ function ApplicationForm() {
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section className="section-y border-t border-border" style={{ background: 'rgba(255,255,255,0.92)' }}>
+    <section className="section-y border-t border-border" style={{ background: '#ffffff' }}>
       <div className="mx-auto max-w-3xl px-6">
         <FadeUp>
           <h2
@@ -597,20 +619,6 @@ function CtaStrip() {
 export default function Investors() {
   return (
     <>
-      {/* Fixed video — stays behind everything as scrollable texture */}
-      <div className="fixed inset-0 z-[-1] overflow-hidden" style={{ background: '#2B2B2B' }}>
-        <video
-          src={HERO_VIDEO}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-          style={{ filter: 'blur(18px)', transform: 'scale(1.12)' }}
-          aria-hidden="true"
-        />
-      </div>
-
       <HeroSection />
       <BenefitsSection />
       <VettingSection />
@@ -618,7 +626,7 @@ export default function Investors() {
       <PortfolioSection />
       <DealTypesSection />
 
-      <section id="apply" className="section-y" style={{ background: 'rgba(255,255,255,0.92)' }}>
+      <section id="apply" className="section-y" style={{ background: '#ffffff' }}>
         <div className="mx-auto max-w-2xl px-6">
           <FadeUp>
             <p className="t-label text-primary mb-3 text-center">Apply</p>
