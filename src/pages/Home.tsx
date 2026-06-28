@@ -1,440 +1,887 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight, TrendingUp, Building2, Rocket, Globe2, Layers, Lightbulb, ClipboardCheck, Ship, ChevronRight } from "lucide-react";
-import MagneticButton from "@/components/MagneticButton";
-import useReveal from "@/hooks/useReveal";
+import { useEffect, useRef, useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, ArrowLeft, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { RadialOrbitalTimeline } from '@/components/ui/radial-orbital-timeline'
+import {
+  motion,
+  AnimatePresence,
+  useInView,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from 'framer-motion'
+import { Button } from '@/components/Button'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { ScrollReveal } from '@/components/motion/ScrollReveal'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 
-// Scroll-based parallax for editorial image sections
-const useParallax = (strength = 0.18) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const onScroll = useCallback(() => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const progress = (vh - rect.top) / (vh + rect.height);
-    const clamped = Math.max(0, Math.min(1, progress));
-    const offset = (clamped - 0.5) * strength * 120;
-    const img = el.querySelector<HTMLImageElement>("[data-parallax-img]");
-    if (img) img.style.transform = `translateY(${offset}px)`;
-  }, [strength]);
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [onScroll]);
-  return ref;
-};
-import imgCityNight from "@/assets/img-city-night.jpg";
+// eslint-disable-next-line
+const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
+const EASE = [0.22, 1, 0.36, 1] as const
+const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4'
 
-// Editorial word rotator  -  slow, refined, no typing effect
-const WORDS = ["conviction", "precision", "clarity", "purpose", "resolve", "confidence"];
+// ── Vertical slide word ticker ────────────────────────────────────────────────
+const TICKER_WORDS = ['conviction', 'precision', 'clarity', 'purpose', 'resolve']
 
-const WordRotator = () => {
-  const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<"in" | "out">("in");
+function WordTicker() {
+  const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    const holdTimer = setTimeout(() => setPhase("out"), 3200);
-    return () => clearTimeout(holdTimer);
-  }, [index]);
-
-  useEffect(() => {
-    if (phase !== "out") return;
-    const exitTimer = setTimeout(() => {
-      setIndex(i => (i + 1) % WORDS.length);
-      setPhase("in");
-    }, 700);
-    return () => clearTimeout(exitTimer);
-  }, [phase]);
+    const t = setInterval(() => setIndex(i => (i + 1) % TICKER_WORDS.length), 4500)
+    return () => clearInterval(t)
+  }, [])
 
   return (
     <span
-      className="text-accent italic"
-      style={{
-        display: "inline-block",
-        opacity: phase === "in" ? 1 : 0,
-        transform: phase === "in" ? "translateY(0)" : "translateY(-10px)",
-        transition: phase === "in"
-          ? "opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1)"
-          : "opacity 0.6s ease-in, transform 0.6s ease-in",
-      }}
+      className="inline-block overflow-hidden align-bottom"
+      style={{ height: '1.15em', verticalAlign: 'bottom' }}
     >
-      {WORDS[index]}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={index}
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: '0%', opacity: 1 }}
+          exit={{ y: '-100%', opacity: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: 'block', color: '#F2B705', fontStyle: 'italic' }}
+        >
+          {TICKER_WORDS[index]}
+        </motion.span>
+      </AnimatePresence>
     </span>
-  );
-};
+  )
+}
 
-// Animated counter that fires once when scrolled into view
-const useCountUp = (target: number, duration = 1800) => {
-  const [count, setCount] = useState(0);
-  const [active, setActive] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setActive(true); obs.disconnect(); } },
-      { threshold: 0.5 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+// ── Animated counter ──────────────────────────────────────────────────────────
+function useCountUp(target: number, duration = 1600) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const triggered = useRef(false)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
 
   useEffect(() => {
-    if (!active) return;
-    const start = performance.now();
-    let raf: number;
+    if (!inView || triggered.current) return
+    triggered.current = true
+    const start = performance.now()
+    let raf: number
     const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(ease * target));
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [active, target, duration]);
+      const p = Math.min((now - start) / duration, 1)
+      const ease = 1 - Math.pow(1 - p, 3)
+      setCount(Math.floor(ease * target))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [inView, target, duration])
 
-  return { count, ref };
-};
+  return { count, ref }
+}
 
-interface StatConfig { prefix?: string; target: number; suffix: string; label: string; delay?: number }
-
-const AnimatedStat = ({ prefix = "", target, suffix, label, delay = 0 }: StatConfig) => {
-  const { count, ref } = useCountUp(target, 1600 + delay);
+interface StatProps { prefix?: string; target: number; suffix: string; label: string }
+function AnimatedStat({ prefix = '', target, suffix, label }: StatProps) {
+  const { count, ref } = useCountUp(target)
   return (
-    <div ref={ref} className="relative flex flex-col justify-center p-8 md:p-12">
-      <div className="text-accent font-mono font-bold leading-none text-[2.2rem] md:text-[3rem] tabular-nums">
+    <div ref={ref}>
+      <div className="t-display-l font-display text-accent tabular-nums leading-none">
         {prefix}{count}{suffix}
       </div>
-      <div className="text-white/40 text-[10px] uppercase tracking-[0.25em] mt-3 font-medium leading-snug">{label}</div>
+      <div className="t-label text-muted-foreground mt-3">{label}</div>
     </div>
-  );
-};
+  )
+}
 
-const services = [
-  { Icon: TrendingUp, title: "Unsecured Business Loans", desc: "Access working capital without pledging assets. Matched to your cashflow, GST returns, and business profile.", path: "/assess/unsecured-loans" },
-  { Icon: Building2, title: "Secured Loans", desc: "Leverage equity or assets for larger financing at better rates. Secured against property, shares, and collateral.", path: "/assess/secured-loans" },
-  { Icon: Layers, title: "Project Funding", desc: "Dedicated financing for large-scale projects. Milestone-based drawdowns and hybrid debt-equity structures.", path: "/assess/project-funding" },
-  { Icon: Rocket, title: "Startup Fundraising", desc: "From pre-seed to growth stage. We sharpen the pitch, build the model, and connect you to the right investors.", path: "/assess/startup-fundraising" },
-  { Icon: Lightbulb, title: "Startup Consultation", desc: "Pricing strategy, go-to-market planning, market sizing, and investor objection mapping. Beyond just capital.", path: "/assess/startup-consultation" },
-  { Icon: Globe2, title: "FDI & ECB Advisory", desc: "Foreign direct investment and external commercial borrowings. From RBI/FEMA compliance to full capital structuring.", path: "/assess/fdi-ecb" },
-  { Icon: Ship, title: "Export Invoice Factoring", desc: "Stop funding your buyer's credit period. We unlock up to 90% of your export invoice value on Day 0, collateral-free and non-recourse.", path: "/contact" },
-  { Icon: ClipboardCheck, title: "Business Loan Readiness", desc: "Know exactly where you stand before you apply. 4-question audit, instant score, follow-up within 24 hours.", path: "/audit" },
-];
+// ── Data ──────────────────────────────────────────────────────────────────────
+const quickPaths = [
+  { label: 'Working Capital',     href: '/founders' },
+  { label: 'Project Funding',     href: '/founders' },
+  { label: 'Startup Fundraising', href: '/founders' },
+  { label: 'FDI / ECB',          href: '/founders' },
+  { label: 'For Investors',       href: '/investors' },
+]
 
-const trust = ["10+ Years", "₹200Cr+ Facilitated", "50+ Clients", "95% Approval Rate", "Pan-India Network", "RBI Compliant"];
-
-const outcomes = [
+const OUTCOMES_CAROUSEL = [
   {
-    tag: "Working Capital",
-    headline: "₹2.8Cr secured in 22 days",
-    context:
-      "Pune-based D2C brand needed bridge capital for a large festive-season inventory order. No collateral. Structured entirely against GST returns and six months of bank statements.",
-    sector: "D2C Consumer",
+    label: 'Project Finance · Hyderabad',
+    metric: '₹45Cr',
+    descriptor: 'Residential township. Senior + Mezzanine hybrid. Funded in 58 days.',
+    category: 'Term Loan',
+    detail: 'Developer had strong land assets but no banking relationship.',
+    bg: '#283C40',
+    panel: '#304650',
   },
   {
-    tag: "Project Funding",
-    headline: "₹45Cr structured for real estate development",
-    context:
-      "Mid-size Hyderabad developer required project-specific financing for a residential township. We designed a senior-mezzanine hybrid with milestone drawdowns matched to construction stages.",
-    sector: "Real Estate",
+    label: 'Startup Equity · Mumbai',
+    metric: 'Seed+',
+    descriptor: 'Closed above target. First cheque in 18 days after mandate.',
+    category: 'Equity Advisory',
+    detail: 'B2B SaaS founder. Six months of failed outreach. One restructured narrative.',
+    bg: '#1A1A1A',
+    panel: '#232323',
   },
   {
-    tag: "Startup Fundraising",
-    headline: "Seed round closed above target",
-    context:
-      "A B2B SaaS startup had struggled with investor traction for six months. We rebuilt the financial model, repositioned the narrative, and made eight warm introductions. Round closed in eleven weeks.",
-    sector: "SaaS / B2B",
+    label: 'Working Capital · Pune',
+    metric: '₹2.8Cr',
+    descriptor: 'Unsecured OD sanctioned in 22 days. No collateral.',
+    category: 'Working Capital',
+    detail: 'D2C brand. Structured entirely against GST returns and bank statements.',
+    bg: '#3F6F73',
+    panel: '#4A8186',
   },
-];
+  {
+    label: 'Cross-border · Bengaluru',
+    metric: '$2M',
+    descriptor: 'ECB structured and placed. Full RBI compliance.',
+    category: 'ECB / FDI',
+    detail: 'Tech startup needed USD-denominated debt to match their revenue currency.',
+    bg: '#252525',
+    panel: '#2E2E2E',
+  },
+]
 
-const Home = () => {
-  useReveal();
-  const parallaxRef = useParallax(0.18);
+const steps = [
+  {
+    n: '01',
+    title: 'Discovery Call',
+    desc: 'We listen, you talk. 15 minutes tells us everything we need to know about fit, readiness, and the right path forward.',
+  },
+  {
+    n: '02',
+    title: 'Capital Blueprint',
+    desc: 'Cashflow mapped. Capital structure designed. We tell you exactly what you qualify for and what is standing in the way.',
+  },
+  {
+    n: '03',
+    title: 'Lender Matchmaking',
+    desc: 'Curated outreach to the right desks. No spray-and-pray. Only lenders we know will look at your profile seriously.',
+  },
+  {
+    n: '04',
+    title: 'Capital Secured',
+    desc: 'Term sheet negotiated. Conditions reviewed. Capital disbursed. We stay on the deal until funds arrive.',
+  },
+]
+
+const stats = [
+  { prefix: '₹', target: 200, suffix: 'Cr+', label: 'Capital Facilitated' },
+  { target: 50,  suffix: '+',  label: 'Founders Served' },
+  { target: 95,  suffix: '%',  label: 'Client Approval Rate' },
+  { target: 40,  suffix: '+',  label: 'Lender Relationships' },
+]
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 1 — HERO (centered, cinematic)
+// ─────────────────────────────────────────────────────────────────────────────
+function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const reduced = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-18%'])
 
   return (
-    <>
-      {/* HERO */}
-      <section className="relative bg-primary text-primary-foreground overflow-hidden bg-glow-corner">
-        <div className="absolute inset-0 bg-diagonal-lines pointer-events-none" aria-hidden="true" />
-        <div className="container pt-28 pb-16 md:pt-40 md:pb-20 relative z-10">
-          <div className="max-w-4xl">
-            <span className="eyebrow text-accent" style={{ animation: "hero-rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both" }}>
-              Akro Ventures · Capital Advisory
-            </span>
-            <div className="divider-gold mt-6 mb-8" style={{ transformOrigin: "left", animation: "line-draw 0.55s cubic-bezier(0.22,1,0.36,1) 0.2s both" }} />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl leading-[1.1] text-white" style={{ animation: "hero-rise 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s both" }}>
-              Capital, structured<br className="hidden sm:block" /> with <WordRotator />.
-            </h1>
-            <p className="mt-10 max-w-2xl text-lg md:text-xl text-white/75 leading-relaxed" style={{ animation: "hero-rise 0.7s cubic-bezier(0.22,1,0.36,1) 0.45s both" }}>
-              Akro Ventures connects ambitious founders across India with structured capital solutions,
-              <span className="text-accent"> strategy first, paperwork second.</span>
-            </p>
+    <section ref={sectionRef} className="relative bg-charcoal overflow-hidden min-h-screen flex flex-col" aria-label="Hero">
 
-            <div className="mt-12 flex flex-wrap gap-4" style={{ animation: "hero-rise 0.7s cubic-bezier(0.22,1,0.36,1) 0.55s both" }}>
-              <Link to="/contact">
-                <MagneticButton variant="teal">
-                  Free Consultation <ArrowRight size={16} />
-                </MagneticButton>
-              </Link>
-              <Link to="/contact">
-                <MagneticButton variant="ghost-light">Book a Call</MagneticButton>
+      {/* Background video */}
+      <video
+        src={HERO_VIDEO}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{ filter: 'blur(16px)', transform: 'scale(1.1)' }}
+        aria-hidden="true"
+      />
+      {/* Charcoal overlay — high opacity suppresses blue video cast */}
+      <div className="absolute inset-0 z-[1]" style={{ background: 'rgba(36,36,36,0.84)' }} aria-hidden="true" />
+      <div
+        className="absolute inset-0 texture-diagonal pointer-events-none"
+        style={{ zIndex: 2, opacity: 0.4 }}
+        aria-hidden="true"
+      />
+
+      {/* Centered content */}
+      <motion.div
+        style={{ y: textY }}
+        className="relative z-10 flex flex-col items-center justify-center text-center flex-1 px-6 py-24 pt-32"
+      >
+        <div className="max-w-3xl mx-auto flex flex-col items-center gap-5">
+
+          <h1 className="t-display-xl font-display text-white leading-tight">
+            <span className="block" style={{ overflow: 'hidden' }}>
+              <motion.span
+                style={{ display: 'inline-block' }}
+                initial={reduced ? {} : { filter: 'blur(10px)', opacity: 0, y: 50 }}
+                animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              >
+                Capital, structured
+              </motion.span>
+            </span>
+            <span className="block" style={{ overflow: 'hidden' }}>
+              <motion.span
+                style={{ display: 'inline-block' }}
+                initial={reduced ? {} : { filter: 'blur(10px)', opacity: 0, y: 50 }}
+                animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.33 }}
+              >
+                with <WordTicker />.
+              </motion.span>
+            </span>
+          </h1>
+
+          <FadeIn delay={0.52} direction="up">
+            <p className="t-body-xl text-white/55 leading-relaxed max-w-xl">
+              We advise Indian founders on capital structure, lender selection,
+              and deal architecture. Strategy first, paperwork second.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={0.66} direction="up">
+            <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
+              <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn-slide">
+                <span>Book a Call</span>
+                <ArrowUpRight size={14} />
+              </a>
+              <Link to="/investors" className="btn-slide btn-slide-mustard">
+                <span>For Investors</span>
+                <ArrowRight size={14} />
               </Link>
             </div>
+          </FadeIn>
 
-            {/* Quick-path selector */}
-            <div className="mt-8 pt-6 border-t border-white/10" style={{ animation: "hero-rise 0.7s cubic-bezier(0.22,1,0.36,1) 0.7s both" }}>
-              <p className="text-white/35 text-[11px] uppercase tracking-[0.2em] mb-3 font-medium">What do you need?</p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { label: "Working Capital", path: "/assess/unsecured-loans" },
-                  { label: "Project Funding", path: "/assess/project-funding" },
-                  { label: "Startup Fundraising", path: "/assess/startup-fundraising" },
-                  { label: "FDI / ECB", path: "/assess/fdi-ecb" },
-                  { label: "Export Finance", path: "/contact" },
-                  { label: "Loan Readiness", path: "/audit" },
-                ].map(({ label, path }) => (
+          {/* Quick-path chips */}
+          <FadeIn delay={0.76} direction="up" className="mt-1">
+            <div className="flex flex-col items-center gap-2">
+              <span className="t-label text-white/25 tracking-[0.2em]">What do you need?</span>
+              <div className="flex flex-wrap justify-center gap-2">
+                {quickPaths.map(({ label, href }) => (
                   <Link
                     key={label}
-                    to={path}
-                    className="px-3 py-1.5 text-[11px] uppercase tracking-wider border border-white/15 text-white/45 hover:border-accent hover:text-accent transition-all duration-200 font-semibold"
+                    to={href}
+                    className="px-3 py-1.5 text-[11px] uppercase tracking-wider border border-white/15 text-white/40 hover:border-[#F2B705] hover:text-[#F2B705] transition-all duration-200 font-semibold"
                   >
                     {label}
                   </Link>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
+          </FadeIn>
 
-        {/* Trust marquee */}
-        <div className="border-t border-accent/30 py-5">
-          <div className="marquee">
-            {[0, 1].map((k) => (
-              <div key={k} className="marquee-track" aria-hidden={k === 1}>
-                {trust.map((t, i) => (
-                  <div key={i} className="flex items-center gap-6 whitespace-nowrap">
-                    <span className="size-1.5 bg-accent" />
-                    <span className="text-white/85 text-sm font-medium tracking-wide uppercase">{t}</span>
-                    <span className="text-accent">|</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES  -  7-card grid */}
-      <section className="bg-background py-24 md:py-32 bg-dot-grid">
-        <div className="container">
-          <div className="reveal mb-5 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <span className="eyebrow">What We Do</span>
-              <div className="divider-gold mt-5 mb-6" />
-              <h2 className="text-4xl md:text-6xl">Capital, engineered eight ways.</h2>
+          <FadeIn delay={0.82} direction="up" className="mt-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+              {[
+                { val: '₹200Cr+', lbl: 'Facilitated' },
+                { val: '50+',     lbl: 'Founders' },
+                { val: '40+',     lbl: 'Lenders' },
+              ].map(({ val, lbl }) => (
+                <div key={lbl} className="flex flex-col items-center">
+                  <span
+                    className="font-display font-bold text-white leading-none"
+                    style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
+                  >
+                    {val}
+                  </span>
+                  <span className="t-label text-white/35 mt-1">{lbl}</span>
+                </div>
+              ))}
             </div>
-            <Link to="/services" className="shrink-0">
-              <MagneticButton variant="teal">
-                All Services <ArrowRight size={14} />
-              </MagneticButton>
+          </FadeIn>
+        </div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="relative z-10 flex flex-col items-center gap-1 pb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.4, duration: 0.7 }}
+      >
+        <span className="t-label text-white/18 tracking-[0.2em]">scroll</span>
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ repeat: Infinity, duration: 1.9, ease: 'easeInOut' }}
+        >
+          <ChevronDown size={14} className="text-white/20" />
+        </motion.div>
+      </motion.div>
+
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 2 — JOURNEY (manifesto + two paths)
+// ─────────────────────────────────────────────────────────────────────────────
+function JourneySection() {
+  return (
+    <section className="bg-charcoal section-y border-t border-white/[0.06]" aria-label="Advisory paths">
+      <div className="mx-auto max-w-[1280px] px-6">
+
+        {/* Manifesto quote — no decorative line */}
+        <ScrollReveal className="mb-20 max-w-4xl">
+          <span className="t-label text-white/40 tracking-[0.2em] mb-5 block">Our Thesis</span>
+          <p
+            className="font-display italic text-white/90 leading-[1.1]"
+            style={{ fontSize: 'clamp(1.625rem, 3.2vw, 3rem)' }}
+          >
+            "Most founders don't have a funding problem.
+            <br className="hidden lg:block" /> They have a structure problem."
+          </p>
+        </ScrollReveal>
+
+        {/* Two-column paths */}
+        <div className="grid lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
+
+          {/* For Founders */}
+          <ScrollReveal className="py-10 lg:py-0 lg:pr-16 flex flex-col items-center lg:items-start" delay={0}>
+            <span className="t-label text-accent mb-6 block tracking-widest">FOR FOUNDERS</span>
+            <h2 className="t-display-m font-display text-white mb-4 leading-[1.08] text-center lg:text-left">
+              Capital to build.
+              <br />
+              <em className="text-white/50 not-italic">Strategy to sustain.</em>
+            </h2>
+            <p className="t-body-m text-white/55 mb-8 leading-relaxed max-w-md text-center lg:text-left">
+              Six capital solutions, one advisory relationship. Click any node to explore.
+            </p>
+            <RadialOrbitalTimeline mode="founders" />
+            <Link to="/founders" className="btn-slide btn-slide-teal mt-8">
+              <span>Founder Services</span>
+              <ArrowRight size={14} />
             </Link>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-0 border-t border-l border-border">
-            {services.map(({ Icon, title, desc, path }, i) => (
-              <Link
-                to={path}
-                key={i}
-                className="group block p-8 md:p-10 border-b border-r border-border hover:bg-secondary/50 transition-colors duration-300"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-accent font-mono text-xs">{String(i + 1).padStart(2, "0")}</span>
-                  <Icon
-                    size={22}
-                    className="text-accent/40 group-hover:text-accent transition-colors duration-300"
-                    strokeWidth={1.25}
-                  />
-                </div>
-                <h3 className="text-xl md:text-2xl mb-3 group-hover:text-accent transition-colors duration-300 leading-snug">{title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{desc}</p>
-                <div className="mt-6 flex items-center gap-2 text-xs uppercase tracking-widest text-accent font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Check eligibility <ArrowRight size={12} />
-                </div>
-              </Link>
-            ))}
-          </div>
+          {/* For Investors */}
+          <ScrollReveal className="py-10 lg:py-0 lg:pl-16 flex flex-col items-center lg:items-start" delay={0.1}>
+            <span className="t-label text-accent mb-6 block tracking-widest">FOR INVESTORS</span>
+            <h2 className="t-display-m font-display text-white mb-4 leading-[1.08] text-center lg:text-left">
+              Curated deal flow.
+              <br />
+              <em className="text-white/50 not-italic">Structured access.</em>
+            </h2>
+            <p className="t-body-m text-white/55 mb-8 leading-relaxed max-w-md text-center lg:text-left">
+              Four pillars of investor access. Click any node to see what you get.
+            </p>
+            <RadialOrbitalTimeline mode="investors" />
+            <Link to="/investors" className="btn-slide btn-slide-mustard mt-8">
+              <span>Investor Access</span>
+              <ArrowRight size={14} />
+            </Link>
+          </ScrollReveal>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      {/* HOW IT WORKS  -  editorial steps */}
-      <section id="how" className="bg-secondary/40 py-24 md:py-32">
-        <div className="container">
-          <div className="reveal text-center max-w-2xl mx-auto mb-20">
-            <span className="eyebrow">The Akro Method</span>
-            <div className="divider-gold mt-5 mb-6 mx-auto" />
-            <h2 className="text-4xl md:text-6xl">From Inquiry to Funded.</h2>
-            <p className="text-muted-foreground mt-6">A four-step engagement built for speed, clarity, and absolute discretion.</p>
-          </div>
+const CAROUSEL_TRANS = 'transform 650ms cubic-bezier(0.4,0,0.2,1), filter 650ms cubic-bezier(0.4,0,0.2,1), opacity 650ms cubic-bezier(0.4,0,0.2,1), left 650ms cubic-bezier(0.4,0,0.2,1), bottom 650ms cubic-bezier(0.4,0,0.2,1), height 650ms cubic-bezier(0.4,0,0.2,1)'
 
-          {/* Connector line — draws across when section enters view */}
-          <div className="steps-connector reveal mb-0">
-            <div className="hidden md:block relative h-px bg-border mb-0 overflow-hidden steps-line-track">
-              <div className="steps-line-fill absolute inset-y-0 left-0 w-0 bg-accent" />
-            </div>
-          </div>
+function OutcomesCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const reduced = useReducedMotion()
 
-          <div className="stagger grid md:grid-cols-4 gap-px bg-border">
-            {[
-              { n: "01", t: "Discovery Call", d: "We listen, you talk. 15 minutes." },
-              { n: "02", t: "Financial Blueprint", d: "Cashflow + capital structure modelled." },
-              { n: "03", t: "Lender Matchmaking", d: "Curated outreach to the right desks." },
-              { n: "04", t: "Capital Secured", d: "Term sheet, negotiation, disbursal." },
-            ].map((s) => (
-              <div key={s.n} className="reveal bg-background p-8 md:p-10">
-                {/* Step number with gold dot connector */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="size-2 bg-accent shrink-0" />
-                  <div className="text-accent font-mono text-sm">{s.n}</div>
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const navigate = useCallback((dir: 'next' | 'prev') => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setActiveIndex(prev => dir === 'next' ? (prev + 1) % 4 : (prev + 3) % 4)
+    setTimeout(() => setIsAnimating(false), 650)
+  }, [isAnimating])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft')  navigate('prev')
+      if (e.key === 'ArrowRight') navigate('next')
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [navigate])
+
+  const center = activeIndex
+  const left   = (activeIndex + 3) % 4
+  const right  = (activeIndex + 1) % 4
+  const back   = (activeIndex + 2) % 4
+
+  // Reduced height so nav + view-all are visible without scrolling
+  const STAGE_H = isMobile ? 400 : 520
+
+  function getRole(i: number): 'center' | 'left' | 'right' | 'back' {
+    if (i === center) return 'center'
+    if (i === left)   return 'left'
+    if (i === right)  return 'right'
+    return 'back'
+  }
+
+  function getCardStyle(i: number): React.CSSProperties {
+    const role = getRole(i)
+    const data = OUTCOMES_CAROUSEL[i]
+
+    const base: React.CSSProperties = {
+      position: 'absolute',
+      aspectRatio: '3 / 4',
+      backgroundColor: data.panel,
+      transition: reduced ? 'none' : CAROUSEL_TRANS,
+      willChange: reduced ? 'auto' : 'transform, filter, opacity',
+      overflow: 'hidden',
+    }
+
+    switch (role) {
+      case 'center': return {
+        ...base,
+        left: '50%',
+        height: isMobile ? '64%' : '82%',
+        bottom: 0,
+        transform: `translateX(-50%) scale(${isMobile ? 1.0 : 1.12})`,
+        filter: 'none',
+        opacity: 1,
+        zIndex: 20,
+      }
+      case 'left': return {
+        ...base,
+        left: isMobile ? '8%' : '22%',
+        height: isMobile ? '36%' : '48%',
+        bottom: isMobile ? '5%' : '8%',
+        transform: 'translateX(-50%) scale(1)',
+        filter: 'blur(2px)',
+        opacity: 0.6,
+        zIndex: 10,
+      }
+      case 'right': return {
+        ...base,
+        left: isMobile ? '92%' : '78%',
+        height: isMobile ? '36%' : '48%',
+        bottom: isMobile ? '5%' : '8%',
+        transform: 'translateX(-50%) scale(1)',
+        filter: 'blur(2px)',
+        opacity: 0.6,
+        zIndex: 10,
+      }
+      case 'back': return {
+        ...base,
+        left: '50%',
+        height: isMobile ? '28%' : '37%',
+        bottom: isMobile ? '5%' : '8%',
+        transform: 'translateX(-50%) scale(1)',
+        filter: 'blur(4px)',
+        opacity: 0.3,
+        zIndex: 5,
+      }
+    }
+  }
+
+  const active = OUTCOMES_CAROUSEL[activeIndex]
+  const btnSize = isMobile ? 44 : 52
+
+  return (
+    <section
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: active.bg,
+        transition: reduced ? 'none' : 'background-color 650ms cubic-bezier(0.4,0,0.2,1)',
+        height: '100vh',
+        minHeight: 560,
+        maxHeight: 900,
+      }}
+      aria-label="Deal outcomes"
+    >
+      {/* Ghost text "CAPITAL" */}
+      <div
+        className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none"
+        style={{ top: isMobile ? '6%' : '10%', zIndex: 2 }}
+        aria-hidden="true"
+      >
+        <span
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(70px, 22vw, 280px)',
+            fontWeight: 900,
+            color: 'white',
+            opacity: 0.05,
+            lineHeight: 1,
+            letterSpacing: '-0.02em',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          CAPITAL
+        </span>
+      </div>
+
+      {/* Eyebrow */}
+      <div className="absolute top-7 left-5 sm:top-9 sm:left-9 z-50">
+        <span className="t-label text-white/35 tracking-[0.22em]">AKRO VENTURES</span>
+      </div>
+
+      {/* Card stage */}
+      <div
+        className="relative w-full"
+        style={{ height: STAGE_H, overflow: 'hidden', zIndex: 3 }}
+      >
+        {OUTCOMES_CAROUSEL.map((deal, i) => {
+          const role = getRole(i)
+          const isCenter = role === 'center'
+
+          return (
+            <div key={i} style={getCardStyle(i)}>
+              <div className="p-5 sm:p-7 h-full flex flex-col">
+                <p className="t-label text-white/45 mb-3 sm:mb-4">{deal.category}</p>
+
+                <div
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: isCenter
+                      ? 'clamp(2.25rem, 5vw, 4rem)'
+                      : 'clamp(1.125rem, 2.5vw, 1.75rem)',
+                    fontWeight: 700,
+                    color: 'white',
+                    lineHeight: 1,
+                    marginBottom: '0.5rem',
+                  }}
+                >
+                  {deal.metric}
                 </div>
-                <h4 className="text-xl mb-3">{s.t}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
+
+                {isCenter && (
+                  <p className="t-body-s sm:t-body-m text-white/65 leading-relaxed mt-1 mb-3">
+                    {deal.descriptor}
+                  </p>
+                )}
+
+                {isCenter && (
+                  <>
+                    <div className="flex-1" />
+                    <div className="border-t border-white/10 pt-4">
+                      <p className="t-body-s text-white/45 leading-relaxed mb-2">
+                        {deal.detail}
+                      </p>
+                      <p className="t-label text-white/28">{deal.label}</p>
+                    </div>
+                  </>
+                )}
               </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Bottom-left — label + nav */}
+      <div
+        className="absolute z-50"
+        style={{
+          bottom: isMobile ? '1.5rem' : '2.5rem',
+          left: isMobile ? '1.25rem' : '3rem',
+          maxWidth: 340,
+        }}
+      >
+        <p
+          className="font-bold uppercase text-white tracking-[0.03em] mb-1.5"
+          style={{ fontSize: isMobile ? '0.875rem' : '1.125rem' }}
+        >
+          Deal Outcomes
+        </p>
+        <p className="t-label text-white/40 mb-4 hidden sm:block">
+          Real capital · Real structures · All anonymised
+        </p>
+
+        <div className="flex items-center gap-3">
+          {(['prev', 'next'] as const).map((dir, di) => (
+            <button
+              key={dir}
+              onClick={() => navigate(dir)}
+              aria-label={dir === 'prev' ? 'Previous deal' : 'Next deal'}
+              style={{
+                width: btnSize, height: btnSize,
+                border: '2px solid rgba(255,255,255,0.35)',
+                borderRadius: '50%',
+                background: 'transparent',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'white',
+                cursor: 'pointer',
+                transition: 'background 150ms, transform 150ms',
+                flexShrink: 0,
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
+                e.currentTarget.style.transform = 'scale(1.08)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
+            >
+              {di === 0
+                ? <ArrowLeft size={isMobile ? 16 : 18} strokeWidth={2.25} />
+                : <ArrowRight size={isMobile ? 16 : 18} strokeWidth={2.25} />
+              }
+            </button>
+          ))}
+
+          {/* Dots */}
+          <div className="flex items-center gap-1.5 ml-1">
+            {OUTCOMES_CAROUSEL.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { if (!isAnimating) { setIsAnimating(true); setActiveIndex(i); setTimeout(() => setIsAnimating(false), 650) } }}
+                aria-label={`Go to deal ${i + 1}`}
+                style={{
+                  width: i === activeIndex ? '1.25rem' : '0.3125rem',
+                  height: '0.3125rem',
+                  borderRadius: 9999,
+                  background: i === activeIndex ? 'white' : 'rgba(255,255,255,0.28)',
+                  border: 'none', cursor: 'pointer', padding: 0,
+                  transition: 'width 300ms ease, background 300ms ease',
+                }}
+              />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* EDITORIAL IMAGE BREAK  -  Mumbai night city */}
-      <div ref={parallaxRef} className="relative h-64 md:h-[480px] overflow-hidden">
-        <img
-          data-parallax-img
-          src={imgCityNight}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 w-full object-cover object-center will-change-transform"
-          style={{ filter: "brightness(0.38)", height: "130%", top: "-15%" }}
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-          <p className="text-accent text-xs uppercase tracking-[0.3em] font-semibold mb-5">Pan-India · Fully Remote</p>
-          <h2 className="text-white text-3xl md:text-6xl max-w-3xl leading-snug" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-            We go where the right<br className="hidden md:block" /> capital is. Everywhere.
-          </h2>
-          <div className="w-12 h-0.5 bg-accent mt-8" />
         </div>
       </div>
 
-      {/* HOW WE WORK  -  animated stats + content split */}
-      <section className="bg-background border-t border-border">
-        <div className="grid md:grid-cols-2 min-h-[520px]">
+      {/* Bottom-right — View all */}
+      <div
+        className="absolute z-50"
+        style={{
+          bottom: isMobile ? '1.5rem' : '2.5rem',
+          right: isMobile ? '1.25rem' : '2.5rem',
+        }}
+      >
+        <Link
+          to="/founders"
+          className="flex items-center gap-2 text-white/65 hover:text-white transition-colors duration-200"
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: isMobile ? '1rem' : 'clamp(1.125rem, 2.2vw, 1.75rem)',
+            fontWeight: 700,
+            fontStyle: 'italic',
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+            textDecoration: 'none',
+          }}
+        >
+          View all
+          <ArrowRight
+            size={isMobile ? 14 : 18}
+            strokeWidth={2.25}
+            style={{ flexShrink: 0 }}
+          />
+        </Link>
+      </div>
+    </section>
+  )
+}
 
-          {/* Animated stats grid */}
-          <div className="relative bg-primary min-h-[360px] md:min-h-0 grid grid-cols-2">
-            <div className="absolute inset-0 bg-diagonal-lines pointer-events-none opacity-70" aria-hidden="true" />
-            {/* Divider lines */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-0 right-0 h-px bg-accent/20" />
-              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-accent/20" />
-            </div>
-            <AnimatedStat prefix="₹" target={200} suffix="Cr+" label="Capital Facilitated" delay={0} />
-            <AnimatedStat target={95} suffix="%" label="Client Approval Rate" delay={150} />
-            <AnimatedStat target={50} suffix="+" label="Founders Helped Get Funded" delay={300} />
-            <AnimatedStat target={40} suffix="+" label="Lender Relationships" delay={450} />
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 5 — PROCESS
+// ─────────────────────────────────────────────────────────────────────────────
+function ProcessSection() {
+  return (
+    <section className="bg-charcoal section-y border-t border-white/[0.06]" aria-label="How we work">
+      <div className="mx-auto max-w-[1280px] px-6">
+        <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:gap-20 xl:gap-32">
+
+          {/* Left — sticky statement — no decorative line */}
+          <div className="lg:sticky lg:top-28 lg:self-start mb-16 lg:mb-0">
+            <ScrollReveal>
+              <span className="t-label text-white/40 tracking-widest mb-8 block">The Process</span>
+              <h2 className="t-display-xl font-display text-white leading-[1.02]">
+                Not a funding
+                <br /> problem.
+              </h2>
+              <p className="t-display-m font-display text-accent italic mt-2 leading-[1.02]">
+                A structure problem.
+              </p>
+              <p className="t-body-l text-white/60 mt-8 max-w-md leading-relaxed">
+                From first call to funded capital. Four steps, absolute discretion,
+                no upfront fees.
+              </p>
+              <div className="mt-10">
+                <a href={CALENDLY} target="_blank" rel="noreferrer">
+                  <Button variant="ghost-light" size="lg">
+                    Book a Discovery Call <ArrowUpRight size={14} />
+                  </Button>
+                </a>
+              </div>
+            </ScrollReveal>
           </div>
 
-          {/* Content side */}
-          <div className="reveal-right flex flex-col justify-center px-10 py-16 md:px-16 bg-background">
-            <span className="eyebrow">How We Work</span>
-            <div className="divider-gold mt-5 mb-6" />
-            <h2 className="text-4xl md:text-6xl leading-tight">
-              Every engagement starts with a <span className="text-accent">real conversation.</span>
+          {/* Right — steps */}
+          <div className="lg:py-2">
+            <Stagger stagger={0.09}>
+              {steps.map((step, i) => (
+                <StaggerItem key={step.n}>
+                  <div
+                    className={`flex gap-8 md:gap-12 py-8 ${
+                      i < steps.length - 1 ? 'border-b border-white/[0.09]' : ''
+                    }`}
+                  >
+                    <span
+                      className="font-display font-bold leading-none text-white/[0.22] tabular-nums shrink-0 select-none"
+                      style={{ fontSize: 'clamp(2.25rem, 4vw, 3.25rem)', width: '3.5rem' }}
+                      aria-hidden="true"
+                    >
+                      {step.n}
+                    </span>
+                    <div className="pt-1">
+                      <h3 className="t-heading-m font-display text-white mb-2">{step.title}</h3>
+                      <p className="t-body-m text-white/75 leading-relaxed">{step.desc}</p>
+                    </div>
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 6 — STATS
+// ─────────────────────────────────────────────────────────────────────────────
+function StatsSection() {
+  return (
+    <section className="bg-cream section-y relative overflow-hidden" aria-label="Track record numbers">
+      <div className="mx-auto max-w-[1280px] px-6">
+
+        <ScrollReveal className="mb-16">
+          <span className="t-label text-muted-foreground tracking-widest mb-4 block">By the Numbers</span>
+          <h2 className="t-display-m font-display text-foreground leading-tight">
+            The numbers<br className="hidden sm:block" /> don't change.
+          </h2>
+          <p className="t-body-m text-muted-foreground mt-3 max-w-md">
+            Since 2023. Every figure is live and verified.
+          </p>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={i}
+              className="bg-white px-8 py-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, ease: EASE, delay: i * 0.08 }}
+            >
+              <AnimatedStat {...stat} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 7 — CTA
+// ─────────────────────────────────────────────────────────────────────────────
+function CtaSection() {
+  return (
+    <section className="bg-primary section-y overflow-hidden relative" aria-label="Book a consultation">
+
+      <div
+        className="absolute inset-0 texture-diagonal pointer-events-none"
+        style={{ opacity: 0.35 }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1280px] px-6">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-12 xl:gap-20 items-center">
+
+          <ScrollReveal>
+            <span className="t-label text-white/45 tracking-widest mb-8 block">Let's Talk</span>
+            <h2 className="t-display-xl font-display text-white leading-[1.02] max-w-3xl">
+              Talk to Rohit
+              <br /> or Akshita.
             </h2>
-            <p className="text-muted-foreground mt-6 leading-relaxed">
-              Not a form. Not a bot. A 15-minute call with our advisory team who've seen the inside of 40+ lender desks. We tell you the truth: what you qualify for, what's blocking you, and what to fix.
+            <p className="t-body-xl text-white/60 mt-6 max-w-md leading-relaxed">
+              15 minutes. Your entire capital path, mapped.
+              <br />
+              Not a bot. Not a template reply.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <a href={CALENDLY} target="_blank" rel="noreferrer">
+                <Button size="lg">
+                  Book a Call <ArrowUpRight size={14} />
+                </Button>
+              </a>
               <Link to="/contact">
-                <MagneticButton variant="teal">
-                  Book a Call <ArrowRight size={14} />
-                </MagneticButton>
-              </Link>
-              <Link to="/audit">
-                <MagneticButton variant="ghost-teal">
-                  Check Loan Readiness
-                </MagneticButton>
+                <Button variant="ghost-light" size="lg">
+                  Send a message <ArrowRight size={14} />
+                </Button>
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
+          </ScrollReveal>
 
-      {/* OUTCOMES  -  case snapshot cards */}
-      <section className="bg-background py-24 md:py-32">
-        <div className="container">
-          <div className="reveal mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <span className="eyebrow">What We've Done</span>
-              <div className="divider-gold mt-5 mb-6" />
-              <h2 className="text-4xl md:text-6xl">Capital that moves the needle.</h2>
+          {/* Founder portraits */}
+          <FadeIn delay={0.35} direction="up" className="hidden lg:flex items-end justify-end gap-5">
+
+            <div className="flex flex-col items-center gap-3 mb-14">
+              <motion.div
+                className="w-[148px] h-[198px] overflow-hidden ring-1 ring-white/15"
+                whileHover={{ scale: 1.03, transition: { duration: 0.3, ease: EASE } }}
+              >
+                <img
+                  src="/team/rohit.png"
+                  alt="Rohit Jain, Co-Founder"
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </motion.div>
+              <div className="text-center">
+                <p className="t-label text-white/75 leading-none">Rohit Jain</p>
+                <p className="t-label text-white/32 mt-1.5">Co-Founder</p>
+              </div>
             </div>
-          </div>
 
-          {/* Mobile: snap carousel */}
-          <div className="md:hidden flex gap-0 overflow-x-auto snap-x snap-mandatory no-scrollbar border-t border-l border-border">
-            {outcomes.map((o, i) => (
-              <div key={i} className="snap-start shrink-0 w-[85vw] p-7 border-b border-r border-border flex flex-col">
-                <span className="text-[10px] font-bold tracking-widest text-accent/60 uppercase mb-4">{o.tag}</span>
-                <div className="text-lg font-bold text-accent mb-3 leading-tight">{o.headline}</div>
-                <p className="text-muted-foreground text-sm leading-relaxed flex-1">{o.context}</p>
-                <div className="mt-5 pt-4 border-t border-border">
-                  <span className="text-[10px] font-semibold tracking-widest text-muted-foreground uppercase">{o.sector}</span>
-                </div>
+            <div className="flex flex-col items-center gap-3">
+              <motion.div
+                className="w-[148px] h-[198px] overflow-hidden ring-1 ring-white/15"
+                whileHover={{ scale: 1.03, transition: { duration: 0.3, ease: EASE } }}
+              >
+                <img
+                  src="/team/akshita.png"
+                  alt="Akshita Chahande, Co-Founder"
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </motion.div>
+              <div className="text-center">
+                <p className="t-label text-white/75 leading-none">Akshita Chahande</p>
+                <p className="t-label text-white/32 mt-1.5">Co-Founder</p>
               </div>
-            ))}
-          </div>
-          <div className="md:hidden flex gap-1.5 justify-center mt-4">
-            {outcomes.map((_, i) => (
-              <span key={i} className={`size-1.5 rounded-full ${i === 0 ? "bg-accent" : "bg-border"}`} />
-            ))}
-          </div>
+            </div>
 
-          {/* Desktop: grid */}
-          <div className="hidden md:grid stagger md:grid-cols-3 gap-0 border-t border-l border-border">
-            {outcomes.map((o, i) => (
-              <div key={i} className="reveal group p-8 md:p-10 border-b border-r border-border hover:bg-secondary/40 transition-colors duration-300 flex flex-col">
-                <span className="text-[10px] font-bold tracking-widest text-accent/60 uppercase mb-5">{o.tag}</span>
-                <div className="text-xl md:text-2xl font-bold text-accent mb-4 leading-tight">{o.headline}</div>
-                <p className="text-muted-foreground text-sm leading-relaxed flex-1">{o.context}</p>
-                <div className="mt-6 pt-5 border-t border-border">
-                  <span className="text-[10px] font-semibold tracking-widest text-muted-foreground uppercase">{o.sector}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          </FadeIn>
         </div>
-      </section>
+      </div>
+    </section>
+  )
+}
 
-      {/* FINAL CTA */}
-      <section className="bg-primary text-white py-24 md:py-32">
-        <div className="container text-center">
-          <span className="eyebrow">Begin</span>
-          <div className="divider-gold mt-5 mb-6 mx-auto" />
-          <h2 className="text-4xl md:text-6xl max-w-3xl mx-auto leading-tight">15 Minutes Could Change Everything.</h2>
-          <p className="mt-6 text-white/75 max-w-xl mx-auto">Book a no-obligation discovery call with Rohit or Akshita. We'll assess fit, map a path, and tell you the truth: funded or not.</p>
-          <Link to="/contact" className="inline-block mt-10">
-            <MagneticButton variant="teal">
-              Free Consultation <ChevronRight size={16} />
-            </MagneticButton>
-          </Link>
-        </div>
-      </section>
+// ─────────────────────────────────────────────────────────────────────────────
+// Page
+// ─────────────────────────────────────────────────────────────────────────────
+export default function Home() {
+  return (
+    <>
+      <HeroSection />
+      <JourneySection />
+      <OutcomesCarousel />
+      <ProcessSection />
+      <StatsSection />
+      <CtaSection />
     </>
-  );
-};
-
-export default Home;
+  )
+}

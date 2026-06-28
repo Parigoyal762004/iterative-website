@@ -1,11 +1,11 @@
-﻿{
+{
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "brochure-preview",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-p", "4200", "public"],
-      "port": 4200
+      "name": "akro-v2",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 8080
     }
   ]
 }
