@@ -34,7 +34,7 @@ const BENEFITS = [
   {
     Icon: FileText,
     title: 'Curated Deal Memos',
-    body: 'Every opportunity comes with a full deal memo — sector, stage, deal size, business model, traction, and Akro\'s diligence summary. No raw, unverified pitches.',
+    body: 'Every opportunity comes with a full deal memo: sector, stage, deal size, business model, traction, and Akro\'s diligence summary. No raw, unverified pitches.',
   },
   {
     Icon: TrendingUp,
@@ -44,17 +44,17 @@ const BENEFITS = [
   {
     Icon: Mail,
     title: 'Monthly Deal Flow Newsletter',
-    body: 'A curated digest of active opportunities, market insights, and Akro\'s deal pipeline — delivered monthly to all network members.',
+    body: 'A curated digest of active opportunities, market insights, and Akro\'s deal pipeline, delivered monthly to all network members.',
   },
   {
     Icon: Users,
     title: 'Exclusive Events & Networking',
-    body: 'Access to Akro-hosted investor events, founder pitch sessions, and ecosystem networking — in person and online.',
+    body: 'Access to Akro-hosted investor events, founder pitch sessions, and ecosystem networking, in person and online.',
   },
   {
     Icon: BarChart2,
     title: 'Portfolio Monitoring Dashboard',
-    body: 'Track every investment you\'ve made through Akro — revenue, traction milestones, and company updates — all in your portal. No need to chase founders for updates.',
+    body: 'Track every investment you\'ve made through Akro: revenue, traction milestones, and company updates, all in your portal. No need to chase founders for updates.',
   },
   {
     Icon: Bell,
@@ -67,14 +67,14 @@ const VETTING_STEPS = [
   { n: '01', label: 'Apply', body: 'Fill the application form. Tell us about yourself, your investment background, and what you\'re looking to deploy into.' },
   { n: '02', label: 'KYC & Financial Verification', body: 'We verify your identity (KYC), confirm your financial standing, and assess your stated investment capacity.' },
   { n: '03', label: 'Full Due Diligence', body: 'We review your investment history, conduct background checks, and complete our internal due diligence on your profile.' },
-  { n: '04', label: 'Network Access', body: 'Once approved, you get full portal access — deal room, portfolio monitoring, newsletter, and event invites.' },
+  { n: '04', label: 'Network Access', body: 'Once approved, you get full portal access: deal room, portfolio monitoring, newsletter, and event invites.' },
 ]
 
 const DEAL_FLOW_POINTS = [
   {
     n: '01',
     title: 'Akro sources & diligences every deal',
-    body: 'Every deal in the network has been originated by Akro — not submitted by a startup. We conduct our own diligence: financials, business model, team, market, and risks. You get our assessment, not just their pitch.',
+    body: 'Every deal in the network has been originated by Akro, not submitted by a startup. We conduct our own diligence: financials, business model, team, market, and risks. You get our assessment, not just their pitch.',
   },
   {
     n: '02',
@@ -84,7 +84,7 @@ const DEAL_FLOW_POINTS = [
   {
     n: '03',
     title: 'Express interest — Akro facilitates',
-    body: 'If a deal interests you, you express interest through the portal. Akro then facilitates the next steps — founder introductions, follow-up Q&A, and deal structuring. You don\'t chase — we manage the process.',
+    body: 'If a deal interests you, you express interest through the portal. Akro then facilitates the next steps: founder introductions, follow-up Q&A, and deal structuring. You don\'t chase; we manage the process.',
   },
 ]
 
@@ -119,82 +119,88 @@ const FAQS = [
 function HeroSection() {
   return (
     <section
-      className="relative flex flex-col items-center justify-center text-center px-6 overflow-hidden"
+      className="relative overflow-hidden flex items-center"
       style={{
-        minHeight: '68vh',
-        background: 'linear-gradient(145deg, #1a1510 0%, #1e1a0e 30%, #2B2B2B 70%, #1e1e1e 100%)',
+        minHeight: '72vh',
+        background: 'linear-gradient(145deg, #0e1208 0%, #1a1510 25%, #1e1a0e 55%, #2B2B2B 100%)',
       }}
     >
+      {/* CelestialSphere — very blurred, just a colour wash */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ opacity: 0.22, filter: 'blur(18px)', zIndex: 0 }}
+      >
+        <Suspense fallback={null}>
+          <CelestialSphere hue={42} speed={0.14} zoom={2.2} particleSize={2} className="w-full h-full" />
+        </Suspense>
+      </div>
+
       {/* Subtle dot grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.08) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.07) 1px, transparent 0)',
           backgroundSize: '40px 40px',
+          zIndex: 1,
         }}
       />
       {/* Vertical grid lines */}
       <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
         {[25, 50, 75].map(pct => (
-          <div
-            key={pct}
-            className="absolute top-0 bottom-0 w-px"
-            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.04)' }}
-          />
+          <div key={pct} className="absolute top-0 bottom-0 w-px"
+            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.04)' }} />
         ))}
       </div>
-      {/* Mustard SVG glow */}
-      <svg
-        className="absolute pointer-events-none"
-        style={{ top: '10%', left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}
-        width="640" height="320" viewBox="0 0 640 320"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <filter id="inv-glow">
-            <feGaussianBlur stdDeviation="28" result="blur" />
-          </filter>
-        </defs>
-        <ellipse cx="320" cy="160" rx="260" ry="110" fill="rgba(242,183,5,0.12)" filter="url(#inv-glow)" />
+      {/* Mustard SVG glow — top-left bias */}
+      <svg className="absolute pointer-events-none" aria-hidden="true"
+        style={{ top: '-8%', left: '-5%', zIndex: 1 }}
+        width="700" height="420" viewBox="0 0 700 420">
+        <defs><filter id="inv-glow"><feGaussianBlur stdDeviation="32" /></filter></defs>
+        <ellipse cx="260" cy="200" rx="300" ry="180" fill="rgba(242,183,5,0.11)" filter="url(#inv-glow)" />
       </svg>
 
-      <div className="relative z-10 max-w-3xl mx-auto pt-24 pb-16">
-        <FadeUp delay={0.1}>
-          <p className="t-label mb-6" style={{ color: '#F2B705', opacity: 0.7 }}>For Investors</p>
-        </FadeUp>
+      {/* Left-aligned content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-24">
+        <div className="max-w-2xl">
+          <FadeUp delay={0.1}>
+            <div className="inline-flex items-center gap-2 mb-7">
+              <span className="h-px w-8" style={{ background: '#F2B705' }} />
+              <span className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: '#F2B705', opacity: 0.8 }}>
+                Investor Network
+              </span>
+            </div>
+          </FadeUp>
 
-        <FadeUp delay={0.2}>
-          <h1
-            className="mb-5"
-            style={{
-              fontFamily: 'Cormorant Garamond, Georgia, serif',
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              fontWeight: 700,
-              fontStyle: 'italic',
-              color: 'white',
-              lineHeight: 1.06,
-              letterSpacing: '-0.03em',
-            }}
-          >
-            The deals you want.<br />None of the noise.
-          </h1>
-        </FadeUp>
+          <FadeUp delay={0.2}>
+            <h1
+              className="mb-6"
+              style={{
+                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontSize: 'clamp(2.8rem, 6vw, 5rem)',
+                fontWeight: 700,
+                fontStyle: 'italic',
+                color: 'white',
+                lineHeight: 1.03,
+                letterSpacing: '-0.03em',
+              }}
+            >
+              The deals you want.<br />None of the noise.
+            </h1>
+          </FadeUp>
 
-        <FadeUp delay={0.4}>
-          <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto mb-10">
-            Akro's investor network is curated, not open. Every member is vetted before they see a single deal.
-          </p>
-        </FadeUp>
+          <FadeUp delay={0.38}>
+            <p className="text-white/55 text-base md:text-lg font-light leading-relaxed mb-10 max-w-lg">
+              Akro's investor network is curated, not open. Every member is vetted before they see a single deal.
+            </p>
+          </FadeUp>
 
-        <FadeUp delay={0.6}>
-          <a
-            href="#apply"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-bold text-sm text-foreground hover:opacity-90 active:scale-95 transition-all"
-            style={{ background: '#F2B705' }}
-          >
-            Apply to Join <ArrowRight size={16} />
-          </a>
-        </FadeUp>
+          <FadeUp delay={0.52}>
+            <a href="#apply" className="btn-slide btn-slide-mustard">
+              <span>Apply to Join</span>
+              <ArrowRight size={15} />
+            </a>
+          </FadeUp>
+        </div>
       </div>
     </section>
   )
@@ -205,35 +211,51 @@ function BenefitsSection() {
   return (
     <section className="section-y" style={{ background: '#ffffff' }}>
       <div className="mx-auto max-w-6xl px-6">
-        <FadeUp>
-          <p className="t-label text-primary mb-3">The Network</p>
-          <h2
-            className="text-3xl md:text-4xl font-bold mb-12"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
-          >
-            What being part of the Akro network means.
-          </h2>
-        </FadeUp>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
+          {/* Left — sticky editorial */}
+          <FadeUp>
+            <div className="lg:sticky lg:top-28">
+              <p className="t-label text-primary mb-3">The Network</p>
+              <h2
+                className="mb-5 leading-tight"
+                style={{
+                  fontFamily: 'Cormorant Garamond, Georgia, serif',
+                  fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                  fontWeight: 700,
+                  color: '#2B2B2B',
+                }}
+              >
+                What being part of the Akro network means.
+              </h2>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-8 max-w-sm">
+                A curated network of verified investors accessing diligenced deals, portfolio monitoring, and Akro's ongoing support.
+              </p>
+              <a href="#apply" className="btn-slide btn-slide-mustard" style={{ display: 'inline-flex', width: 'fit-content' }}>
+                <span>Apply to Join</span>
+                <ArrowRight size={14} />
+              </a>
+            </div>
+          </FadeUp>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {BENEFITS.map(({ Icon, title, body }, i) => (
-            <FadeUp key={title} delay={i * 0.07}>
-              <div className="bg-white p-6 rounded-sm border-l-[3px] shadow-sm h-full" style={{ borderLeftColor: '#3F6F73' }}>
-                <div className="flex items-start gap-4">
+          {/* Right — benefit list */}
+          <div className="divide-y divide-border">
+            {BENEFITS.map(({ Icon, title, body }, i) => (
+              <FadeUp key={title} delay={i * 0.06}>
+                <div className="flex gap-5 py-6">
                   <div
-                    className="flex-shrink-0 h-10 w-10 rounded-sm flex items-center justify-center"
-                    style={{ background: '#3F6F73' + '18' }}
+                    className="flex-shrink-0 h-9 w-9 rounded-sm flex items-center justify-center mt-0.5"
+                    style={{ background: 'rgba(63,111,115,0.1)' }}
                   >
-                    <Icon size={18} style={{ color: '#3F6F73' }} />
+                    <Icon size={16} style={{ color: '#3F6F73' }} />
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-foreground mb-1.5">{title}</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
                   </div>
                 </div>
-              </div>
-            </FadeUp>
-          ))}
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -244,43 +266,58 @@ function BenefitsSection() {
 function VettingSection() {
   return (
     <section className="section-y" style={{ background: '#F4F6F2' }}>
-      <div className="mx-auto max-w-6xl px-6">
-        <FadeUp>
-          <p className="t-label text-primary mb-3">Due Diligence</p>
-          <h2
-            className="text-3xl md:text-4xl font-bold mb-3"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
-          >
-            A network you have to earn.
-          </h2>
-          <p className="text-muted-foreground text-base mb-10 max-w-xl">
-            We review every application personally. No automated approvals. No shortcuts.
-          </p>
-        </FadeUp>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {VETTING_STEPS.map(({ n, label, body }, i) => (
-            <FadeUp key={n} delay={i * 0.1}>
-              <div className="bg-white p-6 rounded-sm shadow-sm h-full">
-                <p
-                  className="text-4xl font-bold mb-3 leading-none"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#3F6F73', opacity: 0.22 }}
-                >
-                  {n}
-                </p>
-                <p className="font-bold text-foreground text-sm mb-2 leading-snug">{label}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
-              </div>
-            </FadeUp>
-          ))}
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 items-start mb-14">
+          <FadeUp>
+            <p className="t-label text-primary mb-3">Due Diligence</p>
+            <h2
+              className="text-3xl md:text-4xl font-bold leading-tight"
+              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            >
+              A network you have to earn.
+            </h2>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <p className="text-muted-foreground text-base leading-relaxed lg:pt-10">
+              We review every application personally. No automated approvals. No shortcuts. The vetting process typically takes 5–7 business days. All information is treated with strict confidentiality.
+            </p>
+          </FadeUp>
         </div>
 
-        <FadeUp>
-          <p className="text-xs text-muted-foreground text-center">
-            The full vetting process typically takes 5–7 business days from application submission.
-            All information shared during the process is treated with strict confidentiality.
-          </p>
-        </FadeUp>
+        {/* Connected timeline */}
+        <div className="relative">
+          {/* Horizontal connector line (desktop) */}
+          <div
+            className="hidden md:block absolute h-px"
+            style={{
+              top: 20,
+              left: '5%',
+              right: '5%',
+              background: 'linear-gradient(90deg, #3F6F73 0%, rgba(63,111,115,0.3) 100%)',
+            }}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {VETTING_STEPS.map(({ n, label, body }, i) => (
+              <FadeUp key={n} delay={i * 0.1}>
+                <div>
+                  {/* Circle node */}
+                  <div className="flex md:block items-center gap-4 mb-4">
+                    <div
+                      className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 relative z-10"
+                      style={{ background: '#3F6F73', color: 'white', fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.05em' }}
+                    >
+                      {n}
+                    </div>
+                    <p className="font-bold text-foreground text-sm md:hidden">{label}</p>
+                  </div>
+                  <p className="font-bold text-foreground text-sm mb-2 hidden md:block">{label}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -379,51 +416,75 @@ function DealFlowSection() {
 // ── Portfolio Monitoring ───────────────────────────────────────────────────
 function PortfolioSection() {
   return (
-    <section className="section-y relative overflow-hidden" style={{ background: '#2B2B2B' }}>
-      {/* CelestialSphere nebula background */}
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.32, zIndex: 0 }}>
-        <Suspense fallback={null}>
-          <CelestialSphere hue={42} speed={0.18} zoom={1.8} particleSize={2.5} className="w-full h-full" />
-        </Suspense>
-      </div>
-      <div className="relative mx-auto max-w-6xl px-6" style={{ zIndex: 1 }}>
-        <FadeUp>
-          <p className="t-label text-primary mb-3">Portfolio</p>
-          <h2
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
-          >
-            Invest once. Stay informed always.
-          </h2>
-          <p className="text-white/60 text-base font-light leading-relaxed max-w-2xl mb-10">
-            Once you've deployed into a deal through Akro, you never have to chase the founder for updates again.
-            Your portfolio monitoring dashboard tracks everything — automatically.
-          </p>
-        </FadeUp>
+    <section
+      className="section-y relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #142022 0%, #1c2a2b 45%, #232e2e 100%)' }}
+    >
+      {/* Subtle teal dot pattern */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.14) 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+        }}
+      />
+      {/* Soft glow top-right */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '-15%', right: '-10%',
+          width: 520, height: 400, borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(63,111,115,0.18) 0%, transparent 70%)',
+        }}
+      />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-          {PORTFOLIO_FEATURES.map(({ title, body }, i) => (
-            <FadeUp key={title} delay={i * 0.08}>
-              <div
-                className="p-6 rounded-sm"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+      <div className="relative mx-auto max-w-6xl px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-14 items-start">
+          {/* Left editorial */}
+          <FadeUp>
+            <div className="lg:sticky lg:top-28">
+              <p className="t-label text-primary mb-3">Portfolio</p>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-white mb-5 leading-tight"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
               >
-                <div className="h-1 w-8 rounded-full mb-4" style={{ background: '#F2B705' }} />
-                <h3 className="font-bold text-white text-sm mb-2">{title}</h3>
-                <p className="text-white/55 text-sm leading-relaxed font-light">{body}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
+                Invest once.<br />Stay informed always.
+              </h2>
+              <p className="text-white/55 text-sm font-light leading-relaxed mb-8">
+                Once you've deployed into a deal through Akro, you never have to chase the founder for updates again.
+                Your portfolio monitoring dashboard tracks everything, automatically.
+              </p>
+              <a
+                href="/portal"
+                className="inline-flex items-center gap-2 text-sm font-semibold transition-colors"
+                style={{ color: '#3F6F73' }}
+              >
+                See how the portal works <ArrowRight size={14} />
+              </a>
+            </div>
+          </FadeUp>
 
-        <FadeUp>
-          <a
-            href="/portal"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-white transition-colors"
-          >
-            See how the portal works <ArrowRight size={15} />
-          </a>
-        </FadeUp>
+          {/* Right: feature cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {PORTFOLIO_FEATURES.map(({ title, body }, i) => (
+              <FadeUp key={title} delay={i * 0.08}>
+                <div
+                  className="p-6 rounded-sm h-full"
+                  style={{
+                    background: 'rgba(63,111,115,0.1)',
+                    border: '1px solid rgba(63,111,115,0.22)',
+                  }}
+                >
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: '#3F6F73' }} />
+                    <h3 className="font-bold text-white text-sm">{title}</h3>
+                  </div>
+                  <p className="text-white/50 text-sm leading-relaxed font-light">{body}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

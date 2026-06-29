@@ -122,100 +122,107 @@ const QUIZ_QS = [
 ]
 
 const FAQS = [
-  { q: 'Do you work on both equity and debt?', a: 'Yes. Akro advises on both equity fundraising and debt syndication. Depending on your stage, model, and goals, we help you determine the right capital mix — then execute on it.' },
+  { q: 'Do you work on both equity and debt?', a: 'Yes. Akro advises on both equity fundraising and debt syndication. Depending on your stage, model, and goals, we help you determine the right capital mix, then execute on it.' },
   { q: 'How long does the fundraising process typically take?', a: 'It varies. For equity raises, typically 3–6 months from mandate to close. For debt, 4–8 weeks. Our preparation work upfront significantly reduces the overall timeline.' },
-  { q: 'What does Akro charge for its services?', a: 'Our fee structure varies by engagement — advisory retainer, success fee, or a combination. We discuss this transparently on our first call. No hidden charges.' },
+  { q: 'What does Akro charge for its services?', a: 'Our fee structure varies by engagement: advisory retainer, success fee, or a combination. We discuss this transparently on our first call. No hidden charges.' },
   { q: 'How is Akro different from a broker or aggregator?', a: 'Brokers connect you to lenders or investors and step back. Akro stays involved end to end — from reviewing your model to structuring your deal to supporting you through negotiations. We are advisors, not introducers.' },
   { q: 'What documents do I need to get started?', a: 'For startups: pitch deck, financials (if available), and a brief on your raise. For businesses: last 2 years\' financials, bank statements, and details of the funding requirement. We\'ll guide you through exactly what\'s needed on our first call.' },
-  { q: 'Do you guarantee funding?', a: 'No — and any firm that does is not being honest with you. What we guarantee is rigorous preparation, the right introductions, and full support through the process. Our track record speaks for itself.' },
+  { q: 'Do you guarantee funding?', a: 'No, and any firm that does is not being honest with you. What we guarantee is rigorous preparation, the right introductions, and full support through the process. Our track record speaks for itself.' },
 ]
 
 // ── Hero ───────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
     <section
-      className="relative flex flex-col items-center justify-center text-center px-6 overflow-hidden"
+      className="relative overflow-hidden flex items-center"
       style={{
-        minHeight: '72vh',
-        background: 'linear-gradient(145deg, #0f2224 0%, #1a3538 35%, #2B2B2B 75%, #1e1e1e 100%)',
+        minHeight: '76vh',
+        background: 'linear-gradient(145deg, #0a1f21 0%, #0f2224 28%, #1a3538 60%, #2B2B2B 100%)',
       }}
     >
-      {/* Cinematic video hint — very heavily blurred, just a texture */}
+      {/* Cinematic video hint — extreme blur, texture only */}
       <video
         src={HERO_VIDEO}
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ filter: 'blur(52px)', transform: 'scale(1.2)', opacity: 0.13, zIndex: 0 }}
+        style={{ filter: 'blur(60px)', transform: 'scale(1.25)', opacity: 0.11, zIndex: 0 }}
         aria-hidden="true"
       />
 
-      {/* Dot grid texture */}
+      {/* Dot grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.1) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
           backgroundSize: '36px 36px',
           zIndex: 1,
         }}
       />
 
-      {/* Vertical grid lines (CodeNest pattern) */}
+      {/* Vertical grid lines */}
       <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
         {[25, 50, 75].map(pct => (
           <div key={pct} className="absolute top-0 bottom-0 w-px"
-            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.05)' }} />
+            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.04)' }} />
         ))}
       </div>
 
-      {/* SVG teal glow at top */}
-      <svg className="absolute pointer-events-none" style={{ top: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}
-        width="900" height="280" viewBox="0 0 900 280" aria-hidden="true">
-        <defs><filter id="founders-glow"><feGaussianBlur stdDeviation="28" /></filter></defs>
-        <ellipse cx="450" cy="80" rx="380" ry="90" fill="rgba(63,111,115,0.2)" filter="url(#founders-glow)" />
+      {/* SVG teal glow — top-left bias */}
+      <svg className="absolute pointer-events-none" aria-hidden="true"
+        style={{ top: '-10%', left: '-8%', zIndex: 1 }}
+        width="800" height="500" viewBox="0 0 800 500">
+        <defs><filter id="founders-glow"><feGaussianBlur stdDeviation="32" /></filter></defs>
+        <ellipse cx="280" cy="230" rx="340" ry="200" fill="rgba(63,111,115,0.16)" filter="url(#founders-glow)" />
       </svg>
 
-      <div className="relative z-10 max-w-4xl mx-auto pt-28 pb-20">
-        <FadeUp delay={0.1}>
-          <p className="t-label text-white/40 mb-6 tracking-[0.2em]">For Founders</p>
-        </FadeUp>
+      {/* Left-aligned content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-24">
+        <div className="max-w-2xl">
+          <FadeUp delay={0.08}>
+            <div className="inline-flex items-center gap-2 mb-7">
+              <span className="h-px w-8" style={{ background: '#3F6F73' }} />
+              <span className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: '#3F6F73', opacity: 0.9 }}>
+                Capital Advisory
+              </span>
+            </div>
+          </FadeUp>
 
-        <FadeUp delay={0.2}>
-          <h1
-            className="mb-6"
-            style={{
-              fontFamily: 'Cormorant Garamond, Georgia, serif',
-              fontSize: 'clamp(2.25rem, 5.5vw, 4.25rem)',
-              fontWeight: 700,
-              fontStyle: 'italic',
-              color: 'white',
-              lineHeight: 1.08,
-              letterSpacing: '-0.025em',
-            }}
-          >
-            We don't just connect you to investors.<br />
-            We make sure you're ready for them.
-          </h1>
-        </FadeUp>
+          <FadeUp delay={0.2}>
+            <h1
+              className="mb-6"
+              style={{
+                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
+                fontWeight: 700,
+                fontStyle: 'italic',
+                color: 'white',
+                lineHeight: 1.05,
+                letterSpacing: '-0.025em',
+              }}
+            >
+              We don't just connect you<br />to investors. We make sure<br />you're ready for them.
+            </h1>
+          </FadeUp>
 
-        <FadeUp delay={0.4}>
-          <p className="text-white/60 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-10">
-            Whether you're a founder building your first raise or a business owner looking to access
-            capital, Akro works with you end to end.
-          </p>
-        </FadeUp>
+          <FadeUp delay={0.38}>
+            <p className="text-white/55 text-base font-light leading-relaxed mb-10 max-w-lg">
+              Whether you're a founder building your first raise or a business owner looking to access capital, Akro works with you end to end.
+            </p>
+          </FadeUp>
 
-        <FadeUp delay={0.6}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#startup-founders" className="btn-slide">
-              <span>Startup Founders</span>
-              <ArrowRight size={15} />
-            </a>
-            <a href="#growing-businesses" className="btn-slide btn-slide-mustard">
-              <span>Growing Businesses</span>
-              <ArrowRight size={15} />
-            </a>
-          </div>
-        </FadeUp>
+          <FadeUp delay={0.52}>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a href="#startup-founders" className="btn-slide">
+                <span>Startup Founders</span>
+                <ArrowRight size={15} />
+              </a>
+              <a href="#growing-businesses" className="btn-slide btn-slide-mustard">
+                <span>Growing Businesses</span>
+                <ArrowRight size={15} />
+              </a>
+            </div>
+          </FadeUp>
+        </div>
       </div>
     </section>
   )
@@ -406,8 +413,13 @@ function ReadinessCalculator() {
 // ── Track A ────────────────────────────────────────────────────────────────
 function TrackASection() {
   return (
-    <section id="startup-founders" className="section-y" style={{ background: '#F4F6F2' }}>
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="startup-founders" className="section-y relative overflow-hidden" style={{ background: '#F4F6F2' }}>
+      {/* Subtle teal dot grid */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.07) 1px, transparent 0)',
+        backgroundSize: '32px 32px',
+      }} />
+      <div className="relative mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">For Startup Founders</p>
           <h2
@@ -490,7 +502,7 @@ function EMICalculator() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="md:col-span-3">
           <label className="block text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
-            Loan Amount — {fmt(principal)}
+            Loan Amount: {fmt(principal)}
           </label>
           <input
             type="range"
@@ -579,8 +591,13 @@ function TrackBSection() {
   const [active, setActive] = useState(0)
 
   return (
-    <section id="growing-businesses" className="section-y" style={{ background: '#ffffff' }}>
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="growing-businesses" className="section-y relative overflow-hidden" style={{ background: '#ffffff' }}>
+      {/* Subtle mustard dot grid */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.05) 1px, transparent 0)',
+        backgroundSize: '36px 36px',
+      }} />
+      <div className="relative mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label mb-3" style={{ color: '#F2B705' }}>For Growing Businesses</p>
           <h2
@@ -591,7 +608,7 @@ function TrackBSection() {
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed max-w-2xl mb-12">
             We simplify the process so you can focus on running your business. Whether you need working
-            capital, want to leverage assets, or are exploring international financing options — Akro
+            capital, want to leverage assets, or are exploring international financing options, Akro
             structures the right solution and handles the complexity end to end.
           </p>
         </FadeUp>
@@ -717,7 +734,7 @@ function CtaStrip() {
           className="text-3xl md:text-4xl font-bold text-white mb-3"
           style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
         >
-          Wherever you are in your journey — let's talk.
+          Wherever you are in your journey, let's talk.
         </h2>
         <p className="text-white/70 text-base font-light max-w-lg mx-auto mb-8">
           One conversation is all it takes to understand where you are and what it would take to get you funded.
