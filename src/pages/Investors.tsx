@@ -115,6 +115,21 @@ const FAQS = [
   { q: 'How many deals will I get access to?', a: 'We prioritise quality over volume. Network members typically see 2–4 curated opportunities per month, each with a full deal memo and Akro\'s diligence summary.' },
 ]
 
+const NETWORK_BRANDS = [
+  { label: 'Angel Investors', style: { fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 15 } },
+  { label: 'Family Offices', style: { fontFamily: 'Palatino, Book Antiqua, serif', fontWeight: 400, letterSpacing: '-0.01em', fontSize: 16 } },
+  { label: 'HNIs', style: { fontFamily: 'Arial, sans-serif', fontWeight: 900, letterSpacing: '0.08em', fontSize: 13 } },
+  { label: 'Micro VCs', style: { fontFamily: 'Trebuchet MS, sans-serif', fontWeight: 600, letterSpacing: '0.01em', fontSize: 15, fontStyle: 'italic' as const } },
+  { label: 'NBFCs', style: { fontFamily: 'Courier New, monospace', fontWeight: 700, letterSpacing: '0.12em', fontSize: 13 } },
+  { label: 'Institutional Investors', style: { fontFamily: 'Impact, Arial Narrow, sans-serif', fontWeight: 400, letterSpacing: '0.04em', fontSize: 14 } },
+  { label: 'Corporate Treasuries', style: { fontFamily: 'Verdana, sans-serif', fontWeight: 700, letterSpacing: '-0.03em', fontSize: 13 } },
+  { label: 'Healthcare', style: { fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 15 } },
+  { label: 'AI', style: { fontFamily: 'Arial, sans-serif', fontWeight: 900, letterSpacing: '0.08em', fontSize: 13 } },
+  { label: 'B2B SaaS', style: { fontFamily: 'Trebuchet MS, sans-serif', fontWeight: 600, letterSpacing: '0.01em', fontSize: 15, fontStyle: 'italic' as const } },
+  { label: 'Manufacturing', style: { fontFamily: 'Courier New, monospace', fontWeight: 700, letterSpacing: '0.1em', fontSize: 12 } },
+  { label: 'Fintech', style: { fontFamily: 'Palatino, Book Antiqua, serif', fontWeight: 400, letterSpacing: '-0.01em', fontSize: 16 } },
+]
+
 // ── Hero ───────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
@@ -191,6 +206,45 @@ function HeroSection() {
               <ArrowRight size={15} />
             </a>
           </FadeUp>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Network Marquee ────────────────────────────────────────────────────────
+function NetworkMarquee() {
+  return (
+    <section className="py-12 px-6 overflow-hidden border-t border-border" style={{ background: '#ffffff' }}>
+      <style>{`
+        @keyframes inv-marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .inv-marquee-track {
+          display: flex;
+          width: max-content;
+          animation: inv-marquee 28s linear infinite;
+        }
+      `}</style>
+      <div className="mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            Open to investors<br className="hidden md:block" /> and sectors including
+          </p>
+          <div className="md:col-span-3 overflow-hidden">
+            <div className="inv-marquee-track">
+              {[...NETWORK_BRANDS, ...NETWORK_BRANDS].map((b, i) => (
+                <span
+                  key={i}
+                  className="mx-8 shrink-0 whitespace-nowrap"
+                  style={{ ...b.style, color: 'rgba(0,0,0,0.38)' }}
+                >
+                  {b.label}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -753,6 +807,7 @@ export default function Investors() {
   return (
     <>
       <HeroSection />
+      <NetworkMarquee />
       <BenefitsSection />
       <VettingSection />
       <DealFlowSection />
