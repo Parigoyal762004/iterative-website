@@ -1,6 +1,10 @@
-import { useRef } from 'react'
+import { useRef, lazy, Suspense } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+
+const CelestialSphere = lazy(() =>
+  import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere }))
+)
 
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
 
@@ -96,14 +100,18 @@ function HeroSection() {
           backgroundSize: '36px 36px',
         }}
       />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          bottom: '-20%', left: '-5%',
-          width: 500, height: 300, borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(63,111,115,0.14) 0%, transparent 70%)',
-        }}
+      {/* Teal glow — bottom-left */}
+      <div className="absolute pointer-events-none" style={{ zIndex: 1,
+        bottom: '-25%', left: '-8%', width: 560, height: 360, borderRadius: '50%',
+        background: 'radial-gradient(ellipse, rgba(63,111,115,0.18) 0%, transparent 70%)' }}
       />
+      {/* Secondary glow — top-right */}
+      <svg className="absolute pointer-events-none" aria-hidden="true"
+        style={{ top: '0%', right: '-5%', zIndex: 1 }}
+        width="500" height="320" viewBox="0 0 500 320">
+        <defs><filter id="about-glow"><feGaussianBlur stdDeviation="28" /></filter></defs>
+        <ellipse cx="420" cy="100" rx="220" ry="140" fill="rgba(63,111,115,0.1)" filter="url(#about-glow)" />
+      </svg>
       <div className="relative z-10 max-w-6xl mx-auto w-full pb-16 pt-36">
         <FadeUp delay={0.1}>
           <p className="t-label mb-5" style={{ color: '#3F6F73' }}>About Akro</p>
@@ -180,22 +188,22 @@ function FoundingStorySection() {
 function PillarsSection() {
   return (
     <section className="section-y relative overflow-hidden" style={{ background: '#2B2B2B' }}>
+      {/* CelestialSphere nebula — teal wash */}
+      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.28, zIndex: 0 }}>
+        <Suspense fallback={null}>
+          <CelestialSphere hue={165} speed={0.18} zoom={2.0} particleSize={2.2} className="w-full h-full" />
+        </Suspense>
+      </div>
+      {/* Dot grid on top of nebula */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)',
           backgroundSize: '32px 32px',
+          zIndex: 1,
         }}
       />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: '-20%', right: '-5%',
-          width: 500, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(63,111,115,0.15) 0%, transparent 70%)',
-        }}
-      />
-      <div className="relative mx-auto max-w-6xl px-6">
+      <div className="relative mx-auto max-w-6xl px-6" style={{ zIndex: 2 }}>
         <FadeUp>
           <h2
             className="text-white mb-14"

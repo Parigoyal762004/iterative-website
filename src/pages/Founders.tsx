@@ -401,6 +401,71 @@ function ReadinessCalculator() {
   )
 }
 
+// ── Journey Timeline ───────────────────────────────────────────────────────
+function JourneyTimeline() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.3 })
+
+  return (
+    <div ref={ref} className="relative">
+      {/* Connector line */}
+      <div className="absolute top-[28px] left-[calc(12.5%+16px)] right-[calc(12.5%+16px)] h-px hidden lg:block" style={{ background: 'rgba(63,111,115,0.15)', zIndex: 0 }}>
+        <motion.div
+          className="h-full"
+          style={{ background: 'linear-gradient(90deg, #3F6F73, rgba(63,111,115,0.4))', transformOrigin: 'left' }}
+          initial={{ scaleX: 0 }}
+          animate={inView ? { scaleX: 1 } : {}}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+        {JOURNEY_STEPS.map(({ n, label, body }, i) => (
+          <motion.div
+            key={n}
+            className="flex flex-col items-center lg:items-start text-center lg:text-left relative"
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 + i * 0.15 }}
+          >
+            {/* Node */}
+            <div className="relative mb-5 z-10">
+              <motion.div
+                className="h-14 w-14 rounded-full flex items-center justify-center border-2"
+                style={{ background: '#F4F6F2', borderColor: '#3F6F73' }}
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={inView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.4, ease: 'backOut', delay: 0.3 + i * 0.15 }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'Cormorant Garamond, Georgia, serif',
+                    fontSize: '1.25rem',
+                    fontWeight: 700,
+                    color: '#3F6F73',
+                  }}
+                >
+                  {n}
+                </span>
+              </motion.div>
+              {/* Glow pulse */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{ background: 'rgba(63,111,115,0.15)' }}
+                animate={inView ? { scale: [1, 1.5, 1], opacity: [0.6, 0, 0.6] } : {}}
+                transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 + i * 0.3 }}
+              />
+            </div>
+
+            <p className="font-bold text-foreground text-base mb-2" style={{ letterSpacing: '-0.01em' }}>{label}</p>
+            <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Track A ────────────────────────────────────────────────────────────────
 function TrackASection() {
   return (
@@ -431,31 +496,18 @@ function TrackASection() {
           <ServiceSelector />
         </FadeUp>
 
-        {/* 4-step journey */}
+        {/* 4-step journey — connected timeline */}
         <FadeUp>
           <h3
-            className="text-2xl font-bold mb-8 text-center"
+            className="text-2xl font-bold mb-12 text-center"
             style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
           >
             The Founder Journey
           </h3>
         </FadeUp>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {JOURNEY_STEPS.map(({ n, label, body }, i) => (
-            <FadeUp key={n} delay={i * 0.1}>
-              <div className="bg-white p-6 rounded-sm shadow-sm relative">
-                <p
-                  className="text-5xl font-bold mb-3 leading-none"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#3F6F73', opacity: 0.25 }}
-                >
-                  {n}
-                </p>
-                <p className="font-bold text-foreground text-base mb-2">{label}</p>
-                <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
+        <FadeUp delay={0.1} className="mb-16">
+          <JourneyTimeline />
+        </FadeUp>
 
         {/* Readiness calculator */}
         <FadeUp>
