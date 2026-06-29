@@ -162,15 +162,6 @@ function HeroSection() {
       {/* Left-aligned content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-24">
         <div className="max-w-2xl">
-          <FadeUp delay={0.1}>
-            <div className="inline-flex items-center gap-2 mb-7">
-              <span className="h-px w-8" style={{ background: '#F2B705' }} />
-              <span className="text-xs font-bold uppercase tracking-[0.2em]" style={{ color: '#F2B705', opacity: 0.8 }}>
-                Investor Network
-              </span>
-            </div>
-          </FadeUp>
-
           <FadeUp delay={0.2}>
             <h1
               className="mb-6"
