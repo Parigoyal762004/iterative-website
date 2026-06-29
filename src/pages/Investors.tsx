@@ -4,11 +4,6 @@ import { ArrowRight, FileText, Users, Mail, TrendingUp, Bell, BarChart2, Chevron
 import { CardStack } from '@/components/ui/card-stack'
 const CelestialSphere = lazy(() => import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere })))
 
-const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
-const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_104800_bc43ae09-f494-43e3-97d7-2f8c1692cfd7.mp4'
-const VETTING_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_171347_f640c30d-ec21-426a-98bc-77e07c2c60cb.mp4'
-const CARD_IMG = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260423_164207_f243351d-ed59-48ec-83a0-a5e996bdbe3c.png&w=1280&q=85'
-
 // ── Fade-up helper ──────────────────────────────────────────────────────────
 function FadeUp({
   children,
@@ -34,47 +29,6 @@ function FadeUp({
   )
 }
 
-// ── Pill CTA button ─────────────────────────────────────────────────────────
-function PillBtn({
-  href,
-  dark = true,
-  children,
-}: {
-  href: string
-  dark?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <a
-      href={href}
-      className="inline-flex items-center gap-3 font-medium transition-colors duration-200"
-      style={{
-        background: dark ? '#1a1a1a' : '#F2B705',
-        color: dark ? 'white' : '#1a1a1a',
-        paddingLeft: 28,
-        paddingRight: 8,
-        paddingTop: 8,
-        paddingBottom: 8,
-        borderRadius: 9999,
-        fontSize: '1rem',
-        textDecoration: 'none',
-      }}
-    >
-      {children}
-      <span
-        className="flex items-center justify-center"
-        style={{
-          background: dark ? 'white' : '#1a1a1a',
-          borderRadius: 9999,
-          padding: 8,
-        }}
-      >
-        <ArrowRight size={18} style={{ color: dark ? '#1a1a1a' : '#F2B705' }} />
-      </span>
-    </a>
-  )
-}
-
 // ── Data ───────────────────────────────────────────────────────────────────
 const BENEFITS = [
   {
@@ -94,7 +48,7 @@ const BENEFITS = [
   },
   {
     Icon: Users,
-    title: 'Exclusive Events and Networking',
+    title: 'Exclusive Events & Networking',
     body: 'Access to Akro-hosted investor events, founder pitch sessions, and ecosystem networking, in person and online.',
   },
   {
@@ -111,7 +65,7 @@ const BENEFITS = [
 
 const VETTING_STEPS = [
   { n: '01', label: 'Apply', body: 'Fill the application form. Tell us about yourself, your investment background, and what you\'re looking to deploy into.' },
-  { n: '02', label: 'KYC and Financial Verification', body: 'We verify your identity (KYC), confirm your financial standing, and assess your stated investment capacity.' },
+  { n: '02', label: 'KYC & Financial Verification', body: 'We verify your identity (KYC), confirm your financial standing, and assess your stated investment capacity.' },
   { n: '03', label: 'Full Due Diligence', body: 'We review your investment history, conduct background checks, and complete our internal due diligence on your profile.' },
   { n: '04', label: 'Network Access', body: 'Once approved, you get full portal access: deal room, portfolio monitoring, newsletter, and event invites.' },
 ]
@@ -119,7 +73,7 @@ const VETTING_STEPS = [
 const DEAL_FLOW_POINTS = [
   {
     n: '01',
-    title: 'Akro sources and diligences every deal',
+    title: 'Akro sources & diligences every deal',
     body: 'Every deal in the network has been originated by Akro, not submitted by a startup. We conduct our own diligence: financials, business model, team, market, and risks. You get our assessment, not just their pitch.',
   },
   {
@@ -129,7 +83,7 @@ const DEAL_FLOW_POINTS = [
   },
   {
     n: '03',
-    title: 'Express interest, Akro facilitates',
+    title: 'Express interest — Akro facilitates',
     body: 'If a deal interests you, you express interest through the portal. Akro then facilitates the next steps: founder introductions, follow-up Q&A, and deal structuring. You don\'t chase; we manage the process.',
   },
 ]
@@ -156,245 +110,86 @@ const DEAL_CARDS = [
 const FAQS = [
   { q: 'Who can apply to join?', a: 'Angel investors, HNIs, family offices, NBFCs, and institutional investors are all welcome to apply. All applications are reviewed personally by the Akro team. We look for credible investors with genuine intent to deploy.' },
   { q: 'What is the minimum ticket size?', a: 'There is no fixed minimum. Ticket sizes are deal-by-deal and depend on the specific opportunity. We will discuss this with you once you are part of the network.' },
-  { q: 'How does the background check work?', a: 'Our vetting involves KYC verification, financial background assessment, and a full review of your investment history. This typically takes 5 to 7 business days. All information is treated with strict confidentiality.' },
+  { q: 'How does the background check work?', a: 'Our vetting involves KYC verification, financial background assessment, and a full review of your investment history. This typically takes 5–7 business days. All information is treated with strict confidentiality.' },
   { q: 'Is there a fee to join the network?', a: 'There is no fee to join the Akro investor network. You only engage financially when you choose to participate in a deal.' },
-  { q: 'How many deals will I get access to?', a: 'We prioritise quality over volume. Network members typically see 2 to 4 curated opportunities per month, each with a full deal memo and Akro\'s diligence summary.' },
-]
-
-const NETWORK_BRANDS = [
-  { label: 'Angel Investors', style: { fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 15 } },
-  { label: 'Family Offices', style: { fontFamily: 'Palatino, Book Antiqua, serif', fontWeight: 400, letterSpacing: '-0.01em', fontSize: 16 } },
-  { label: 'HNIs', style: { fontFamily: 'Arial, sans-serif', fontWeight: 900, letterSpacing: '0.08em', fontSize: 13, textTransform: 'uppercase' as const } },
-  { label: 'Micro VCs', style: { fontFamily: 'Trebuchet MS, sans-serif', fontWeight: 600, letterSpacing: '0.01em', fontSize: 15, fontStyle: 'italic' as const } },
-  { label: 'NBFCs', style: { fontFamily: 'Courier New, monospace', fontWeight: 700, letterSpacing: '0.12em', fontSize: 13, textTransform: 'uppercase' as const } },
-  { label: 'Institutional Investors', style: { fontFamily: 'Impact, Arial Narrow, sans-serif', fontWeight: 400, letterSpacing: '0.04em', fontSize: 14 } },
-  { label: 'Corporate Treasuries', style: { fontFamily: 'Verdana, sans-serif', fontWeight: 700, letterSpacing: '-0.03em', fontSize: 13 } },
-]
-
-const SECTOR_BRANDS = [
-  { label: 'Healthcare', style: { fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 15 } },
-  { label: 'AI', style: { fontFamily: 'Arial, sans-serif', fontWeight: 900, letterSpacing: '0.08em', fontSize: 13, textTransform: 'uppercase' as const } },
-  { label: 'B2B SaaS', style: { fontFamily: 'Trebuchet MS, sans-serif', fontWeight: 600, letterSpacing: '0.01em', fontSize: 15, fontStyle: 'italic' as const } },
-  { label: 'Manufacturing', style: { fontFamily: 'Courier New, monospace', fontWeight: 700, letterSpacing: '0.12em', fontSize: 12, textTransform: 'uppercase' as const } },
-  { label: 'Fintech', style: { fontFamily: 'Palatino, Book Antiqua, serif', fontWeight: 400, letterSpacing: '-0.01em', fontSize: 16 } },
-  { label: 'Consumer', style: { fontFamily: 'Impact, Arial Narrow, sans-serif', fontWeight: 400, letterSpacing: '0.04em', fontSize: 14 } },
-  { label: 'Export', style: { fontFamily: 'Verdana, sans-serif', fontWeight: 700, letterSpacing: '-0.03em', fontSize: 13 } },
-  { label: 'Deeptech', style: { fontFamily: 'Times New Roman, serif', fontWeight: 400, letterSpacing: '0.02em', fontSize: 14 } },
+  { q: 'How many deals will I get access to?', a: 'We prioritise quality over volume. Network members typically see 2–4 curated opportunities per month, each with a full deal memo and Akro\'s diligence summary.' },
 ]
 
 // ── Hero ───────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
-      <style>{`
-        @keyframes marquee-inv {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee-inv-track {
-          display: flex;
-          width: max-content;
-          animation: marquee-inv 22s linear infinite;
-        }
-      `}</style>
+    <section
+      className="relative overflow-hidden flex items-center"
+      style={{
+        minHeight: '72vh',
+        background: 'linear-gradient(145deg, #0e1208 0%, #1a1510 25%, #1e1a0e 55%, #2B2B2B 100%)',
+      }}
+    >
+      {/* CelestialSphere — very blurred, just a colour wash */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ opacity: 0.22, filter: 'blur(18px)', zIndex: 0 }}
+      >
+        <Suspense fallback={null}>
+          <CelestialSphere hue={42} speed={0.14} zoom={2.2} particleSize={2} className="w-full h-full" />
+        </Suspense>
+      </div>
 
-      <div className="flex-1 px-5 pt-20 pb-5 flex items-end">
-        <div
-          className="relative w-full rounded-2xl overflow-hidden"
-          style={{ height: 'calc(100vh - 96px)' }}
-        >
-          {/* Video bg */}
-          <video
-            src={HERO_VIDEO}
-            autoPlay muted loop playsInline
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-            style={{ zIndex: 0 }}
-          />
-          {/* Dark overlay for legibility */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: 'linear-gradient(160deg, rgba(10,20,22,0.55) 0%, rgba(10,20,22,0.25) 60%, rgba(10,20,22,0.1) 100%)', zIndex: 1 }}
-          />
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.07) 1px, transparent 0)',
+          backgroundSize: '40px 40px',
+          zIndex: 1,
+        }}
+      />
+      {/* Vertical grid lines */}
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
+        {[25, 50, 75].map(pct => (
+          <div key={pct} className="absolute top-0 bottom-0 w-px"
+            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.04)' }} />
+        ))}
+      </div>
+      {/* Mustard SVG glow — top-left bias */}
+      <svg className="absolute pointer-events-none" aria-hidden="true"
+        style={{ top: '-8%', left: '-5%', zIndex: 1 }}
+        width="700" height="420" viewBox="0 0 700 420">
+        <defs><filter id="inv-glow"><feGaussianBlur stdDeviation="32" /></filter></defs>
+        <ellipse cx="260" cy="200" rx="300" ry="180" fill="rgba(242,183,5,0.11)" filter="url(#inv-glow)" />
+      </svg>
 
-          {/* Content */}
-          <div className="relative flex flex-col items-start justify-start h-full p-10 md:p-14 pt-20 md:pt-28" style={{ zIndex: 2 }}>
-            <motion.h1
-              initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-              className="text-white max-w-xl mb-4"
+      {/* Left-aligned content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-24">
+        <div className="max-w-2xl">
+          <FadeUp delay={0.2}>
+            <h1
+              className="mb-6"
               style={{
                 fontFamily: 'Cormorant Garamond, Georgia, serif',
-                fontSize: 'clamp(2.8rem, 5.5vw, 4.8rem)',
+                fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                 fontWeight: 700,
                 fontStyle: 'italic',
-                lineHeight: 1.05,
-                letterSpacing: '-0.035em',
-              }}
-            >
-              The deals you want.<br />None of the noise.
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.32 }}
-              className="text-white/65 max-w-md mb-8 leading-relaxed"
-              style={{ fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', fontWeight: 300 }}
-            >
-              Akro's investor network is curated, not open. Every member is vetted before they see a single deal.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.48 }}
-            >
-              <PillBtn href="#apply">Apply to Join</PillBtn>
-            </motion.div>
-
-            {/* Marquee strip at bottom */}
-            <motion.div
-              className="mt-auto w-full max-w-lg overflow-hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.9 }}
-            >
-              <p className="text-white/35 text-xs uppercase tracking-widest mb-3" style={{ fontWeight: 600 }}>
-                Open to investors including
-              </p>
-              <div className="marquee-inv-track">
-                {[...NETWORK_BRANDS, ...NETWORK_BRANDS].map((b, i) => (
-                  <span
-                    key={i}
-                    className="mx-7 shrink-0 text-white/50 whitespace-nowrap"
-                    style={b.style}
-                  >
-                    {b.label}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ── Info Section ("What Akro offers") ──────────────────────────────────────
-function InfoSection() {
-  return (
-    <section className="px-6 py-24" style={{ background: '#F4F6F2' }}>
-      <div className="mx-auto max-w-6xl">
-        {/* Row 1: headline + para */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-start">
-          <FadeUp>
-            <h2
-              className="text-black mb-8 leading-tight"
-              style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
-                fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
-                fontWeight: 700,
+                color: 'white',
+                lineHeight: 1.03,
                 letterSpacing: '-0.03em',
               }}
             >
-              What being part of the Akro network means.
-            </h2>
-            <PillBtn href="#apply" dark={false}>
-              Apply Now
-            </PillBtn>
+              The deals you want.<br />None of the noise.
+            </h1>
           </FadeUp>
 
-          <FadeUp delay={0.12}>
-            <p
-              className="leading-relaxed"
-              style={{
-                color: 'rgba(0,0,0,0.6)',
-                fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
-                lineHeight: 1.6,
-                paddingTop: 8,
-              }}
-            >
-              A curated network of verified investors accessing diligenced deals, full deal memos, portfolio monitoring, and Akro's ongoing advisory support — all in one place.
+          <FadeUp delay={0.38}>
+            <p className="text-white/55 text-base md:text-lg font-light leading-relaxed mb-10 max-w-lg">
+              Akro's investor network is curated, not open. Every member is vetted before they see a single deal.
             </p>
           </FadeUp>
-        </div>
 
-        {/* Row 2: 4-col card grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Card 1 — image background (spans 2 cols) */}
-          <FadeUp className="lg:col-span-2">
-            <div
-              className="rounded-2xl min-h-80 flex flex-col justify-between p-7"
-              style={{
-                backgroundImage: `url(${CARD_IMG})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            >
-              <p
-                className="text-black leading-snug"
-                style={{
-                  fontFamily: 'Cormorant Garamond, Georgia, serif',
-                  fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                  maxWidth: '14ch',
-                }}
-              >
-                Deals that are already diligenced.
-              </p>
-              <p className="text-black/65 text-sm max-w-xs leading-relaxed">
-                Every opportunity in the network has been sourced and vetted by Akro. You receive our assessment, not just their pitch.
-              </p>
-            </div>
-          </FadeUp>
-
-          {/* Card 2 — dark */}
-          <FadeUp delay={0.08}>
-            <div
-              className="rounded-2xl min-h-80 p-7 flex flex-col justify-between"
-              style={{ background: '#1a2e30' }}
-            >
-              <p
-                className="text-white leading-snug"
-                style={{
-                  fontFamily: 'Cormorant Garamond, Georgia, serif',
-                  fontSize: 'clamp(1.3rem, 2vw, 1.6rem)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                Early access.<br />Always.
-              </p>
-              <p className="text-white/55 text-sm leading-relaxed">
-                Network members see new opportunities before they're distributed more widely. Priority access reserved for active members.
-              </p>
-            </div>
-          </FadeUp>
-
-          {/* Card 3 — dark */}
-          <FadeUp delay={0.14}>
-            <div
-              className="rounded-2xl min-h-80 p-7 flex flex-col justify-between"
-              style={{ background: '#1a2e30' }}
-            >
-              <p
-                className="text-white leading-snug"
-                style={{
-                  fontFamily: 'Cormorant Garamond, Georgia, serif',
-                  fontSize: 'clamp(1.3rem, 2vw, 1.6rem)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                Portfolio monitoring,<br />automated.
-              </p>
-              <p className="text-white/55 text-sm leading-relaxed">
-                Track revenue, milestones, and founder updates from your dashboard. No chasing, no silence.
-              </p>
-            </div>
+          <FadeUp delay={0.52}>
+            <a href="#apply" className="btn-slide btn-slide-mustard">
+              <span>Apply to Join</span>
+              <ArrowRight size={15} />
+            </a>
           </FadeUp>
         </div>
       </div>
@@ -402,46 +197,55 @@ function InfoSection() {
   )
 }
 
-// ── Network Marquee ("Backed By" style) ────────────────────────────────────
-function NetworkMarqueeSection() {
+// ── Benefits ───────────────────────────────────────────────────────────────
+function BenefitsSection() {
   return (
-    <section className="py-14 px-6 overflow-hidden" style={{ background: '#F4F6F2' }}>
-      <style>{`
-        @keyframes backers-inv {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .backers-inv-track {
-          display: flex;
-          width: max-content;
-          animation: backers-inv 30s linear infinite;
-        }
-      `}</style>
-      <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
-          {/* Left label */}
+    <section className="section-y" style={{ background: '#ffffff' }}>
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
+          {/* Left — sticky editorial */}
           <FadeUp>
-            <p
-              className="leading-relaxed"
-              style={{ color: 'rgba(0,0,0,0.6)', fontSize: '1rem', lineHeight: 1.65 }}
-            >
-              Deals across sectors,<br />stages, and structures.
-            </p>
+            <div className="lg:sticky lg:top-28">
+              <p className="t-label text-primary mb-3">The Network</p>
+              <h2
+                className="mb-5 leading-tight"
+                style={{
+                  fontFamily: 'Cormorant Garamond, Georgia, serif',
+                  fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                  fontWeight: 700,
+                  color: '#2B2B2B',
+                }}
+              >
+                What being part of the Akro network means.
+              </h2>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-8 max-w-sm">
+                A curated network of verified investors accessing diligenced deals, portfolio monitoring, and Akro's ongoing support.
+              </p>
+              <a href="#apply" className="btn-slide btn-slide-mustard" style={{ display: 'inline-flex', width: 'fit-content' }}>
+                <span>Apply to Join</span>
+                <ArrowRight size={14} />
+              </a>
+            </div>
           </FadeUp>
 
-          {/* Right marquee */}
-          <div className="md:col-span-3 overflow-hidden">
-            <div className="backers-inv-track">
-              {[...SECTOR_BRANDS, ...SECTOR_BRANDS].map((b, i) => (
-                <span
-                  key={i}
-                  className="mx-10 shrink-0 whitespace-nowrap"
-                  style={{ ...b.style, color: 'rgba(0,0,0,0.45)' }}
-                >
-                  {b.label}
-                </span>
-              ))}
-            </div>
+          {/* Right — benefit list */}
+          <div className="divide-y divide-border">
+            {BENEFITS.map(({ Icon, title, body }, i) => (
+              <FadeUp key={title} delay={i * 0.06}>
+                <div className="flex gap-5 py-6">
+                  <div
+                    className="flex-shrink-0 h-9 w-9 rounded-sm flex items-center justify-center mt-0.5"
+                    style={{ background: 'rgba(63,111,115,0.1)' }}
+                  >
+                    <Icon size={16} style={{ color: '#3F6F73' }} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm text-foreground mb-1.5">{title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
+                  </div>
+                </div>
+              </FadeUp>
+            ))}
           </div>
         </div>
       </div>
@@ -449,112 +253,61 @@ function NetworkMarqueeSection() {
   )
 }
 
-// ── Vetting Process ("Use Cases" style) ────────────────────────────────────
+// ── Vetting Process ────────────────────────────────────────────────────────
 function VettingSection() {
   return (
-    <section className="px-6 py-24" style={{ background: '#F4F6F2' }}>
-      <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          {/* Left */}
-          <FadeUp className="md:pr-12 md:pt-2">
-            <p className="text-black/55 text-sm mb-2" style={{ fontWeight: 500 }}>
-              Vetting Process
-            </p>
+    <section className="section-y" style={{ background: '#F4F6F2' }}>
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 items-start mb-14">
+          <FadeUp>
+            <p className="t-label text-primary mb-3">Due Diligence</p>
             <h2
-              className="text-black leading-none mb-6"
-              style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
-                fontSize: 'clamp(3rem, 5.5vw, 5rem)',
-                fontWeight: 700,
-                letterSpacing: '-0.04em',
-              }}
+              className="text-3xl md:text-4xl font-bold leading-tight"
+              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
             >
-              A network<br />you have<br />to earn.
+              A network you have to earn.
             </h2>
-            <p className="text-black/55 text-base leading-relaxed max-w-sm">
-              We review every application personally. No automated approvals, no shortcuts. Typically 5 to 7 business days. All information treated with strict confidentiality.
-            </p>
-
-            {/* Steps list */}
-            <div className="mt-10 space-y-5">
-              {VETTING_STEPS.map(({ n, label, body }, i) => (
-                <motion.div
-                  key={n}
-                  className="flex gap-4"
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                >
-                  <span
-                    className="flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center text-white mt-0.5"
-                    style={{ background: '#3F6F73', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.04em' }}
-                  >
-                    {n}
-                  </span>
-                  <div>
-                    <p className="font-semibold text-sm text-black mb-1">{label}</p>
-                    <p className="text-black/50 text-sm leading-relaxed">{body}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </FadeUp>
-
-          {/* Right — video card */}
           <FadeUp delay={0.1}>
-            <div
-              className="relative rounded-3xl overflow-hidden"
-              style={{ minHeight: 640 }}
-            >
-              <video
-                src={VETTING_VIDEO}
-                autoPlay muted loop playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              {/* overlay */}
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(180deg, rgba(10,26,28,0.1) 0%, rgba(10,26,28,0.65) 100%)' }}
-              />
-              <div className="relative z-10 p-10 md:p-12 flex flex-col justify-end h-full" style={{ minHeight: 640 }}>
-                <h3
-                  className="text-white mb-5 leading-tight"
-                  style={{
-                    fontFamily: 'Cormorant Garamond, Georgia, serif',
-                    fontSize: 'clamp(2rem, 3.5vw, 3rem)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.03em',
-                  }}
-                >
-                  Investor Vetting
-                </h3>
-                <p className="text-white/65 text-sm max-w-md mb-8 leading-relaxed">
-                  Every investor in the Akro network has been individually reviewed, KYC'd, and assessed for genuine deployment intent. We protect both sides of every deal.
-                </p>
-                <a
-                  href="#apply"
-                  className="inline-flex items-center gap-3 group"
-                  style={{ textDecoration: 'none' }}
-                >
-                  <span
-                    className="flex items-center justify-center"
-                    style={{
-                      background: 'rgba(255,255,255,0.75)',
-                      backdropFilter: 'blur(4px)',
-                      borderRadius: 9999,
-                      width: 40,
-                      height: 40,
-                      transition: 'background 0.2s',
-                    }}
-                  >
-                    <ArrowRight size={16} style={{ color: 'black' }} />
-                  </span>
-                  <span className="text-white text-sm font-medium">Start your application</span>
-                </a>
-              </div>
-            </div>
+            <p className="text-muted-foreground text-base leading-relaxed lg:pt-10">
+              We review every application personally. No automated approvals. No shortcuts. The vetting process typically takes 5–7 business days. All information is treated with strict confidentiality.
+            </p>
           </FadeUp>
+        </div>
+
+        {/* Connected timeline */}
+        <div className="relative">
+          {/* Horizontal connector line (desktop) */}
+          <div
+            className="hidden md:block absolute h-px"
+            style={{
+              top: 20,
+              left: '5%',
+              right: '5%',
+              background: 'linear-gradient(90deg, #3F6F73 0%, rgba(63,111,115,0.3) 100%)',
+            }}
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {VETTING_STEPS.map(({ n, label, body }, i) => (
+              <FadeUp key={n} delay={i * 0.1}>
+                <div>
+                  {/* Circle node */}
+                  <div className="flex md:block items-center gap-4 mb-4">
+                    <div
+                      className="h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 relative z-10"
+                      style={{ background: '#3F6F73', color: 'white', fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.05em' }}
+                    >
+                      {n}
+                    </div>
+                    <p className="font-bold text-foreground text-sm md:hidden">{label}</p>
+                  </div>
+                  <p className="font-bold text-foreground text-sm mb-2 hidden md:block">{label}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -579,6 +332,7 @@ function DealFlowSection() {
           </p>
         </FadeUp>
 
+        {/* How it works — compact 3-step */}
         <FadeUp className="mb-14">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {DEAL_FLOW_POINTS.map(({ n, title, body }) => (
@@ -591,6 +345,7 @@ function DealFlowSection() {
           </div>
         </FadeUp>
 
+        {/* Deal card stack */}
         <FadeUp>
           <p className="text-xs font-bold uppercase tracking-widest mb-6 text-center" style={{ color: '#F2B705' }}>
             Sample Deal Memos — Drag to explore
@@ -616,7 +371,10 @@ function DealFlowSection() {
                   transition: 'background 0.3s, border-color 0.3s',
                 }}
               >
-                <span className="text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: '#F2B705' }}>
+                <span
+                  className="text-[10px] font-bold uppercase tracking-[0.14em]"
+                  style={{ color: '#F2B705' }}
+                >
                   {item.tag}
                 </span>
                 <div>
@@ -653,6 +411,7 @@ function PortfolioSection() {
       className="section-y relative overflow-hidden"
       style={{ background: 'linear-gradient(135deg, #142022 0%, #1c2a2b 45%, #232e2e 100%)' }}
     >
+      {/* Subtle teal dot pattern */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -660,6 +419,7 @@ function PortfolioSection() {
           backgroundSize: '32px 32px',
         }}
       />
+      {/* Soft glow top-right */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -671,6 +431,7 @@ function PortfolioSection() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-14 items-start">
+          {/* Left editorial */}
           <FadeUp>
             <div className="lg:sticky lg:top-28">
               <p className="t-label text-primary mb-3">Portfolio</p>
@@ -684,17 +445,22 @@ function PortfolioSection() {
                 Once you've deployed into a deal through Akro, you never have to chase the founder for updates again.
                 Your portfolio monitoring dashboard tracks everything, automatically.
               </p>
-              <a href="/portal" className="inline-flex items-center gap-2 text-sm font-semibold transition-colors" style={{ color: '#3F6F73' }}>
+              <a
+                href="/portal"
+                className="inline-flex items-center gap-2 text-sm font-semibold transition-colors"
+                style={{ color: '#3F6F73' }}
+              >
                 See how the portal works <ArrowRight size={14} />
               </a>
             </div>
           </FadeUp>
 
+          {/* Right: feature cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {PORTFOLIO_FEATURES.map(({ title, body }, i) => (
               <FadeUp key={title} delay={i * 0.08}>
                 <div
-                  className="p-6 rounded-2xl h-full"
+                  className="p-6 rounded-sm h-full"
                   style={{
                     background: 'rgba(63,111,115,0.1)',
                     border: '1px solid rgba(63,111,115,0.22)',
@@ -733,12 +499,26 @@ function DealTypesSection() {
         <FadeUp delay={0.1}>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { heading: 'Sectors', items: ['Healthcare and Hospitals', 'Artificial Intelligence', 'B2B SaaS', 'Manufacturing'] },
-              { heading: 'Stages', items: ['Pre-Seed', 'Seed', 'Pre-Series A', 'Series A and Growth'] },
-              { heading: 'Deal Types', items: ['Equity Raise', 'Structured Debt', 'Debt Syndication', 'Co-Investment'] },
+              {
+                heading: 'Sectors',
+                items: ['Healthcare & Hospitals', 'Artificial Intelligence', 'B2B SaaS', 'Manufacturing'],
+              },
+              {
+                heading: 'Stages',
+                items: ['Pre-Seed', 'Seed', 'Pre-Series A', 'Series A & Growth'],
+              },
+              {
+                heading: 'Deal Types',
+                items: ['Equity Raise', 'Structured Debt', 'Debt Syndication', 'Co-Investment'],
+              },
             ].map(({ heading, items }) => (
-              <div key={heading} className="bg-white p-6 rounded-2xl shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#3F6F73' }}>{heading}</p>
+              <div key={heading} className="bg-white p-6 rounded-sm shadow-sm">
+                <p
+                  className="text-xs font-bold uppercase tracking-widest mb-4"
+                  style={{ color: '#3F6F73' }}
+                >
+                  {heading}
+                </p>
                 <ul className="space-y-2">
                   {items.map(item => (
                     <li key={item} className="text-sm text-foreground flex items-center gap-2">
@@ -758,7 +538,9 @@ function DealTypesSection() {
 
 // ── Application Form ───────────────────────────────────────────────────────
 function ApplicationForm() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', investorType: '', ticketSize: '', background: '' })
+  const [form, setForm] = useState({
+    name: '', email: '', phone: '', investorType: '', ticketSize: '', background: ''
+  })
   const [sectors, setSectors] = useState<string[]>([])
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -776,7 +558,10 @@ function ApplicationForm() {
     setError('')
     try {
       const { createClient } = await import('@supabase/supabase-js')
-      const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY)
+      const supabase = createClient(
+        import.meta.env.VITE_SUPABASE_URL,
+        import.meta.env.VITE_SUPABASE_ANON_KEY
+      )
       const { error: err } = await supabase.from('investor_applications').insert({
         name: form.name,
         email: form.email,
@@ -800,10 +585,13 @@ function ApplicationForm() {
   if (submitted) {
     return (
       <div className="text-center py-16 max-w-md mx-auto">
-        <div className="h-12 w-12 rounded-sm flex items-center justify-center mx-auto mb-4" style={{ background: '#3F6F7318' }}>
+        <div className="h-12 w-12 rounded-sm flex items-center justify-center mx-auto mb-4" style={{ background: '#3F6F73' + '18' }}>
           <FileText size={22} style={{ color: '#3F6F73' }} />
         </div>
-        <h3 className="text-2xl font-bold text-foreground mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>
+        <h3
+          className="text-2xl font-bold text-foreground mb-2"
+          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+        >
           Application received.
         </h3>
         <p className="text-muted-foreground text-sm leading-relaxed">
@@ -832,6 +620,7 @@ function ApplicationForm() {
         </select>
       </div>
 
+      {/* Sectors multi-select */}
       <div>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Sectors of interest</p>
         <div className="flex flex-wrap gap-2">
@@ -935,25 +724,25 @@ function FAQSection() {
 // ── CTA Strip ──────────────────────────────────────────────────────────────
 function CtaStrip() {
   return (
-    <section className="py-20 px-6 text-center relative overflow-hidden" style={{ background: '#1a2e30' }}>
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.14) 1px, transparent 0)',
-          backgroundSize: '32px 32px',
-        }}
-      />
-      <FadeUp className="relative z-10">
+    <section className="py-16 px-6 text-center" style={{ background: 'rgba(63,111,115,0.95)' }}>
+      <FadeUp>
         <h2
-          className="text-3xl md:text-4xl font-bold text-white mb-4 max-w-2xl mx-auto leading-tight"
+          className="text-3xl md:text-4xl font-bold text-white mb-3"
           style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
         >
-          If you're serious about deployment, we're serious about finding you the right deals.
+          If you're serious about deployment — we're serious about finding you the right deals.
         </h2>
-        <p className="text-white/55 text-base font-light max-w-lg mx-auto mb-9">
-          Join a network of verified investors deploying into diligenced opportunities across Healthcare, AI, SaaS, and Manufacturing.
+        <p className="text-white/70 text-base font-light max-w-lg mx-auto mb-8">
+          Join a network of verified investors deploying into diligenced opportunities across
+          Healthcare, AI, SaaS, and Manufacturing.
         </p>
-        <PillBtn href="#apply">Apply to Join</PillBtn>
+        <a
+          href="#apply"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-bold text-sm text-foreground hover:scale-105 active:scale-95 transition-transform"
+          style={{ background: '#F2B705' }}
+        >
+          Apply to Join <ArrowRight size={16} />
+        </a>
       </FadeUp>
     </section>
   )
@@ -964,8 +753,7 @@ export default function Investors() {
   return (
     <>
       <HeroSection />
-      <InfoSection />
-      <NetworkMarqueeSection />
+      <BenefitsSection />
       <VettingSection />
       <DealFlowSection />
       <PortfolioSection />
