@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, lazy, Suspense } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, FileText, Users, Mail, TrendingUp, Bell, BarChart2, ChevronDown } from 'lucide-react'
+import { CardStack } from '@/components/ui/card-stack'
+const CelestialSphere = lazy(() => import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere })))
 
 // ── Fade-up helper ──────────────────────────────────────────────────────────
 function FadeUp({
@@ -97,6 +99,14 @@ const INVESTOR_TYPES = ['Angel Investor', 'HNI', 'Family Office', 'NBFC', 'Micro
 const TICKET_SIZES = ['Under ₹25L', '₹25L–₹1 Cr', '₹1–5 Cr', '₹5–20 Cr', '₹20 Cr+']
 const SECTORS = ['Healthcare', 'AI', 'SaaS', 'Manufacturing', 'Fintech', 'Consumer', 'Other']
 
+const DEAL_CARDS = [
+  { id: 1, title: 'Healthcare SaaS', description: 'Pre-Series A · ₹3.5 Cr equity raise · ₹1.2 Cr ARR, profitable unit economics. Full deck and model prepared by Akro.', tag: 'Healthcare' },
+  { id: 2, title: 'B2B Fintech Platform', description: 'Seed · ₹1.8 Cr · 40+ enterprise clients, 3-month payback period. Akro sourced 6 investor intros, closed in 9 weeks.', tag: 'Fintech' },
+  { id: 3, title: 'Manufacturing SME', description: 'Structured debt · ₹8 Cr · GST-backed underwriting, 3-year tenure. Working capital for capacity expansion.', tag: 'Manufacturing' },
+  { id: 4, title: 'AI Infrastructure Co.', description: 'Seed · ₹2.5 Cr · Patent-pending inference optimisation stack. Pre-revenue, strong technical moat. Closed in 6 weeks.', tag: 'AI' },
+  { id: 5, title: 'Export Trading House', description: 'Invoice factoring · ₹50L/month · Non-recourse, 90% advance on Day 0. VoloFin partnership. Immediate liquidity unlocked.', tag: 'Export' },
+]
+
 const FAQS = [
   { q: 'Who can apply to join?', a: 'Angel investors, HNIs, family offices, NBFCs, and institutional investors are all welcome to apply. All applications are reviewed personally by the Akro team. We look for credible investors with genuine intent to deploy.' },
   { q: 'What is the minimum ticket size?', a: 'There is no fixed minimum. Ticket sizes are deal-by-deal and depend on the specific opportunity. We will discuss this with you once you are part of the network.' },
@@ -123,17 +133,30 @@ function HeroSection() {
           backgroundSize: '40px 40px',
         }}
       />
-      {/* Mustard glow */}
-      <div
+      {/* Vertical grid lines */}
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
+        {[25, 50, 75].map(pct => (
+          <div
+            key={pct}
+            className="absolute top-0 bottom-0 w-px"
+            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.04)' }}
+          />
+        ))}
+      </div>
+      {/* Mustard SVG glow */}
+      <svg
         className="absolute pointer-events-none"
-        style={{
-          width: 700, height: 500,
-          borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(242,183,5,0.10) 0%, transparent 70%)',
-          top: '50%', left: '50%',
-          transform: 'translate(-50%, -65%)',
-        }}
-      />
+        style={{ top: '10%', left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}
+        width="640" height="320" viewBox="0 0 640 320"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <filter id="inv-glow">
+            <feGaussianBlur stdDeviation="28" result="blur" />
+          </filter>
+        </defs>
+        <ellipse cx="320" cy="160" rx="260" ry="110" fill="rgba(242,183,5,0.12)" filter="url(#inv-glow)" />
+      </svg>
 
       <div className="relative z-10 max-w-3xl mx-auto pt-24 pb-16">
         <FadeUp delay={0.1}>
@@ -267,35 +290,87 @@ function VettingSection() {
 function DealFlowSection() {
   return (
     <section className="section-y" style={{ background: '#ffffff' }}>
-      <div className="mx-auto max-w-4xl px-6">
+      <div className="mx-auto max-w-5xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Process</p>
           <h2
-            className="text-3xl md:text-4xl font-bold mb-10"
+            className="text-3xl md:text-4xl font-bold mb-3"
             style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
           >
             How we bring deals to you.
           </h2>
+          <p className="text-muted-foreground text-sm mb-10 max-w-xl">
+            Every deal below is anonymised. Once you express interest through the portal, Akro facilitates the full introduction.
+          </p>
         </FadeUp>
 
-        <div className="space-y-5">
-          {DEAL_FLOW_POINTS.map(({ n, title, body }, i) => (
-            <FadeUp key={n} delay={i * 0.1}>
-              <div className="flex gap-6 p-6 bg-white rounded-sm shadow-sm border border-border">
-                <p
-                  className="text-3xl font-bold leading-none flex-shrink-0 mt-1"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#3F6F73', opacity: 0.3 }}
-                >
-                  {n}
-                </p>
-                <div>
-                  <h3 className="font-bold text-foreground text-sm mb-2">{title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{body}</p>
-                </div>
+        {/* How it works — compact 3-step */}
+        <FadeUp className="mb-14">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {DEAL_FLOW_POINTS.map(({ n, title, body }) => (
+              <div key={n} className="p-5 bg-[#F4F6F2] rounded-sm border-l-2" style={{ borderLeftColor: '#3F6F73' }}>
+                <span className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: '#3F6F73' }}>{n}</span>
+                <h3 className="font-bold text-foreground text-sm mb-1">{title}</h3>
+                <p className="text-muted-foreground text-xs leading-relaxed">{body}</p>
               </div>
-            </FadeUp>
-          ))}
-        </div>
+            ))}
+          </div>
+        </FadeUp>
+
+        {/* Deal card stack */}
+        <FadeUp>
+          <p className="text-xs font-bold uppercase tracking-widest mb-6 text-center" style={{ color: '#F2B705' }}>
+            Sample Deal Memos — Drag to explore
+          </p>
+          <CardStack
+            items={DEAL_CARDS}
+            cardWidth={400}
+            cardHeight={240}
+            maxVisible={5}
+            spreadDeg={36}
+            overlap={0.44}
+            autoAdvance
+            intervalMs={3200}
+            pauseOnHover
+            showDots
+            renderCard={(item, { active }) => (
+              <div
+                className="h-full w-full p-7 flex flex-col justify-between"
+                style={{
+                  background: active ? '#1a3538' : '#1e2020',
+                  border: `1px solid ${active ? '#3F6F73' : 'rgba(255,255,255,0.07)'}`,
+                  borderRadius: 12,
+                  transition: 'background 0.3s, border-color 0.3s',
+                }}
+              >
+                <span
+                  className="text-[10px] font-bold uppercase tracking-[0.14em]"
+                  style={{ color: '#F2B705' }}
+                >
+                  {item.tag}
+                </span>
+                <div>
+                  <h3
+                    className="mb-2"
+                    style={{
+                      fontFamily: 'Cormorant Garamond, Georgia, serif',
+                      fontSize: '1.35rem',
+                      fontWeight: 700,
+                      color: 'white',
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.78rem', lineHeight: 1.65 }}>
+                    {item.description}
+                  </p>
+                </div>
+                <div style={{ height: 2, width: 28, background: active ? '#F2B705' : 'rgba(255,255,255,0.15)', borderRadius: 1, transition: 'background 0.3s' }} />
+              </div>
+            )}
+          />
+        </FadeUp>
       </div>
     </section>
   )
@@ -304,8 +379,14 @@ function DealFlowSection() {
 // ── Portfolio Monitoring ───────────────────────────────────────────────────
 function PortfolioSection() {
   return (
-    <section className="section-y" style={{ background: '#2B2B2B' }}>
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="section-y relative overflow-hidden" style={{ background: '#2B2B2B' }}>
+      {/* CelestialSphere nebula background */}
+      <div className="absolute inset-0 pointer-events-none" style={{ opacity: 0.32, zIndex: 0 }}>
+        <Suspense fallback={null}>
+          <CelestialSphere hue={42} speed={0.18} zoom={1.8} particleSize={2.5} className="w-full h-full" />
+        </Suspense>
+      </div>
+      <div className="relative mx-auto max-w-6xl px-6" style={{ zIndex: 1 }}>
         <FadeUp>
           <p className="t-label text-primary mb-3">Portfolio</p>
           <h2

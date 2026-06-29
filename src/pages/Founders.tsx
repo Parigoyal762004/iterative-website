@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
+const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4'
 // ── Fade-up helper ──────────────────────────────────────────────────────────
 function FadeUp({
   children,
@@ -139,25 +140,39 @@ function HeroSection() {
         background: 'linear-gradient(145deg, #0f2224 0%, #1a3538 35%, #2B2B2B 75%, #1e1e1e 100%)',
       }}
     >
-      {/* Subtle grid texture */}
+      {/* Cinematic video hint — very heavily blurred, just a texture */}
+      <video
+        src={HERO_VIDEO}
+        autoPlay muted loop playsInline
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ filter: 'blur(52px)', transform: 'scale(1.2)', opacity: 0.13, zIndex: 0 }}
+        aria-hidden="true"
+      />
+
+      {/* Dot grid texture */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.1) 1px, transparent 0)',
           backgroundSize: '36px 36px',
+          zIndex: 1,
         }}
       />
-      {/* Teal glow */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: 600, height: 600,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(63,111,115,0.18) 0%, transparent 70%)',
-          top: '50%', left: '50%',
-          transform: 'translate(-50%, -60%)',
-        }}
-      />
+
+      {/* Vertical grid lines (CodeNest pattern) */}
+      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
+        {[25, 50, 75].map(pct => (
+          <div key={pct} className="absolute top-0 bottom-0 w-px"
+            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.05)' }} />
+        ))}
+      </div>
+
+      {/* SVG teal glow at top */}
+      <svg className="absolute pointer-events-none" style={{ top: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 1 }}
+        width="900" height="280" viewBox="0 0 900 280" aria-hidden="true">
+        <defs><filter id="founders-glow"><feGaussianBlur stdDeviation="28" /></filter></defs>
+        <ellipse cx="450" cy="80" rx="380" ry="90" fill="rgba(63,111,115,0.2)" filter="url(#founders-glow)" />
+      </svg>
 
       <div className="relative z-10 max-w-4xl mx-auto pt-28 pb-20">
         <FadeUp delay={0.1}>
