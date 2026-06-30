@@ -52,7 +52,7 @@ const ARTICLES = [
     category: 'fundraising',
     title: 'What I Tell Every Founder Who Walks In Asking About Funding',
     excerpt: 'A founder came in wanting Series A with 90L in revenue and needed 80L for inventory. The first question was not about valuation. Here is what it was.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-05-18',
     readTime: 7,
     featured: true,
@@ -63,7 +63,7 @@ const ARTICLES = [
     category: 'fundraising',
     title: 'Your Pitch Deck Gets 2 Minutes and 24 Seconds. Here\'s How Indian Investors Actually Use Them.',
     excerpt: 'An Indian VC sees roughly 2,000 decks a year and invests in 5 to 8. The average first-pass review is 2 minutes and 24 seconds. Make every slide count.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-05-10',
     readTime: 5,
     featured: false,
@@ -74,7 +74,7 @@ const ARTICLES = [
     category: 'fundraising',
     title: 'Every Founder Says Their Unit Economics Work. Most Are Lying to Themselves.',
     excerpt: 'Not because founders are dishonest, because unit economics is the most confidently miscalculated metric in startup finance. Investors have built their entire DD process around finding the errors.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-04-28',
     readTime: 6,
     featured: false,
@@ -85,7 +85,7 @@ const ARTICLES = [
     category: 'fundraising',
     title: 'Your Startup\'s Valuation Is Not What You Think It Is',
     excerpt: 'Most founders base their valuation on a friend\'s raise, a VC tweet, and a revenue multiple from a panel. Those figures were accurate in 2021, now probably off by 40% today.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-04-15',
     readTime: 5,
     featured: false,
@@ -96,7 +96,7 @@ const ARTICLES = [
     category: 'fundraising',
     title: '3 Things Investors Won\'t Tell You They Hate in Pitch Decks',
     excerpt: 'Clean design, good fonts. After two reads, you still cannot explain what the company does. That is not a deck problem. That is a communication problem that ends fundraising conversations before they begin.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-04-02',
     readTime: 4,
     featured: false,
@@ -107,7 +107,7 @@ const ARTICLES = [
     category: 'market-view',
     title: 'India\'s Export Finance Landscape Just Changed Completely',
     excerpt: 'RBI\'s recent moves on export credit have quietly shifted the rules of the game for Indian exporters. Here is what changed, what it means for your capital stack, and what to do about it.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-03-20',
     readTime: 6,
     featured: false,
@@ -118,7 +118,7 @@ const ARTICLES = [
     category: 'market-view',
     title: 'Your Loan Didn\'t Get Rejected Because Your Business Is Weak',
     excerpt: 'Most loan rejections have nothing to do with business quality. They happen because of how the application was structured, which lender was approached, and what the documents said.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-03-08',
     readTime: 5,
     featured: false,
@@ -129,7 +129,7 @@ const ARTICLES = [
     category: 'market-view',
     title: '81 Lakh Crore Sitting in Unpaid MSME Invoices Right Now',
     excerpt: 'India\'s MSME sector is owed over 81 lakh crore in unpaid invoices. That is not just a statistic, it is a working capital crisis hiding in plain sight.',
-    author: 'Rohit Jain',
+    author: 'Pari Goyal',
     date: '2026-02-22',
     readTime: 6,
     featured: false,
@@ -140,7 +140,7 @@ const ARTICLES = [
     category: 'deal-announcements',
     title: 'Akro closes Healthcare SaaS mandate: Pre-Series A, 3.5 Cr equity raise',
     excerpt: 'The company had 1.2 Cr ARR and profitable unit economics. Akro prepared the full deck and financial model, sourced investor intros, and closed in 11 weeks.',
-    author: 'Akshita Chahande',
+    author: 'Pari Goyal',
     date: '2026-06-18',
     readTime: 3,
     featured: false,
@@ -151,7 +151,7 @@ const ARTICLES = [
     category: 'deal-announcements',
     title: 'B2B Fintech: Seed round closed, 1.8 Cr, 40+ enterprise clients',
     excerpt: 'Three-month payback period, no prior institutional investors. Akro sourced 6 investor introductions and closed in 9 weeks.',
-    author: 'Akshita Chahande',
+    author: 'Pari Goyal',
     date: '2026-06-02',
     readTime: 3,
     featured: false,
@@ -327,7 +327,7 @@ function NewsletterStrip() {
           Get Akro's insights in your inbox.
         </h3>
         <p className="text-white/65 text-sm mb-6">
-          Deal flow, market views, and fundraising intelligence — delivered weekly.
+          Deal flow, market views, and fundraising intelligence, delivered weekly.
         </p>
         {submitted ? (
           <p className="text-white font-semibold text-sm">You're subscribed. Watch your inbox.</p>

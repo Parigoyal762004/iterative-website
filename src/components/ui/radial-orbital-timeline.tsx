@@ -21,15 +21,15 @@ interface OrbitalNode {
 const FOUNDER_NODES: OrbitalNode[] = [
   { id: 1, title: 'Business Loans',      category: 'Founders', content: 'Unsecured and secured loans matched to your cashflow, GST returns, and business profile. No collateral needed for working capital.',  Icon: TrendingUp,     color: '#3F6F73', angle: 0,   energy: 92 },
   { id: 2, title: 'Startup Fundraising', category: 'Founders', content: 'From pre-seed to growth stage. We sharpen your narrative, build the model, and connect you to the right investors.',                   Icon: Rocket,         color: '#3F6F73', angle: 60,  energy: 85 },
-  { id: 3, title: 'FDI and ECB',         category: 'Founders', content: 'Foreign direct investment and external commercial borrowings — full RBI/FEMA compliance, cross-border capital structuring.',             Icon: Globe,          color: '#3F6F73', angle: 120, energy: 78 },
-  { id: 4, title: 'Export Factoring',    category: 'Founders', content: 'Up to 90% of export invoice value unlocked on Day 0. Collateral-free and non-recourse — stop funding your buyer\'s credit period.',      Icon: Ship,           color: '#3F6F73', angle: 180, energy: 88 },
+  { id: 3, title: 'FDI and ECB',         category: 'Founders', content: 'Foreign direct investment and external commercial borrowings with full RBI/FEMA compliance and cross-border capital structuring.',         Icon: Globe,          color: '#3F6F73', angle: 120, energy: 78 },
+  { id: 4, title: 'Export Factoring',    category: 'Founders', content: 'Up to 90% of export invoice value unlocked on Day 0. Collateral-free and non-recourse. Stop funding your buyer\'s credit period.',         Icon: Ship,           color: '#3F6F73', angle: 180, energy: 88 },
   { id: 5, title: 'Project Funding',     category: 'Founders', content: 'Milestone-based drawdowns for large-scale projects. Senior, mezzanine, and hybrid structures tailored to your development timeline.',    Icon: Layers,         color: '#3F6F73', angle: 240, energy: 72 },
   { id: 6, title: 'Loan Readiness',      category: 'Founders', content: 'Know exactly where you stand before applying. Detailed audit, instant score, and a structured action plan to maximise approval odds.',   Icon: ClipboardCheck, color: '#3F6F73', angle: 300, energy: 96 },
 ]
 
 const INVESTOR_NODES: OrbitalNode[] = [
   { id: 7,  title: 'Verified Deal Flow', category: 'Investors', content: 'Anonymised deal cards with sector, stage, and ticket size. Every deal is pre-vetted before it reaches you.',                           Icon: ShieldCheck, color: '#F2B705', angle: 0,   energy: 95 },
-  { id: 8,  title: '50+ Closed Deals',  category: 'Investors', content: 'Track record verified across equity advisory and structured debt mandates. Real capital, real closures — all anonymised.',              Icon: BarChart3,   color: '#F2B705', angle: 90,  energy: 90 },
+  { id: 8,  title: '50+ Closed Deals',  category: 'Investors', content: 'Track record verified across equity advisory and structured debt mandates. Real capital, real closures, all anonymised.',               Icon: BarChart3,   color: '#F2B705', angle: 90,  energy: 90 },
   { id: 9,  title: 'Direct Access',     category: 'Investors', content: 'Full founder introductions post NDA and agreement. You get direct access to the decision-makers, not intermediaries.',                  Icon: Users,       color: '#F2B705', angle: 180, energy: 82 },
   { id: 10, title: '₹50L to ₹50Cr',    category: 'Investors', content: 'Curated across early stage equity to structured credit. Ticket sizes designed to match your deployment strategy and risk profile.',    Icon: Landmark,    color: '#F2B705', angle: 270, energy: 88 },
 ]
@@ -46,8 +46,8 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
   const [paused, setPaused] = useState(false)
   const rafRef = useRef<number>(0)
   const lastRef = useRef<number>(0)
-  const RADIUS = 168
-  const SPEED = 0.008 // degrees per ms — slow, deliberate
+  const RADIUS = 210
+  const SPEED = 0.008 // degrees per ms
 
   const animate = useCallback((ts: number) => {
     if (!lastRef.current) lastRef.current = ts
@@ -78,7 +78,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
   }
 
   const selectedNode = nodes.find(n => n.id === selected)
-  const SIZE = 400
+  const SIZE = 500
 
   return (
     <div className="flex flex-col items-center gap-5 w-full">
@@ -116,8 +116,8 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
         {nodes.map(node => {
           const pos = getPos(node.angle)
           const depth = getDepth(node.angle)
-          const scale = 0.78 + (depth + 1) * 0.13
-          const opacity = 0.45 + (depth + 1) * 0.27
+          const scale = 0.85 + (depth + 1) * 0.1
+          const opacity = 0.65 + (depth + 1) * 0.175
           const isSelected = selected === node.id
           const NodeIcon = node.Icon
 
@@ -138,7 +138,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
               <div
                 className="rounded-full flex items-center justify-center"
                 style={{
-                  width: 48, height: 48,
+                  width: 60, height: 60,
                   background: isSelected ? accentColor : `${accentColor}2a`,
                   border: `1.5px solid ${isSelected ? accentColor : accentColor + '55'}`,
                   boxShadow: isSelected ? `0 0 18px ${accentColor}55` : 'none',
@@ -146,8 +146,8 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
                 }}
               >
                 <NodeIcon
-                  size={20}
-                  strokeWidth={1.8}
+                  size={24}
+                  strokeWidth={1.6}
                   className={isSelected ? 'text-white' : ''}
                   style={{ color: isSelected ? '#fff' : accentColor }}
                 />

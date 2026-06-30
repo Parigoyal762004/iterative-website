@@ -11,7 +11,7 @@ export default function PortalComingSoon() {
           The portal is on its way.
         </h1>
         <p className="t-body-l text-white/60 mb-10 leading-relaxed">
-          The Akro client portal — deal tracking, document signing, and portfolio visibility — is currently in development. Existing clients can reach us directly in the meantime.
+          The Akro client portal (deal tracking, document signing, and portfolio visibility) is currently in development. Existing clients can reach us directly in the meantime.
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <a href="mailto:info@akroventures.com">

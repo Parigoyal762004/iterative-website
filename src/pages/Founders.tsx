@@ -38,14 +38,14 @@ const SERVICES_A = [
     Icon: Target,
     name: 'Business Model Assessment',
     fullName: 'Business Model Assessment & Strategic Review',
-    body: 'We review your core model, unit economics, and market positioning — and give you a frank assessment of what\'s working and what needs strengthening before you approach investors.',
+    body: 'We review your core model, unit economics, and market positioning, and give you a frank assessment of what\'s working and what needs strengthening before you approach investors.',
     tag: 'Assessment',
   },
   {
     Icon: TrendingUp,
     name: 'Fundraising Strategy',
     fullName: 'Fundraising Strategy & Capital Planning',
-    body: 'We map the right capital structure for your stage — equity, debt, or a mix. We define raise size, valuation approach, and investor tier targeting.',
+    body: 'We map the right capital structure for your stage: equity, debt, or a mix. We define raise size, valuation approach, and investor tier targeting.',
     tag: 'Strategy',
   },
   {
@@ -66,7 +66,7 @@ const SERVICES_A = [
     Icon: Users,
     name: 'Investor Mapping',
     fullName: 'Investor Mapping & Outreach Assistance',
-    body: 'We identify the right investors for your stage, sector, and ticket size — and support you with personalised outreach, warm introductions where possible.',
+    body: 'We identify the right investors for your stage, sector, and ticket size, and support you with personalised outreach and warm introductions where possible.',
     tag: 'Outreach',
   },
   {
@@ -80,7 +80,7 @@ const SERVICES_A = [
     Icon: Landmark,
     name: 'Ongoing Advisory',
     fullName: 'Ongoing Strategic Advisory',
-    body: 'We stay with you through the fundraising process — available for prep calls, feedback after investor meetings, and course-correction when needed.',
+    body: 'We stay with you through the fundraising process: available for prep calls, feedback after investor meetings, and course-correction when needed.',
     tag: 'Advisory',
   },
 ]
@@ -88,11 +88,11 @@ const SERVICES_A = [
 const SERVICES_B = [
   {
     name: 'Unsecured Business Loans',
-    body: 'Access working capital without pledging assets. We identify the right lenders for your profile and handle the application end to end — fast approvals, no unnecessary complexity.',
+    body: 'Access working capital without pledging assets. We identify the right lenders for your profile and handle the application end to end. Fast approvals, no unnecessary complexity.',
   },
   {
     name: 'Secured Loans',
-    body: 'Leverage existing assets — property, shares, or receivables — to unlock larger financing at better rates. We structure the arrangement and negotiate terms on your behalf.',
+    body: 'Leverage existing assets (property, shares, or receivables) to unlock larger financing at better rates. We structure the arrangement and negotiate terms on your behalf.',
   },
   {
     name: 'FDI & ECB Advisory',
@@ -125,7 +125,7 @@ const FAQS = [
   { q: 'Do you work on both equity and debt?', a: 'Yes. Akro advises on both equity fundraising and debt syndication. Depending on your stage, model, and goals, we help you determine the right capital mix, then execute on it.' },
   { q: 'How long does the fundraising process typically take?', a: 'It varies. For equity raises, typically 3–6 months from mandate to close. For debt, 4–8 weeks. Our preparation work upfront significantly reduces the overall timeline.' },
   { q: 'What does Akro charge for its services?', a: 'Our fee structure varies by engagement: advisory retainer, success fee, or a combination. We discuss this transparently on our first call. No hidden charges.' },
-  { q: 'How is Akro different from a broker or aggregator?', a: 'Brokers connect you to lenders or investors and step back. Akro stays involved end to end — from reviewing your model to structuring your deal to supporting you through negotiations. We are advisors, not introducers.' },
+  { q: 'How is Akro different from a broker or aggregator?', a: 'Brokers connect you to lenders or investors and step back. Akro stays involved end to end, from reviewing your model to structuring your deal to supporting you through negotiations. We are advisors, not introducers.' },
   { q: 'What documents do I need to get started?', a: 'For startups: pitch deck, financials (if available), and a brief on your raise. For businesses: last 2 years\' financials, bank statements, and details of the funding requirement. We\'ll guide you through exactly what\'s needed on our first call.' },
   { q: 'Do you guarantee funding?', a: 'No, and any firm that does is not being honest with you. What we guarantee is rigorous preparation, the right introductions, and full support through the process. Our track record speaks for itself.' },
 ]
@@ -305,10 +305,10 @@ function ReadinessCalculator() {
   const score = answers.reduce((sum, v) => sum + v, 0)
   const scoreLabel =
     score <= 40
-      ? 'Early Stage — Let\'s build your foundation first'
+      ? 'Early Stage: Let\'s build your foundation first'
       : score <= 70
-      ? 'Getting There — A few key gaps to close'
-      : 'Ready to Raise — Let\'s get you in front of investors'
+      ? 'Getting There: A few key gaps to close'
+      : 'Ready to Raise: Let\'s get you in front of investors'
   const scoreTeal = score <= 40 ? '#e05252' : score <= 70 ? '#F2B705' : '#3F6F73'
 
   const handleNext = () => {

@@ -347,7 +347,7 @@ const LoanAudit = () => {
                   ? "Your profile looks strong. Our team will confirm the details on the call."
                   : pct >= 50
                   ? "A few areas to address. We'll walk you through what to fix."
-                  : "Room to prepare — but we've helped businesses in this position before."}
+                  : "Room to prepare, but we've helped businesses in this position before."}
               </div>
 
               <div className="divider-gold mx-auto mb-6" />

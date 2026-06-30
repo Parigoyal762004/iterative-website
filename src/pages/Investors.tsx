@@ -83,7 +83,7 @@ const DEAL_FLOW_POINTS = [
   },
   {
     n: '03',
-    title: 'Express interest — Akro facilitates',
+    title: 'Express interest: Akro facilitates',
     body: 'If a deal interests you, you express interest through the portal. Akro then facilitates the next steps: founder introductions, follow-up Q&A, and deal structuring. You don\'t chase; we manage the process.',
   },
 ]
@@ -402,7 +402,7 @@ function DealFlowSection() {
         {/* Deal card stack */}
         <FadeUp>
           <p className="text-xs font-bold uppercase tracking-widest mb-6 text-center" style={{ color: '#F2B705' }}>
-            Sample Deal Memos — Drag to explore
+            Sample Deal Memos: Drag to explore
           </p>
           <CardStack
             items={DEAL_CARDS}
@@ -697,7 +697,7 @@ function ApplicationForm() {
       </div>
 
       <textarea
-        placeholder="Tell us briefly about your investment background — sectors, stage, notable deals (if any). This helps us understand fit."
+        placeholder="Tell us briefly about your investment background: sectors, stage, notable deals (if any). This helps us understand fit."
         value={form.background}
         onChange={set('background')}
         rows={4}
@@ -784,7 +784,7 @@ function CtaStrip() {
           className="text-3xl md:text-4xl font-bold text-white mb-3"
           style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
         >
-          If you're serious about deployment — we're serious about finding you the right deals.
+          If you're serious about deployment, we're serious about finding you the right deals.
         </h2>
         <p className="text-white/70 text-base font-light max-w-lg mx-auto mb-8">
           Join a network of verified investors deploying into diligenced opportunities across

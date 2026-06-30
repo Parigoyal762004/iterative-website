@@ -67,18 +67,21 @@ const TEAM = [
     name: 'Rohit Jain',
     title: 'Co-Founder & CEO',
     initials: 'RJ',
+    image: '/team/rohit.png',
     bio: "With six years in the stock markets and a background as Finance Head at a 1,000 crore company, Rohit has seen capital from every angle. His time in the family lending business showed him how much damage the wrong funding advice could do, and why the right advisory matters. He founded Akro to fix that.",
   },
   {
     name: 'Akshita Chahande',
     title: 'Co-Founder & CTO',
     initials: 'AC',
+    image: '/team/akshita.png',
     bio: "After three years at Dell, Akshita chose to build something that mattered. She believed that companies don't just need fundraising; they need marketing support, research capability, and technology infrastructure to truly grow. At Akro, she leads the tech and research function that turns advisory into real execution.",
   },
   {
     name: 'Pari Goyal',
     title: 'CMO',
     initials: 'PG',
+    image: null as string | null,
     bio: 'Bio coming soon.',
   },
 ]
@@ -315,15 +318,21 @@ function TeamSection() {
           </p>
         </FadeUp>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {TEAM.map(({ name, title, initials, bio }, i) => (
+          {TEAM.map(({ name, title, initials, image, bio }, i) => (
             <FadeUp key={name} delay={i * 0.1}>
               <div className="bg-white rounded-sm p-7 h-full shadow-sm">
-                <div
-                  className="h-16 w-16 rounded-sm flex items-center justify-center mb-5 font-bold text-white text-lg"
-                  style={{ background: '#2B2B2B', letterSpacing: '0.05em' }}
-                >
-                  {initials}
-                </div>
+                {image ? (
+                  <div className="h-20 w-20 rounded-sm overflow-hidden mb-5">
+                    <img src={image} alt={name} className="w-full h-full object-cover object-top" loading="lazy" />
+                  </div>
+                ) : (
+                  <div
+                    className="h-16 w-16 rounded-sm flex items-center justify-center mb-5 font-bold text-white text-lg"
+                    style={{ background: '#2B2B2B', letterSpacing: '0.05em' }}
+                  >
+                    {initials}
+                  </div>
+                )}
                 <p
                   className="font-bold text-foreground mb-0.5"
                   style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.2rem' }}
