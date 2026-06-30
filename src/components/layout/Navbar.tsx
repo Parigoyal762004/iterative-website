@@ -74,8 +74,10 @@ export function Navbar() {
             className="flex items-center justify-between h-16"
             aria-label="Main navigation"
           >
-            {/* Logo */}
-            <Logo />
+            {/* Logo — invert to black when nav is over white bg */}
+            <div style={{ filter: scrolled ? 'brightness(0)' : 'none', transition: 'filter 0.3s' }}>
+              <Logo />
+            </div>
 
             {/* Desktop nav links */}
             <ul className="hidden lg:flex items-center gap-1" role="list">

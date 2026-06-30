@@ -89,8 +89,8 @@ function HeroSection() {
     <section
       className="relative flex items-end overflow-hidden px-6"
       style={{
-        minHeight: '50vh',
-        background: 'linear-gradient(145deg, #181818 0%, #2B2B2B 60%, #222 100%)',
+        minHeight: '60vh',
+        background: 'linear-gradient(145deg, #0a1f21 0%, #0f2a2c 40%, #1a3538 70%, #2B2B2B 100%)',
       }}
     >
       <div
@@ -216,24 +216,34 @@ function PillarsSection() {
             What we're built around.
           </h2>
         </FadeUp>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: 'rgba(255,255,255,0.08)' }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {PILLARS.map(({ title, body }, i) => (
             <FadeUp key={title} delay={i * 0.12}>
-              <div className="p-8 md:p-10 h-full" style={{ background: '#2B2B2B' }}>
+              <div
+                className="p-8 md:p-10 h-full rounded-2xl relative overflow-hidden"
+                style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(63,111,115,0.3)',
+                  boxShadow: '0 0 40px rgba(63,111,115,0.08)',
+                }}
+              >
+                {/* Glow accent top */}
+                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(90deg, transparent, #3F6F73, transparent)' }} />
                 <p
-                  className="mb-5"
+                  className="mb-2"
                   style={{
                     fontFamily: 'Cormorant Garamond, Georgia, serif',
-                    fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+                    fontSize: 'clamp(2rem, 3vw, 2.8rem)',
                     fontWeight: 700,
-                    color: '#3F6F73',
-                    lineHeight: 1.15,
+                    color: '#ffffff',
+                    lineHeight: 1.1,
+                    letterSpacing: '-0.02em',
                   }}
                 >
                   {title}
                 </p>
-                <div className="h-px w-8 mb-5" style={{ background: 'rgba(63,111,115,0.5)' }} />
-                <p className="text-white/55 text-sm leading-relaxed font-light">{body}</p>
+                <div className="h-[2px] w-10 mb-5 rounded-full" style={{ background: '#3F6F73' }} />
+                <p className="text-white/60 text-sm leading-relaxed font-light">{body}</p>
               </div>
             </FadeUp>
           ))}
