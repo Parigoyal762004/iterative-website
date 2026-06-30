@@ -340,9 +340,9 @@ export default function Apply() {
               <div className="mt-8 pt-6 border-t border-[#F3F4F6] text-center">
                 <p className="text-xs text-[#6B7280]">
                   Already have portal access?{' '}
-                  <a href="mailto:info@akroventures.com" className="font-semibold text-[#3F6F73] hover:text-[#2B2B2B] transition-colors">
-                    Email us
-                  </a>
+                  <Link to="/portal" className="font-semibold text-[#3F6F73] hover:text-[#2B2B2B] transition-colors">
+                    Log in
+                  </Link>
                 </p>
               </div>
             )}

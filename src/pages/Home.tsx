@@ -238,10 +238,10 @@ function HeroSection() {
 
           <FadeIn delay={0.66} direction="up">
             <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
-              <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn-slide">
-                <span>Book a Call</span>
-                <ArrowUpRight size={14} />
-              </a>
+              <Link to="/founders" className="btn-slide btn-slide-teal">
+                <span>For Founders</span>
+                <ArrowRight size={14} />
+              </Link>
               <Link to="/investors" className="btn-slide btn-slide-mustard">
                 <span>For Investors</span>
                 <ArrowRight size={14} />
@@ -291,12 +291,11 @@ function HeroSection() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="relative z-10 flex flex-col items-center gap-1 pb-8"
+        className="relative z-10 flex flex-col items-center pb-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.4, duration: 0.7 }}
       >
-        <span className="t-label text-white/18 tracking-[0.2em]">scroll</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.9, ease: 'easeInOut' }}
