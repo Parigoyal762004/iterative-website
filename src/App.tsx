@@ -21,6 +21,7 @@ const Contact          = lazy(() => import('./pages/Contact'))
 const Calculator       = lazy(() => import('./pages/Calculator'))
 const LoanAudit        = lazy(() => import('./pages/LoanAudit'))
 const PortalComingSoon = lazy(() => import('./pages/PortalComingSoon'))
+const Login           = lazy(() => import('./pages/Login'))
 const NotFound         = lazy(() => import('./pages/NotFound'))
 
 // ── Assessment tools ──────────────────────────────────────────────────────────
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/loan-audit" element={<LoanAudit />} />
             <Route path="/portal"    element={<PortalComingSoon />} />
+            <Route path="/login"     element={<Login />} />
 
             {/* Assessment tools */}
             <Route path="/assess/unsecured-loans"      element={<UnsecuredLoansTool />} />

@@ -45,107 +45,117 @@ function getCategoryLabel(id: string) {
   return CATEGORIES.find(c => c.id === id)?.label ?? id
 }
 
-// ── Sample articles (placeholder until CMS is wired) ──────────────────────
+// ── Articles — real LinkedIn publications + Akro deal notes ───────────────
 const ARTICLES = [
   {
     id: 1,
     category: 'fundraising',
-    title: 'What investors actually read in your pitch deck — and what they skip',
-    excerpt: 'Most founders spend 80% of their time on the wrong slides. Here is what a seasoned investor looks at first, and why.',
+    title: 'What I Tell Every Founder Who Walks In Asking About Funding',
+    excerpt: 'A founder came in wanting Series A with 90L in revenue and needed 80L for inventory. The first question was not about valuation. Here is what it was.',
     author: 'Rohit Jain',
-    date: '2026-06-25',
-    readTime: 5,
+    date: '2026-05-18',
+    readTime: 7,
     featured: true,
+    href: 'https://www.linkedin.com/pulse/what-i-tell-every-founder-who-walks-asking-funding-akro-ventures-ivn9c/',
   },
   {
     id: 2,
-    category: 'market-view',
-    title: 'The Indian startup funding landscape in H1 2026',
-    excerpt: 'Deal volumes are up 18% YoY, but average ticket sizes have compressed. What this means for founders raising today.',
+    category: 'fundraising',
+    title: 'Your Pitch Deck Gets 2 Minutes and 24 Seconds. Here\'s How Indian Investors Actually Use Them.',
+    excerpt: 'An Indian VC sees roughly 2,000 decks a year and invests in 5 to 8. The average first-pass review is 2 minutes and 24 seconds. Make every slide count.',
     author: 'Rohit Jain',
-    date: '2026-06-22',
-    readTime: 7,
+    date: '2026-05-10',
+    readTime: 5,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/your-pitch-deck-gets-2-minutes-24-seconds-heres-how-indian-klvgc/',
   },
   {
     id: 3,
     category: 'fundraising',
-    title: 'Debt vs equity: how to decide what\'s right for your stage',
-    excerpt: 'The wrong capital at the wrong time is worse than no capital at all. A framework for making the call.',
-    author: 'Pari Goyal',
-    date: '2026-06-20',
+    title: 'Every Founder Says Their Unit Economics Work. Most Are Lying to Themselves.',
+    excerpt: 'Not because founders are dishonest, because unit economics is the most confidently miscalculated metric in startup finance. Investors have built their entire DD process around finding the errors.',
+    author: 'Rohit Jain',
+    date: '2026-04-28',
     readTime: 6,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/every-founder-says-unit-economics-work-most-lying-themselves-8hrje/',
   },
   {
     id: 4,
-    category: 'deal-announcements',
-    title: 'Akro closes healthcare SaaS mandate: Pre-Series A, 3.5 Cr equity raise',
-    excerpt: 'The company had 1.2 Cr ARR and profitable unit economics. Akro prepared the full deck and financial model.',
-    author: 'Akshita Chahande',
-    date: '2026-06-18',
-    readTime: 3,
+    category: 'fundraising',
+    title: 'Your Startup\'s Valuation Is Not What You Think It Is',
+    excerpt: 'Most founders base their valuation on a friend\'s raise, a VC tweet, and a revenue multiple from a panel. Those figures were accurate in 2021, now probably off by 40% today.',
+    author: 'Rohit Jain',
+    date: '2026-04-15',
+    readTime: 5,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/your-startups-valuation-what-you-think-akro-ventures-wmlrc/',
   },
   {
     id: 5,
     category: 'fundraising',
-    title: 'How to structure your financial model before you speak to investors',
-    excerpt: 'Investors will forensically probe your assumptions. Here is how to build projections that hold up under scrutiny.',
+    title: '3 Things Investors Won\'t Tell You They Hate in Pitch Decks',
+    excerpt: 'Clean design, good fonts. After two reads, you still cannot explain what the company does. That is not a deck problem. That is a communication problem that ends fundraising conversations before they begin.',
     author: 'Rohit Jain',
-    date: '2026-06-15',
-    readTime: 8,
+    date: '2026-04-02',
+    readTime: 4,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/3-things-investors-wont-tell-you-hate-pitch-decks-akro-ventures-jtyxc/',
   },
   {
     id: 6,
-    category: 'spotlights',
-    title: 'Spotlight: A founder who raised 2 Cr in 6 weeks — without a warm intro',
-    excerpt: 'No prior investor relationships. No network. Just a tight deck, solid numbers, and a clear narrative. Here is how it happened.',
-    author: 'Pari Goyal',
-    date: '2026-06-12',
-    readTime: 5,
+    category: 'market-view',
+    title: 'India\'s Export Finance Landscape Just Changed Completely',
+    excerpt: 'RBI\'s recent moves on export credit have quietly shifted the rules of the game for Indian exporters. Here is what changed, what it means for your capital stack, and what to do about it.',
+    author: 'Rohit Jain',
+    date: '2026-03-20',
+    readTime: 6,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/indias-export-finance-landscape-just-changed-completely-9metc/',
   },
   {
     id: 7,
     category: 'market-view',
-    title: 'Why manufacturing SMEs are the most underfunded segment in India',
-    excerpt: 'GST-backed underwriting and debt syndication are unlocking capital for a sector that banks routinely ignore.',
+    title: 'Your Loan Didn\'t Get Rejected Because Your Business Is Weak',
+    excerpt: 'Most loan rejections have nothing to do with business quality. They happen because of how the application was structured, which lender was approached, and what the documents said.',
     author: 'Rohit Jain',
-    date: '2026-06-10',
-    readTime: 6,
+    date: '2026-03-08',
+    readTime: 5,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/your-loan-didnt-get-rejected-because-business-weak-akro-ventures-zn3nc/',
   },
   {
     id: 8,
-    category: 'events',
-    title: 'Akro Founder Pitch Night — June 2026 recap',
-    excerpt: 'Eight founders. Three investor panels. One evening. What came out of Akro\'s quarterly pitch session.',
-    author: 'Pari Goyal',
-    date: '2026-06-08',
-    readTime: 4,
+    category: 'market-view',
+    title: '81 Lakh Crore Sitting in Unpaid MSME Invoices Right Now',
+    excerpt: 'India\'s MSME sector is owed over 81 lakh crore in unpaid invoices. That is not just a statistic, it is a working capital crisis hiding in plain sight.',
+    author: 'Rohit Jain',
+    date: '2026-02-22',
+    readTime: 6,
     featured: false,
+    href: 'https://www.linkedin.com/pulse/81-lakh-crore-sitting-unpaid-msme-invoices-right-now-theres-m5ucc/',
   },
   {
     id: 9,
-    category: 'fundraising',
-    title: 'The Akro checklist: are you ready to raise?',
-    excerpt: 'Twelve questions that tell us whether a founder is genuinely ready to enter a fundraising process. Honest answers required.',
-    author: 'Rohit Jain',
-    date: '2026-06-05',
-    readTime: 5,
+    category: 'deal-announcements',
+    title: 'Akro closes Healthcare SaaS mandate: Pre-Series A, 3.5 Cr equity raise',
+    excerpt: 'The company had 1.2 Cr ARR and profitable unit economics. Akro prepared the full deck and financial model, sourced investor intros, and closed in 11 weeks.',
+    author: 'Akshita Chahande',
+    date: '2026-06-18',
+    readTime: 3,
     featured: false,
+    href: '',
   },
   {
     id: 10,
     category: 'deal-announcements',
-    title: 'B2B Fintech: Seed round closed, 1.8 Cr — 40+ enterprise clients',
+    title: 'B2B Fintech: Seed round closed, 1.8 Cr, 40+ enterprise clients',
     excerpt: 'Three-month payback period, no prior institutional investors. Akro sourced 6 investor introductions and closed in 9 weeks.',
     author: 'Akshita Chahande',
     date: '2026-06-02',
     readTime: 3,
     featured: false,
+    href: '',
   },
 ]
 
@@ -177,11 +187,15 @@ function CategoryPill({ id, small = false }: { id: string; small?: boolean }) {
 
 // ── Featured card ──────────────────────────────────────────────────────────
 function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
+  const dest = article.href || `/insights/${article.id}`
+  const isExternal = article.href?.startsWith('http')
   return (
     <FadeUp>
       <a
-        href={`/insights/${article.id}`}
-        className="group block rounded-sm overflow-hidden border border-border hover:border-primary transition-colors"
+        href={dest}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noreferrer' : undefined}
+        className="group block rounded-2xl overflow-hidden border border-border hover:border-primary transition-colors"
         style={{ background: '#ffffff' }}
       >
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-0">
@@ -215,7 +229,7 @@ function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
                 <span>{article.author}</span>
               </div>
               <span className="ml-auto flex items-center gap-1.5 text-xs font-semibold text-primary group-hover:gap-2.5 transition-all">
-                Read Article <ArrowRight size={12} />
+                {isExternal ? 'Read on LinkedIn' : 'Read Article'} <ArrowRight size={12} />
               </span>
             </div>
           </div>
@@ -247,11 +261,15 @@ function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
 // ── Article card ───────────────────────────────────────────────────────────
 function ArticleCard({ article, delay = 0 }: { article: typeof ARTICLES[0]; delay?: number }) {
   const accent = getCategoryColor(article.category)
+  const dest = article.href || `/insights/${article.id}`
+  const isExternal = article.href?.startsWith('http')
   return (
     <FadeUp delay={delay}>
       <a
-        href={`/insights/${article.id}`}
-        className="group block bg-white rounded-sm border border-border hover:border-primary transition-colors h-full overflow-hidden"
+        href={dest}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noreferrer' : undefined}
+        className="group block bg-white rounded-2xl border border-border hover:border-primary transition-colors h-full overflow-hidden"
         style={{ borderTop: `3px solid ${accent}` }}
       >
         <div className="p-6 flex flex-col h-full">
@@ -279,7 +297,7 @@ function ArticleCard({ article, delay = 0 }: { article: typeof ARTICLES[0]; dela
               <span>{article.author}</span>
             </div>
             <span className="text-[10px] font-semibold text-primary flex items-center gap-1 group-hover:gap-2 transition-all">
-              Read <ArrowRight size={10} />
+              {isExternal ? 'LinkedIn' : 'Read'} <ArrowRight size={10} />
             </span>
           </div>
         </div>
@@ -370,37 +388,51 @@ export default function Insights() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="px-6 pt-32 pb-10" style={{ background: '#ffffff' }}>
-        <div className="mx-auto max-w-4xl">
+      <section
+        className="px-6 pt-32 pb-14 relative overflow-hidden"
+        style={{ background: 'linear-gradient(145deg, #0a1f21 0%, #0f2a2c 50%, #2B2B2B 100%)' }}
+      >
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+        <div className="relative mx-auto max-w-4xl">
           <FadeUp>
+            <p className="t-label mb-3" style={{ color: '#3F6F73' }}>Insights</p>
             <h1
-              className="mb-2"
+              className="mb-3 text-white"
               style={{
                 fontFamily: 'Cormorant Garamond, Georgia, serif',
-                fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+                fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                 fontWeight: 700,
-                color: '#2B2B2B',
+                fontStyle: 'italic',
                 lineHeight: 1.05,
+                letterSpacing: '-0.03em',
               }}
             >
-              Insights
+              Funding intelligence.<br />From the inside.
             </h1>
-            <p className="text-muted-foreground text-base mb-7 max-w-xl">
-              Fundraising intelligence, market views, and deal thinking from the Akro team.
+            <p className="text-white/55 text-base mb-8 max-w-xl">
+              Fundraising strategy, market views, and deal thinking from the Akro team. Published on LinkedIn, collected here.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>
             <div className="relative max-w-2xl">
               <Search
                 size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
+                className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                style={{ color: 'rgba(255,255,255,0.4)' }}
               />
               <input
                 type="text"
                 value={query}
                 onChange={e => { setQuery(e.target.value); setPage(1) }}
                 placeholder="Search articles, topics, or deals..."
-                className="w-full pl-10 pr-4 py-3.5 text-sm text-foreground placeholder-muted-foreground border border-border rounded-sm focus:outline-none focus:border-primary transition-colors bg-white"
+                className="w-full pl-10 pr-4 py-3.5 text-sm text-white placeholder-white/40 border rounded-sm focus:outline-none transition-colors"
+                style={{ background: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.15)' }}
               />
             </div>
           </FadeUp>

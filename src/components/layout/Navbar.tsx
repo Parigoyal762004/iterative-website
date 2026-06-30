@@ -116,7 +116,7 @@ export function Navbar() {
             {/* Desktop right actions */}
             <div className="hidden lg:flex items-center gap-4">
               <Link
-                to="/portal"
+                to="/login"
                 className={cn(
                   'text-[0.6875rem] font-semibold uppercase tracking-[0.08em] transition-colors duration-200',
                   scrolled ? 'text-muted-foreground hover:text-foreground' : 'text-white/50 hover:text-white'
@@ -200,7 +200,7 @@ export function Navbar() {
                   ))}
                   <li>
                     <Link
-                      to="/portal"
+                      to="/login"
                       className="block py-3 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors duration-200 border-b border-white/8"
                     >
                       Login

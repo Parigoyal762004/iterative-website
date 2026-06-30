@@ -629,15 +629,48 @@ function EMICalculator() {
   )
 }
 
+// ── Quote Strip ────────────────────────────────────────────────────────────
+function QuoteStrip() {
+  return (
+    <section className="py-16 px-6 relative overflow-hidden" style={{ background: '#1a2e30' }}>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.18) 1px, transparent 0)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+      <div className="relative mx-auto max-w-4xl text-center">
+        <p
+          style={{
+            fontFamily: 'Cormorant Garamond, Georgia, serif',
+            fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
+            fontWeight: 700,
+            fontStyle: 'italic',
+            color: 'white',
+            lineHeight: 1.25,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          "The wrong capital at the wrong time is worse than no capital at all."
+        </p>
+        <p className="mt-4 text-xs uppercase tracking-widest font-semibold" style={{ color: '#3F6F73' }}>
+          Rohit Jain, Co-Founder
+        </p>
+      </div>
+    </section>
+  )
+}
+
 // ── Track B ────────────────────────────────────────────────────────────────
 function TrackBSection() {
   const [active, setActive] = useState(0)
 
   return (
-    <section id="growing-businesses" className="section-y relative overflow-hidden" style={{ background: '#ffffff' }}>
-      {/* Subtle mustard dot grid */}
+    <section id="growing-businesses" className="section-y relative overflow-hidden" style={{ background: 'linear-gradient(145deg, #0f2224 0%, #1a3538 55%, #232e2e 100%)' }}>
+      {/* Mustard dot grid on dark */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.05) 1px, transparent 0)',
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.07) 1px, transparent 0)',
         backgroundSize: '36px 36px',
       }} />
       <div className="relative mx-auto max-w-6xl px-6">
@@ -645,11 +678,11 @@ function TrackBSection() {
           <p className="t-label mb-3" style={{ color: '#F2B705' }}>For Growing Businesses</p>
           <h2
             className="text-4xl md:text-5xl font-bold leading-tight mb-5"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'white' }}
           >
             Access the right capital, faster than you think.
           </h2>
-          <p className="text-muted-foreground text-base leading-relaxed max-w-2xl mb-12">
+          <p className="text-base leading-relaxed max-w-2xl mb-12" style={{ color: 'rgba(255,255,255,0.6)' }}>
             We simplify the process so you can focus on running your business. Whether you need working
             capital, want to leverage assets, or are exploring international financing options, Akro
             structures the right solution and handles the complexity end to end.
@@ -680,7 +713,7 @@ function TrackBSection() {
                 </button>
               ))}
             </div>
-            <div className="bg-white p-8 md:p-10 flex flex-col justify-center min-h-[260px]">
+            <div className="p-8 md:p-10 flex flex-col justify-center min-h-[260px]" style={{ background: 'rgba(255,255,255,0.05)' }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}
@@ -692,11 +725,11 @@ function TrackBSection() {
                   <div className="h-1 w-8 rounded-full mb-5" style={{ background: '#F2B705' }} />
                   <h3
                     className="text-xl md:text-2xl font-bold mb-4 leading-snug"
-                    style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+                    style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'white' }}
                   >
                     {SERVICES_B[active].name}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-lg">
+                  <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: 'rgba(255,255,255,0.6)' }}>
                     {SERVICES_B[active].body}
                   </p>
                   <a href={CALENDLY} target="_blank" rel="noreferrer" className="btn-slide btn-slide-mustard" style={{ display: 'inline-flex', width: 'fit-content' }}>
@@ -721,7 +754,7 @@ function TrackBSection() {
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section className="section-y border-t border-border" style={{ background: '#ffffff' }}>
+    <section className="section-y" style={{ background: '#F4F6F2' }}>
       <div className="mx-auto max-w-3xl px-6">
         <FadeUp>
           <h2
@@ -797,6 +830,7 @@ export default function Founders() {
     <>
       <HeroSection />
       <TrackASection />
+      <QuoteStrip />
       <TrackBSection />
       <FAQSection />
       <CtaStrip />
