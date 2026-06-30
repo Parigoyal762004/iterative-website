@@ -66,7 +66,7 @@ export function Navbar() {
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           scrolled
             ? 'bg-white border-b border-border shadow-sm'
-            : 'bg-black/20 backdrop-blur-sm'
+            : 'bg-black/55 backdrop-blur-md'
         )}
       >
         <div className="mx-auto max-w-[1280px] px-6">
