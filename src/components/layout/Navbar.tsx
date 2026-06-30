@@ -66,7 +66,7 @@ export function Navbar() {
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           scrolled
             ? 'bg-white border-b border-border shadow-sm'
-            : 'bg-transparent'
+            : 'bg-black/20 backdrop-blur-sm'
         )}
       >
         <div className="mx-auto max-w-[1280px] px-6">
@@ -74,10 +74,7 @@ export function Navbar() {
             className="flex items-center justify-between h-16"
             aria-label="Main navigation"
           >
-            {/* Logo — invert to black when nav is over white bg */}
-            <div style={{ filter: scrolled ? 'brightness(0)' : 'none', transition: 'filter 0.3s' }}>
-              <Logo />
-            </div>
+            <Logo />
 
             {/* Desktop nav links */}
             <ul className="hidden lg:flex items-center gap-1" role="list">
