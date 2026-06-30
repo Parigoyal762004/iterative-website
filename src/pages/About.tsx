@@ -79,10 +79,10 @@ const TEAM = [
   },
   {
     name: 'Pari Goyal',
-    title: 'CMO',
+    title: 'Technology, Marketing & Operations',
     initials: 'PG',
-    image: null as string | null,
-    bio: 'Bio coming soon.',
+    image: '/team/pari.png' as string | null,
+    bio: 'A Computer Science graduate from Thapar Institute of Engineering & Technology, Pari built Akro\'s entire digital operation from scratch: the website, lead generation tooling, content pipelines, and automated outreach. She specialises in agentic AI systems and has shipped real workflows for clients across marketing and operations. At Akro, she sits at the intersection of technology, marketing, and research.',
   },
 ]
 
