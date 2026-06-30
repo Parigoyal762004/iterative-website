@@ -81,8 +81,8 @@ const TEAM = [
     name: 'Pari Goyal',
     title: 'Technology, Marketing & Operations',
     initials: 'PG',
-    image: '/team/pari.png' as string | null,
-    bio: 'A Computer Science graduate from Thapar Institute of Engineering & Technology, Pari built Akro\'s entire digital operation from scratch: the website, lead generation tooling, content pipelines, and automated outreach. She specialises in agentic AI systems and has shipped real workflows for clients across marketing and operations. At Akro, she sits at the intersection of technology, marketing, and research.',
+    image: '/team/pari.jpeg' as string | null,
+    bio: "Pari has spent the last few years building agentic AI systems that actually get used, across marketing, lead generation, and client operations. She works across product, marketing, and automation because she thinks in outcomes, not deliverables. At Akro, she built the entire digital operation from the ground up and leads technology, marketing, and research.",
   },
 ]
 
