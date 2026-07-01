@@ -280,7 +280,7 @@ function HeroSection() {
       <div className="relative z-10 flex-1 mx-auto w-full max-w-[1280px] px-6 pt-24 pb-12 grid lg:grid-cols-[1fr_1.05fr] gap-8 lg:gap-10 items-center">
 
         {/* Left — headline + CTAs */}
-        <div className="order-2 lg:order-1">
+        <div className="lg:order-1">
           <h1
             className="font-display text-white"
             style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.02em', maxWidth: '15ch' }}
@@ -318,8 +318,8 @@ function HeroSection() {
           </FadeIn>
         </div>
 
-        {/* Right — rotating card stage */}
-        <div className="order-1 lg:order-2 flex flex-col items-center gap-6">
+        {/* Right — rotating card stage (desktop only; on mobile the rotation lives in the background color/glow/ghost-word instead, so the hero reads as one block, not two) */}
+        <div className="hidden lg:flex lg:order-2 lg:flex-col lg:items-center lg:gap-6">
           <div className="relative w-full" style={{ height: STAGE_H, overflow: 'hidden' }}>
             {HERO_CARDS.map((card, i) => {
               const role = getRole(i)
@@ -572,11 +572,10 @@ function OutcomesCarousel() {
 
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden h-viewport-safe"
       style={{
         backgroundColor: active.bg,
         transition: reduced ? 'none' : 'background-color 650ms cubic-bezier(0.4,0,0.2,1)',
-        height: '100vh',
         minHeight: 560,
         maxHeight: 900,
       }}
