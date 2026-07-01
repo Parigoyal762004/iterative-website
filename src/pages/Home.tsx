@@ -751,7 +751,7 @@ function ProcessSection() {
 // ─────────────────────────────────────────────────────────────────────────────
 function StatsSection() {
   return (
-    <section className="bg-cream section-y relative overflow-hidden" aria-label="Track record numbers">
+    <section className="bg-secondary section-y relative overflow-hidden" aria-label="Track record numbers">
       <div className="mx-auto max-w-[1280px] px-6">
 
         <ScrollReveal className="mb-16">
@@ -768,7 +768,7 @@ function StatsSection() {
           {stats.map((stat, i) => (
             <motion.div
               key={i}
-              className="bg-white px-4 py-6 sm:px-8 sm:py-10"
+              className="bg-background px-4 py-6 sm:px-8 sm:py-10 border border-border"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}

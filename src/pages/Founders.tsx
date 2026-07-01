@@ -153,7 +153,7 @@ function HeroSection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.06) 1px, transparent 0)',
           backgroundSize: '36px 36px',
           zIndex: 1,
         }}
@@ -251,7 +251,7 @@ function ServiceSelector() {
       </div>
 
       {/* Right — detail */}
-      <div className="bg-white p-8 md:p-10 flex flex-col justify-center min-h-[320px]">
+      <div className="bg-background p-8 md:p-10 flex flex-col justify-center min-h-[320px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -322,7 +322,7 @@ function ReadinessCalculator() {
   const handleReset = () => { setStep(0); setAnswers([]); setSelected(null) }
 
   return (
-    <div className="bg-white rounded-sm shadow-md p-8 max-w-xl mx-auto" style={{ borderTop: '3px solid #3F6F73' }}>
+    <div className="bg-background rounded-sm shadow-md p-8 max-w-xl mx-auto" style={{ borderTop: '3px solid #3F6F73' }}>
       <p className="t-label text-primary mb-2">How fundraising-ready are you?</p>
 
       {!done ? (
@@ -469,7 +469,7 @@ function JourneyTimeline() {
 // ── Track A ────────────────────────────────────────────────────────────────
 function TrackASection() {
   return (
-    <section id="startup-founders" className="section-y relative overflow-hidden" style={{ background: '#F4F6F2' }}>
+    <section id="startup-founders" className="section-y relative overflow-hidden bg-secondary">
       {/* Subtle teal dot grid */}
       <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.07) 1px, transparent 0)',
@@ -539,7 +539,7 @@ function EMICalculator() {
   const TENURES = [6, 12, 18, 24, 36, 48, 60, 84, 120]
 
   return (
-    <div className="bg-white rounded-sm shadow-md p-8 max-w-2xl mx-auto" style={{ borderTop: '3px solid #F2B705' }}>
+    <div className="bg-background rounded-sm shadow-md p-8 max-w-2xl mx-auto" style={{ borderTop: '3px solid #F2B705' }}>
       <p className="t-label mb-2" style={{ color: '#F2B705' }}>Calculate your loan repayment</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -636,7 +636,7 @@ function QuoteStrip() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.18) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.08) 1px, transparent 0)',
           backgroundSize: '28px 28px',
         }}
       />
@@ -670,7 +670,7 @@ function TrackBSection() {
     <section id="growing-businesses" className="section-y relative overflow-hidden" style={{ background: 'linear-gradient(145deg, #0f2224 0%, #1a3538 55%, #232e2e 100%)' }}>
       {/* Mustard dot grid on dark */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.07) 1px, transparent 0)',
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.04) 1px, transparent 0)',
         backgroundSize: '36px 36px',
       }} />
       <div className="relative mx-auto max-w-6xl px-6">
@@ -754,7 +754,7 @@ function TrackBSection() {
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section className="section-y" style={{ background: '#F4F6F2' }}>
+    <section className="section-y bg-secondary">
       <div className="mx-auto max-w-3xl px-6">
         <FadeUp>
           <h2

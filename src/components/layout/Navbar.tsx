@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Sun, Moon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Logo from '@/components/Logo'
 import { Button } from '@/components/Button'
 import { cn } from '@/lib/utils'
+import { useTheme } from '@/lib/theme'
 
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
 
@@ -22,6 +23,7 @@ export function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const progressRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
+  const { theme, toggleTheme } = useTheme()
 
   // Close drawer on route change
   useEffect(() => { setDrawerOpen(false) }, [location.pathname])
@@ -65,7 +67,7 @@ export function Navbar() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           scrolled
-            ? 'bg-white border-b border-border shadow-sm'
+            ? 'bg-background border-b border-border shadow-sm'
             : 'bg-black/55 backdrop-blur-md'
         )}
       >
@@ -112,6 +114,16 @@ export function Navbar() {
 
             {/* Desktop right actions */}
             <div className="hidden lg:flex items-center gap-4">
+              <button
+                onClick={toggleTheme}
+                className={cn(
+                  'w-8 h-8 flex items-center justify-center transition-colors duration-200',
+                  scrolled ? 'text-muted-foreground hover:text-foreground' : 'text-white/50 hover:text-white'
+                )}
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? <Sun size={15} strokeWidth={1.8} /> : <Moon size={15} strokeWidth={1.8} />}
+              </button>
               <Link
                 to="/login"
                 className={cn(
@@ -216,6 +228,13 @@ export function Navbar() {
                       Contact Us
                     </Button>
                   </Link>
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center gap-2.5 py-3 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white transition-colors duration-200"
+                  >
+                    {theme === 'dark' ? <Sun size={14} strokeWidth={1.8} /> : <Moon size={14} strokeWidth={1.8} />}
+                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                  </button>
                 </div>
               </nav>
 

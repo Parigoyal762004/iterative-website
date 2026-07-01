@@ -154,7 +154,7 @@ function HeroSection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.07) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.04) 1px, transparent 0)',
           backgroundSize: '40px 40px',
           zIndex: 1,
         }}
@@ -215,7 +215,7 @@ function HeroSection() {
 // ── Network Marquee ────────────────────────────────────────────────────────
 function NetworkMarquee() {
   return (
-    <section className="py-12 px-6 overflow-hidden border-t border-border" style={{ background: '#ffffff' }}>
+    <section className="py-12 px-6 overflow-hidden border-t border-border bg-background">
       <style>{`
         @keyframes inv-marquee {
           0% { transform: translateX(0); }
@@ -254,7 +254,7 @@ function NetworkMarquee() {
 // ── Benefits ───────────────────────────────────────────────────────────────
 function BenefitsSection() {
   return (
-    <section className="section-y" style={{ background: '#ffffff' }}>
+    <section className="section-y bg-background">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
           {/* Left — sticky editorial */}
@@ -310,7 +310,7 @@ function BenefitsSection() {
 // ── Vetting Process ────────────────────────────────────────────────────────
 function VettingSection() {
   return (
-    <section className="section-y" style={{ background: '#F4F6F2' }}>
+    <section className="section-y bg-secondary">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 items-start mb-14">
           <FadeUp>
@@ -371,7 +371,7 @@ function VettingSection() {
 // ── Deal Flow ──────────────────────────────────────────────────────────────
 function DealFlowSection() {
   return (
-    <section className="section-y" style={{ background: '#ffffff' }}>
+    <section className="section-y bg-background">
       <div className="mx-auto max-w-5xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Process</p>
@@ -390,7 +390,7 @@ function DealFlowSection() {
         <FadeUp className="mb-14">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {DEAL_FLOW_POINTS.map(({ n, title, body }) => (
-              <div key={n} className="p-5 bg-[#F4F6F2] rounded-sm border-l-2" style={{ borderLeftColor: '#3F6F73' }}>
+              <div key={n} className="p-5 bg-secondary rounded-sm border-l-2" style={{ borderLeftColor: '#3F6F73' }}>
                 <span className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: '#3F6F73' }}>{n}</span>
                 <h3 className="font-bold text-foreground text-sm mb-1">{title}</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed">{body}</p>
@@ -469,7 +469,7 @@ function PortfolioSection() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.14) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.06) 1px, transparent 0)',
           backgroundSize: '32px 32px',
         }}
       />
@@ -479,7 +479,7 @@ function PortfolioSection() {
         style={{
           top: '-15%', right: '-10%',
           width: 520, height: 400, borderRadius: '50%',
-          background: 'radial-gradient(ellipse, rgba(63,111,115,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(63,111,115,0.08) 0%, transparent 70%)',
         }}
       />
 
@@ -538,7 +538,7 @@ function PortfolioSection() {
 // ── Deal Types ─────────────────────────────────────────────────────────────
 function DealTypesSection() {
   return (
-    <section className="section-y" style={{ background: '#F4F6F2' }}>
+    <section className="section-y bg-secondary">
       <div className="mx-auto max-w-4xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Deal Coverage</p>
@@ -566,7 +566,7 @@ function DealTypesSection() {
                 items: ['Equity Raise', 'Structured Debt', 'Debt Syndication', 'Co-Investment'],
               },
             ].map(({ heading, items }) => (
-              <div key={heading} className="bg-white p-6 rounded-sm shadow-sm">
+              <div key={heading} className="bg-background p-6 rounded-sm shadow-sm border border-border">
                 <p
                   className="text-xs font-bold uppercase tracking-widest mb-4"
                   style={{ color: '#3F6F73' }}
@@ -728,7 +728,7 @@ function ApplicationForm() {
 function FAQSection() {
   const [open, setOpen] = useState<number | null>(null)
   return (
-    <section className="section-y border-t border-border" style={{ background: '#ffffff' }}>
+    <section className="section-y border-t border-border bg-background">
       <div className="mx-auto max-w-3xl px-6">
         <FadeUp>
           <h2
@@ -814,7 +814,7 @@ export default function Investors() {
       <PortfolioSection />
       <DealTypesSection />
 
-      <section id="apply" className="section-y" style={{ background: '#ffffff' }}>
+      <section id="apply" className="section-y bg-background">
         <div className="mx-auto max-w-2xl px-6">
           <FadeUp>
             <p className="t-label text-primary mb-3 text-center">Apply</p>

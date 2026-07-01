@@ -10,6 +10,8 @@ import { Toaster as Sonner } from '@/components/ui/sonner'
 import { Toaster } from '@/components/ui/toaster'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import Layout from './components/layout/Layout'
+import ErrorBoundary from './components/ErrorBoundary'
+import { ThemeProvider } from './lib/theme'
 
 // ── Pages ─────────────────────────────────────────────────────────────────────
 const Home             = lazy(() => import('./pages/Home'))
@@ -33,16 +35,32 @@ const StartupConsultationTool = lazy(() => import('./pages/tools/StartupConsulta
 const FdiEcbTool              = lazy(() => import('./pages/tools/FdiEcbTool'))
 
 const PageFallback = () => (
-  <div className="min-h-[60vh] bg-background" aria-hidden="true" />
+  <div className="min-h-[60vh] bg-background flex items-center justify-center">
+    <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin opacity-40" />
+  </div>
+)
+
+const PageError = () => (
+  <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-6 text-center">
+    <p className="t-body-m text-muted-foreground">This page couldn't load. Try refreshing.</p>
+    <button
+      onClick={() => window.location.reload()}
+      className="t-label text-accent underline underline-offset-4"
+    >
+      Reload page
+    </button>
+  </div>
 )
 
 const App = () => (
+  <ThemeProvider>
   <TooltipProvider>
     <Toaster />
     <Sonner />
     <BrowserRouter>
       <ScrollToTop />
       <Layout>
+        <ErrorBoundary fallback={<PageError />}>
         <Suspense fallback={<PageFallback />}>
           <Routes>
             <Route path="/"          element={<Home />} />
@@ -67,9 +85,11 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
+        </ErrorBoundary>
       </Layout>
     </BrowserRouter>
   </TooltipProvider>
+  </ThemeProvider>
 )
 
 export default App

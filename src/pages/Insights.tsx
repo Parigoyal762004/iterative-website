@@ -195,8 +195,7 @@ function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
         href={dest}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noreferrer' : undefined}
-        className="group block rounded-2xl overflow-hidden border border-border hover:border-primary transition-colors"
-        style={{ background: '#ffffff' }}
+        className="group block rounded-2xl overflow-hidden border border-border hover:border-primary transition-colors bg-background"
       >
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-0">
           {/* Left: content */}
@@ -395,7 +394,7 @@ export default function Insights() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
+            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.06) 1px, transparent 0)',
             backgroundSize: '32px 32px',
           }}
         />

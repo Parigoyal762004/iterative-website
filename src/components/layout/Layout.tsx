@@ -2,6 +2,7 @@ import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 import { SmoothScroll } from './SmoothScroll'
 import WhatsAppFloat from '@/components/WhatsAppFloat'
+import { ScrollToTopButton } from '@/components/ui/ScrollToTop'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -17,6 +18,7 @@ export default function Layout({ children }: LayoutProps) {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <ScrollToTopButton />
     </>
   )
 }

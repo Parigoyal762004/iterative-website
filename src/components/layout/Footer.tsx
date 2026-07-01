@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Linkedin, Instagram, Mail, Phone, MapPin, MessageCircle } from 'lucide-react'
-import Logo from '@/components/Logo'
+import footerLogoImg from '@/assets/footer_logo.jpg'
 
 const XLogo = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -43,7 +43,9 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="space-y-6">
-            <Logo />
+            <Link to="/">
+              <img src={footerLogoImg} alt="Akro Ventures" className="h-10 md:h-12 w-auto object-contain" />
+            </Link>
             <p className="text-[0.875rem] text-white/55 leading-relaxed max-w-[260px]">
               Capital advisory for ambitious Indian founders. Strategy first, paperwork second.
             </p>

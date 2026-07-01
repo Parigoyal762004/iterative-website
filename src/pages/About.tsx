@@ -1,6 +1,9 @@
 import { useRef, lazy, Suspense } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import rohitImg from '@/assets/rohit.jpg'
+import akshitaImg from '@/assets/akshita.jpg'
+import pariImg from '@/assets/pari.jpeg'
 
 const CelestialSphere = lazy(() =>
   import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere }))
@@ -67,21 +70,21 @@ const TEAM = [
     name: 'Rohit Jain',
     title: 'Co-Founder & CEO',
     initials: 'RJ',
-    image: '/team/rohit.png',
+    image: rohitImg,
     bio: "With six years in the stock markets and a background as Finance Head at a 1,000 crore company, Rohit has seen capital from every angle. His time in the family lending business showed him how much damage the wrong funding advice could do, and why the right advisory matters. He founded Akro to fix that.",
   },
   {
     name: 'Akshita Chahande',
     title: 'Co-Founder & CTO',
     initials: 'AC',
-    image: '/team/akshita.png',
+    image: akshitaImg,
     bio: "After three years at Dell, Akshita chose to build something that mattered. She believed that companies don't just need fundraising; they need marketing support, research capability, and technology infrastructure to truly grow. At Akro, she leads the tech and research function that turns advisory into real execution.",
   },
   {
     name: 'Pari Goyal',
     title: 'CMO',
     initials: 'PG',
-    image: '/team/pari.jpeg' as string | null,
+    image: pariImg,
     bio: "Pari has spent the last few years building agentic AI systems that actually get used, across marketing, lead generation, and client operations. She works across product, marketing, and automation because she thinks in outcomes, not deliverables. At Akro, she built the entire digital operation from the ground up and leads technology, marketing, and research.",
   },
 ]
@@ -106,7 +109,7 @@ function HeroSection() {
       {/* Teal glow — bottom-left */}
       <div className="absolute pointer-events-none" style={{ zIndex: 1,
         bottom: '-25%', left: '-8%', width: 560, height: 360, borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(63,111,115,0.18) 0%, transparent 70%)' }}
+        background: 'radial-gradient(ellipse, rgba(63,111,115,0.08) 0%, transparent 70%)' }}
       />
       {/* Secondary glow — top-right */}
       <svg className="absolute pointer-events-none" aria-hidden="true"
@@ -143,7 +146,7 @@ function HeroSection() {
 // ── Founding Story ─────────────────────────────────────────────────────────
 function FoundingStorySection() {
   return (
-    <section className="section-y" style={{ background: '#F4F6F2' }}>
+    <section className="section-y bg-secondary">
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">How We Started</p>
@@ -259,7 +262,7 @@ function PillarsSection() {
 // ── Why Akro Is Different ──────────────────────────────────────────────────
 function DifferentSection() {
   return (
-    <section className="section-y" style={{ background: '#ffffff' }}>
+    <section className="section-y bg-background">
       <div className="mx-auto max-w-6xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Why Akro</p>
@@ -296,7 +299,7 @@ function DifferentSection() {
 // ── Team ───────────────────────────────────────────────────────────────────
 function TeamSection() {
   return (
-    <section className="section-y relative overflow-hidden" style={{ background: '#F4F6F2' }}>
+    <section className="section-y relative overflow-hidden bg-secondary">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -320,7 +323,7 @@ function TeamSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {TEAM.map(({ name, title, initials, image, bio }, i) => (
             <FadeUp key={name} delay={i * 0.1}>
-              <div className="bg-white rounded-sm p-7 h-full shadow-sm">
+              <div className="bg-background rounded-sm p-7 h-full shadow-sm border border-border">
                 {image ? (
                   <div className="h-20 w-20 rounded-sm overflow-hidden mb-5">
                     <img src={image} alt={name} className="w-full h-full object-cover object-top" loading="lazy" />

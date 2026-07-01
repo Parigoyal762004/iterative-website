@@ -96,7 +96,7 @@ export default function Apply() {
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.12) 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.06) 1px, transparent 0)',
           backgroundSize: '32px 32px',
         }}
       />

@@ -170,7 +170,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
                 style={{
                   fontSize: LABEL_SIZE,
                   letterSpacing: '0.04em',
-                  color: isSelected ? '#fff' : 'rgba(255,255,255,0.55)',
+                  color: isSelected ? '#fff' : 'rgba(255,255,255,0.78)',
                   transition: 'color 0.3s',
                   maxWidth: 72,
                   textAlign: 'center',
