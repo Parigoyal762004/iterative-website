@@ -181,7 +181,7 @@ function HeroSection() {
             <h1
               className="mb-6"
               style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                 fontWeight: 700,
                 fontStyle: 'italic',
@@ -264,7 +264,7 @@ function BenefitsSection() {
               <h2
                 className="mb-5 leading-tight"
                 style={{
-                  fontFamily: 'Cormorant Garamond, Georgia, serif',
+                  fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(2rem, 3.5vw, 3rem)',
                   fontWeight: 700,
                   color: '#2B2B2B',
@@ -317,7 +317,7 @@ function VettingSection() {
             <p className="t-label text-primary mb-3">Due Diligence</p>
             <h2
               className="text-3xl md:text-4xl font-bold leading-tight"
-              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+              style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
             >
               A network you have to earn.
             </h2>
@@ -377,7 +377,7 @@ function DealFlowSection() {
           <p className="t-label text-primary mb-3">Process</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-3"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             How we bring deals to you.
           </h2>
@@ -435,7 +435,7 @@ function DealFlowSection() {
                   <h3
                     className="mb-2"
                     style={{
-                      fontFamily: 'Cormorant Garamond, Georgia, serif',
+                      fontFamily: 'var(--font-display)',
                       fontSize: '1.35rem',
                       fontWeight: 700,
                       color: 'white',
@@ -491,7 +491,7 @@ function PortfolioSection() {
               <p className="t-label text-primary mb-3">Portfolio</p>
               <h2
                 className="text-3xl md:text-4xl font-bold text-white mb-5 leading-tight"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 Invest once.<br />Stay informed always.
               </h2>
@@ -544,7 +544,7 @@ function DealTypesSection() {
           <p className="t-label text-primary mb-3">Deal Coverage</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-10"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             Deal types we work on.
           </h2>
@@ -644,7 +644,7 @@ function ApplicationForm() {
         </div>
         <h3
           className="text-2xl font-bold text-foreground mb-2"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Application received.
         </h3>
@@ -733,7 +733,7 @@ function FAQSection() {
         <FadeUp>
           <h2
             className="text-3xl md:text-4xl font-bold text-center mb-10"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             Questions from serious investors.
           </h2>
@@ -782,7 +782,7 @@ function CtaStrip() {
       <FadeUp>
         <h2
           className="text-3xl md:text-4xl font-bold text-white mb-3"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           If you're serious about deployment, we're serious about finding you the right deals.
         </h2>
@@ -820,7 +820,7 @@ export default function Investors() {
             <p className="t-label text-primary mb-3 text-center">Apply</p>
             <h2
               className="text-3xl md:text-4xl font-bold text-center mb-3"
-              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+              style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
             >
               Apply to join the Akro investor network.
             </h2>

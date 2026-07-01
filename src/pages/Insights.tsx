@@ -205,7 +205,7 @@ function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
               <h2
                 className="mt-4 mb-3 group-hover:text-primary transition-colors leading-tight"
                 style={{
-                  fontFamily: 'Cormorant Garamond, Georgia, serif',
+                  fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
                   fontWeight: 700,
                   color: '#2B2B2B',
@@ -240,7 +240,7 @@ function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
             <p
               className="px-8 text-center leading-tight"
               style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontFamily: 'var(--font-display)',
                 fontSize: '3.5rem',
                 fontWeight: 700,
                 fontStyle: 'italic',
@@ -276,7 +276,7 @@ function ArticleCard({ article, delay = 0 }: { article: typeof ARTICLES[0]; dela
           <h3
             className="mt-3 mb-2 group-hover:text-primary transition-colors leading-snug line-clamp-2"
             style={{
-              fontFamily: 'Cormorant Garamond, Georgia, serif',
+              fontFamily: 'var(--font-display)',
               fontSize: '1.05rem',
               fontWeight: 700,
               color: '#2B2B2B',
@@ -321,7 +321,7 @@ function NewsletterStrip() {
       <FadeUp>
         <h3
           className="text-2xl md:text-3xl font-bold text-white mb-2"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Get Akro's insights in your inbox.
         </h3>
@@ -404,7 +404,7 @@ export default function Insights() {
             <h1
               className="mb-3 text-white"
               style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                 fontWeight: 700,
                 fontStyle: 'italic',

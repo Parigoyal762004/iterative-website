@@ -125,7 +125,7 @@ function HeroSection() {
         <FadeUp delay={0.2}>
           <h1
             style={{
-              fontFamily: 'Cormorant Garamond, Georgia, serif',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.8rem, 6vw, 5rem)',
               fontWeight: 700,
               fontStyle: 'italic',
@@ -156,7 +156,7 @@ function FoundingStorySection() {
             <div className="lg:sticky lg:top-28">
               <h2
                 style={{
-                  fontFamily: 'Cormorant Garamond, Georgia, serif',
+                  fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(1.8rem, 3vw, 2.6rem)',
                   fontWeight: 700,
                   color: '#2B2B2B',
@@ -214,7 +214,7 @@ function PillarsSection() {
           <h2
             className="text-white mb-14"
             style={{
-              fontFamily: 'Cormorant Garamond, Georgia, serif',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
               fontWeight: 700,
             }}
@@ -238,7 +238,7 @@ function PillarsSection() {
                 <p
                   className="mb-2"
                   style={{
-                    fontFamily: 'Cormorant Garamond, Georgia, serif',
+                    fontFamily: 'var(--font-display)',
                     fontSize: 'clamp(2rem, 3vw, 2.8rem)',
                     fontWeight: 700,
                     color: '#ffffff',
@@ -268,7 +268,7 @@ function DifferentSection() {
           <p className="t-label text-primary mb-3">Why Akro</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-12"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             What makes us different.
           </h2>
@@ -282,7 +282,7 @@ function DifferentSection() {
               >
                 <h3
                   className="font-bold text-foreground mb-4 leading-snug"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.15rem' }}
+                  style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem' }}
                 >
                   {headline}
                 </h3>
@@ -312,7 +312,7 @@ function TeamSection() {
           <p className="t-label text-primary mb-3">The Team</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-2"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             The people behind Akro.
           </h2>
@@ -338,7 +338,7 @@ function TeamSection() {
                 )}
                 <p
                   className="font-bold text-foreground mb-0.5"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.2rem' }}
+                  style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem' }}
                 >
                   {name}
                 </p>
@@ -367,7 +367,7 @@ function CtaStrip() {
       <FadeUp>
         <h2
           className="text-3xl md:text-4xl font-bold text-white mb-4 max-w-2xl mx-auto leading-tight"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Work with a team that's been in your position.
         </h2>

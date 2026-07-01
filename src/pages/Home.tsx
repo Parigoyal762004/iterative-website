@@ -43,7 +43,7 @@ function WordTicker() {
           animate={{ y: '0%', opacity: 1 }}
           exit={{ y: '-100%', opacity: 0 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          style={{ display: 'block', color: '#F2B705', fontStyle: 'italic' }}
+          style={{ display: 'block', color: '#F2B705' }}
         >
           {TICKER_WORDS[index]}
         </motion.span>
@@ -178,7 +178,8 @@ function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const reduced = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-18%'])
+  const ghostY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '20%'])
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-8%'])
 
   return (
     <section ref={sectionRef} className="relative bg-charcoal overflow-hidden min-h-screen flex flex-col" aria-label="Hero">
@@ -191,31 +192,66 @@ function HeroSection() {
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
-        style={{ filter: 'blur(16px)', transform: 'scale(1.1)' }}
+        style={{ filter: 'blur(10px) saturate(0.82)', transform: 'scale(1.08)' }}
         aria-hidden="true"
       />
-      {/* Charcoal overlay — high opacity suppresses blue video cast */}
-      <div className="absolute inset-0 z-[1]" style={{ background: 'rgba(36,36,36,0.84)' }} aria-hidden="true" />
+      {/* Directional overlay — warm-teal light from upper-left, not a flat scrim */}
       <div
-        className="absolute inset-0 texture-diagonal pointer-events-none"
-        style={{ zIndex: 2, opacity: 0.4 }}
+        className="absolute inset-0 z-[1]"
+        style={{ background: 'linear-gradient(118deg, rgba(16,18,18,0.94) 0%, rgba(23,40,41,0.80) 46%, rgba(34,34,34,0.93) 100%)' }}
         aria-hidden="true"
       />
+      {/* Film grain */}
+      <div className="grain-layer absolute inset-0 z-[2] pointer-events-none" style={{ mixBlendMode: 'overlay' }} aria-hidden="true" />
 
-      {/* Centered content */}
+      {/* Giant stencil ghost word */}
       <motion.div
-        style={{ y: textY }}
-        className="relative z-10 flex flex-col items-center justify-center text-center flex-1 px-6 py-24 pt-32"
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 z-[2] pointer-events-none select-none flex justify-start"
+        style={{ y: ghostY }}
       >
-        <div className="max-w-3xl mx-auto flex flex-col items-center gap-5">
+        <span
+          className="font-stencil"
+          style={{
+            fontSize: 'clamp(120px, 30vw, 470px)',
+            fontWeight: 700,
+            lineHeight: 0.78,
+            color: '#ffffff',
+            opacity: 0.06,
+            letterSpacing: '-0.03em',
+            whiteSpace: 'nowrap',
+            transform: 'translateY(12%)',
+            paddingLeft: '1.5vw',
+          }}
+        >
+          CAPITAL
+        </span>
+      </motion.div>
 
-          <h1 className="t-display-xl font-display text-white leading-tight">
+      {/* Content — bottom-weighted, left aligned */}
+      <motion.div style={{ y: contentY }} className="relative z-10 flex-1 flex flex-col justify-end">
+        <div className="mx-auto w-full max-w-[1280px] px-6 pb-14 pt-36">
+
+          {/* Eyebrow */}
+          <FadeIn delay={0.1} direction="up">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="t-label text-accent">Capital Advisory</span>
+              <span className="h-px w-8 bg-white/25" />
+              <span className="t-label text-white/35">Since 2023</span>
+            </div>
+          </FadeIn>
+
+          {/* Headline */}
+          <h1
+            className="font-display text-white"
+            style={{ fontSize: 'clamp(2.75rem, 7vw, 5.75rem)', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.02em', maxWidth: '16ch' }}
+          >
             <span className="block" style={{ overflow: 'hidden' }}>
               <motion.span
                 style={{ display: 'inline-block' }}
-                initial={reduced ? {} : { filter: 'blur(10px)', opacity: 0, y: 50 }}
-                animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+                initial={reduced ? {} : { opacity: 0, y: 54 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
               >
                 Capital, structured
               </motion.span>
@@ -223,89 +259,95 @@ function HeroSection() {
             <span className="block" style={{ overflow: 'hidden' }}>
               <motion.span
                 style={{ display: 'inline-block' }}
-                initial={reduced ? {} : { filter: 'blur(10px)', opacity: 0, y: 50 }}
-                animate={{ filter: 'blur(0px)', opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.33 }}
+                initial={reduced ? {} : { opacity: 0, y: 54 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: EASE, delay: 0.3 }}
               >
                 with <WordTicker />.
               </motion.span>
             </span>
           </h1>
 
-          <FadeIn delay={0.52} direction="up">
-            <p className="t-body-xl text-white/55 leading-relaxed max-w-xl">
-              We advise Indian founders on capital structure, lender selection,
-              and deal architecture. Strategy first, paperwork second.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.66} direction="up">
-            <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
-              <Link to="/founders" className="btn-slide btn-slide-teal">
-                <span>For Founders</span>
-                <ArrowRight size={14} />
-              </Link>
-              <Link to="/investors" className="btn-slide btn-slide-mustard">
-                <span>For Investors</span>
-                <ArrowRight size={14} />
-              </Link>
-            </div>
-          </FadeIn>
-
-          {/* Quick-path chips */}
-          <FadeIn delay={0.76} direction="up" className="mt-1">
-            <div className="flex flex-col items-center gap-2">
-              <span className="t-label text-white/25 tracking-[0.2em]">What do you need?</span>
-              <div className="flex flex-wrap justify-center gap-2">
-                {quickPaths.map(({ label, href }) => (
-                  <Link
-                    key={label}
-                    to={href}
-                    className="px-3 py-1.5 text-[11px] uppercase tracking-wider border border-white/15 text-white/40 hover:border-[#F2B705] hover:text-[#F2B705] transition-all duration-200 font-semibold"
-                  >
-                    {label}
+          {/* Lower band — subtext + CTAs on the left, stats strip on the right */}
+          <div className="mt-8 flex flex-col gap-9 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-xl">
+              <FadeIn delay={0.5} direction="up">
+                <p className="t-body-l text-white/55 leading-relaxed">
+                  We advise Indian founders on capital structure, lender selection,
+                  and deal architecture. Strategy first, paperwork second.
+                </p>
+              </FadeIn>
+              <FadeIn delay={0.62} direction="up">
+                <div className="flex flex-wrap items-center gap-4 mt-7">
+                  <Link to="/founders" className="btn-slide btn-slide-teal">
+                    <span>For Founders</span>
+                    <ArrowRight size={14} />
                   </Link>
+                  <Link to="/investors" className="btn-slide btn-slide-mustard">
+                    <span>For Investors</span>
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </FadeIn>
+              <FadeIn delay={0.72} direction="up">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-6">
+                  {quickPaths.map(({ label, href }, i) => (
+                    <span key={label} className="flex items-center gap-x-5">
+                      {i > 0 && <span className="h-3 w-px bg-white/15" aria-hidden="true" />}
+                      <Link
+                        to={href}
+                        className="text-[11px] uppercase tracking-[0.14em] text-white/40 hover:text-[#F2B705] transition-colors duration-200 font-semibold"
+                      >
+                        {label}
+                      </Link>
+                    </span>
+                  ))}
+                </div>
+              </FadeIn>
+            </div>
+
+            {/* Stats strip — editorial data block */}
+            <FadeIn delay={0.78} direction="up">
+              <div className="flex items-end gap-8 lg:gap-10 border-t border-white/10 pt-5 lg:border-t-0 lg:pt-0">
+                {[
+                  { val: '₹200Cr+', lbl: 'Facilitated' },
+                  { val: '50+',     lbl: 'Founders' },
+                  { val: '40+',     lbl: 'Lenders' },
+                ].map(({ val, lbl }) => (
+                  <div key={lbl} className="flex flex-col">
+                    <span
+                      className="font-display font-bold text-white leading-none tabular-nums"
+                      style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2rem)' }}
+                    >
+                      {val}
+                    </span>
+                    <span className="t-label text-white/35 mt-2">{lbl}</span>
+                  </div>
                 ))}
               </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.82} direction="up" className="mt-6">
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-              {[
-                { val: '₹200Cr+', lbl: 'Facilitated' },
-                { val: '50+',     lbl: 'Founders' },
-                { val: '40+',     lbl: 'Lenders' },
-              ].map(({ val, lbl }) => (
-                <div key={lbl} className="flex flex-col items-center">
-                  <span
-                    className="font-display font-bold text-white leading-none"
-                    style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
-                  >
-                    {val}
-                  </span>
-                  <span className="t-label text-white/35 mt-1">{lbl}</span>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
+            </FadeIn>
+          </div>
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="relative z-10 flex flex-col items-center pb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.4, duration: 0.7 }}
+      {/* Right vertical index — editorial marker */}
+      <div
+        className="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
+        style={{ writingMode: 'vertical-rl' }}
+        aria-hidden="true"
       >
+        <span className="t-label text-white/25 tracking-[0.3em]">PUNE · INDIA</span>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.9, ease: 'easeInOut' }}
         >
-          <ChevronDown size={14} className="text-white/20" />
+          <ChevronDown size={16} className="text-white/25" />
         </motion.div>
-      </motion.div>
+      </div>
 
     </section>
   )
@@ -501,13 +543,13 @@ function OutcomesCarousel() {
       >
         <span
           style={{
-            fontFamily: 'var(--font-display)',
+            fontFamily: 'var(--font-stencil)',
             fontSize: 'clamp(70px, 22vw, 280px)',
-            fontWeight: 900,
+            fontWeight: 700,
             color: 'white',
-            opacity: 0.05,
+            opacity: 0.06,
             lineHeight: 1,
-            letterSpacing: '-0.02em',
+            letterSpacing: '-0.03em',
             whiteSpace: 'nowrap',
           }}
         >

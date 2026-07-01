@@ -125,7 +125,7 @@ export default function Apply() {
               <>
                 <h1
                   className="text-center mb-2"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
+                  style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
                 >
                   Join the Network
                 </h1>
@@ -170,7 +170,7 @@ export default function Apply() {
               <>
                 <h1
                   className="text-center mb-2"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
+                  style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
                 >
                   Investor Application
                 </h1>
@@ -240,7 +240,7 @@ export default function Apply() {
               <>
                 <h1
                   className="text-center mb-2"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
+                  style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
                 >
                   Founder Application
                 </h1>
@@ -318,7 +318,7 @@ export default function Apply() {
                 </div>
                 <h1
                   className="mb-3"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
+                  style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, color: '#2B2B2B', letterSpacing: '-0.02em' }}
                 >
                   Application Received
                 </h1>

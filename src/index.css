@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+/* Fonts loaded via <link> in index.html: Finlandica Text, Geom, Arimo, Saira Stencil */
 
 @tailwind base;
 @tailwind components;
@@ -59,8 +59,10 @@
     --duration-slow:      650ms;
 
     /* Typography */
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body:    'DM Sans', system-ui, sans-serif;
+    --font-display: 'Geom', 'Finlandica Text', system-ui, sans-serif;
+    --font-body:    'Finlandica Text', system-ui, sans-serif;
+    --font-stencil: 'Saira Stencil', 'Arial Narrow', sans-serif;
+    --font-label:   'Arimo', system-ui, sans-serif;
 
     /* Layout */
     --container-max:       1280px;
@@ -176,7 +178,7 @@
   .t-body-m   { font-size: 0.9375rem; line-height: 1.65; }
   .t-body-s   { font-size: 0.8125rem; line-height: 1.6;  }
   .t-label {
-    font-family: var(--font-body);
+    font-family: var(--font-label);
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.18em;
@@ -298,6 +300,12 @@
   .texture-dot {
     background-image: radial-gradient(hsl(var(--foreground) / 0.035) 1px, transparent 1px);
     background-size: 32px 32px;
+  }
+  /* Film grain — tactile texture for dark hero/sections */
+  .grain-layer {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.5;
   }
   .texture-ledger {
     background-image: repeating-linear-gradient(

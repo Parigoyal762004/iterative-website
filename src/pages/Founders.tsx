@@ -182,7 +182,7 @@ function HeroSection() {
             <h1
               className="mb-6"
               style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
                 fontWeight: 700,
                 fontStyle: 'italic',
@@ -276,7 +276,7 @@ function ServiceSelector() {
             </div>
             <h3
               className="text-xl md:text-2xl font-bold mb-4 leading-snug"
-              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+              style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
             >
               {service.fullName}
             </h3>
@@ -339,7 +339,7 @@ function ReadinessCalculator() {
           <p className="text-xs text-muted-foreground mb-3">Question {step + 1} of {total}</p>
           <h4
             className="text-xl font-bold mb-6 leading-snug"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             {QUIZ_QS[step].q}
           </h4>
@@ -375,7 +375,7 @@ function ReadinessCalculator() {
         >
           <p
             className="text-7xl font-bold mb-2"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: scoreTeal }}
+            style={{ fontFamily: 'var(--font-display)', color: scoreTeal }}
           >
             {score}<span className="text-3xl text-foreground/30">/100</span>
           </p>
@@ -439,7 +439,7 @@ function JourneyTimeline() {
               >
                 <span
                   style={{
-                    fontFamily: 'Cormorant Garamond, Georgia, serif',
+                    fontFamily: 'var(--font-display)',
                     fontSize: '1.25rem',
                     fontWeight: 700,
                     color: '#3F6F73',
@@ -480,7 +480,7 @@ function TrackASection() {
           <p className="t-label text-primary mb-3">For Startup Founders</p>
           <h2
             className="text-4xl md:text-5xl font-bold leading-tight mb-5"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             Strategy first. Capital follows.
           </h2>
@@ -500,7 +500,7 @@ function TrackASection() {
         <FadeUp>
           <h3
             className="text-2xl font-bold mb-12 text-center"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             The Founder Journey
           </h3>
@@ -598,7 +598,7 @@ function EMICalculator() {
             <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Monthly EMI</p>
             <p
               className="text-3xl font-bold"
-              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#3F6F73' }}
+              style={{ fontFamily: 'var(--font-display)', color: '#3F6F73' }}
             >
               {fmt(emi)}
             </p>
@@ -643,7 +643,7 @@ function QuoteStrip() {
       <div className="relative mx-auto max-w-4xl text-center">
         <p
           style={{
-            fontFamily: 'Cormorant Garamond, Georgia, serif',
+            fontFamily: 'var(--font-display)',
             fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
             fontWeight: 700,
             fontStyle: 'italic',
@@ -678,7 +678,7 @@ function TrackBSection() {
           <p className="t-label mb-3" style={{ color: '#F2B705' }}>For Growing Businesses</p>
           <h2
             className="text-4xl md:text-5xl font-bold leading-tight mb-5"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'white' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'white' }}
           >
             Access the right capital, faster than you think.
           </h2>
@@ -725,7 +725,7 @@ function TrackBSection() {
                   <div className="h-1 w-8 rounded-full mb-5" style={{ background: '#F2B705' }} />
                   <h3
                     className="text-xl md:text-2xl font-bold mb-4 leading-snug"
-                    style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'white' }}
+                    style={{ fontFamily: 'var(--font-display)', color: 'white' }}
                   >
                     {SERVICES_B[active].name}
                   </h3>
@@ -759,7 +759,7 @@ function FAQSection() {
         <FadeUp>
           <h2
             className="text-3xl md:text-4xl font-bold text-center mb-10"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
           >
             Questions founders and business owners ask us.
           </h2>
@@ -808,7 +808,7 @@ function CtaStrip() {
       <FadeUp>
         <h2
           className="text-3xl md:text-4xl font-bold text-white mb-3"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Wherever you are in your journey, let's talk.
         </h2>

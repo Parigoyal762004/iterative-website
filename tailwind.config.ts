@@ -14,9 +14,11 @@ export default {
     container: { center: true, padding: "1.5rem", screens: { "2xl": "1280px" } },
     extend: {
       fontFamily: {
-        display: ["Cormorant Garamond", "Georgia", "serif"],
-        body:    ["DM Sans", "system-ui", "sans-serif"],
-        sans:    ["DM Sans", "system-ui", "sans-serif"],
+        display: ["Geom", "Finlandica Text", "system-ui", "sans-serif"],
+        body:    ["Finlandica Text", "system-ui", "sans-serif"],
+        sans:    ["Finlandica Text", "system-ui", "sans-serif"],
+        label:   ["Arimo", "system-ui", "sans-serif"],
+        stencil: ["Saira Stencil", "Arial Narrow", "sans-serif"],
       },
       colors: {
         /* Raw palette */
