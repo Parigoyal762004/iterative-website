@@ -268,7 +268,7 @@ function ArticleCard({ article, delay = 0 }: { article: typeof ARTICLES[0]; dela
         href={dest}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noreferrer' : undefined}
-        className="group block bg-white rounded-2xl border border-border hover:border-primary transition-colors h-full overflow-hidden"
+        className="group block bg-background rounded-2xl border border-border hover:border-primary transition-colors h-full overflow-hidden"
         style={{ borderTop: `3px solid ${accent}` }}
       >
         <div className="p-6 flex flex-col h-full">
@@ -338,12 +338,12 @@ function NewsletterStrip() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Your email address"
-              className="flex-1 px-4 py-3 rounded-sm text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 bg-white"
+              className="flex-1 px-4 py-3 rounded-sm text-sm text-[#2B2B2B] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 bg-white"
               style={{ focusRingColor: '#F2B705' } as React.CSSProperties}
             />
             <button
               type="submit"
-              className="px-6 py-3 rounded-sm font-bold text-sm text-foreground hover:opacity-90 transition-opacity flex-shrink-0"
+              className="px-6 py-3 rounded-sm font-bold text-sm text-[#2B2B2B] hover:opacity-90 transition-opacity flex-shrink-0"
               style={{ background: '#F2B705' }}
             >
               Subscribe
@@ -391,13 +391,6 @@ export default function Insights() {
         className="px-6 pt-32 pb-14 relative overflow-hidden"
         style={{ background: 'linear-gradient(145deg, #0a1f21 0%, #0f2a2c 50%, #2B2B2B 100%)' }}
       >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.06) 1px, transparent 0)',
-            backgroundSize: '32px 32px',
-          }}
-        />
         <div className="relative mx-auto max-w-4xl">
           <FadeUp>
             <p className="t-label mb-3" style={{ color: 'hsl(var(--primary))' }}>Insights</p>
@@ -439,7 +432,7 @@ export default function Insights() {
       </section>
 
       {/* ── Category filter (sticky) ── */}
-      <div className="sticky top-[64px] z-30 bg-white border-b border-border">
+      <div className="sticky top-[64px] z-30 bg-background border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-3 overflow-x-auto">
           <div className="flex gap-2 min-w-max">
             {CATEGORIES.map(cat => {
@@ -453,7 +446,7 @@ export default function Insights() {
                   style={
                     isActive
                       ? { background: color, color: color === '#F2B705' ? '#2B2B2B' : 'white', border: `1px solid ${color}` }
-                      : { background: 'transparent', color: '#6B7280', border: '1px solid #E5E7EB' }
+                      : { background: 'transparent', color: 'hsl(var(--muted-foreground))', border: '1px solid hsl(var(--border))' }
                   }
                 >
                   {cat.label}

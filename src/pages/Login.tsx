@@ -93,14 +93,6 @@ export default function Apply() {
       className="min-h-screen flex items-center justify-center px-4 py-16"
       style={{ background: 'linear-gradient(145deg, #0a1f21 0%, #0f2a2c 45%, #1a3538 100%)' }}
     >
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(63,111,115,0.06) 1px, transparent 0)',
-          backgroundSize: '32px 32px',
-        }}
-      />
-
       <div className="relative w-full max-w-lg">
         {/* Back button */}
         {(track === 'investor' || track === 'founder') && (

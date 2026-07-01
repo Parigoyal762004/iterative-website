@@ -168,13 +168,6 @@ const stats = [
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION 1 — HERO (centered, cinematic)
 // ─────────────────────────────────────────────────────────────────────────────
-const quickPaths = [
-  { label: 'Working Capital',     href: '/founders' },
-  { label: 'Project Funding',     href: '/founders' },
-  { label: 'Startup Fundraising', href: '/founders' },
-  { label: 'FDI / ECB',          href: '/founders' },
-  { label: 'For Investors',       href: '/investors' },
-]
 
 function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -198,11 +191,6 @@ function HeroSection() {
       />
       {/* Charcoal overlay — high opacity suppresses blue video cast */}
       <div className="absolute inset-0 z-[1]" style={{ background: 'rgba(36,36,36,0.84)' }} aria-hidden="true" />
-      <div
-        className="absolute inset-0 texture-diagonal pointer-events-none"
-        style={{ zIndex: 2, opacity: 0.4 }}
-        aria-hidden="true"
-      />
 
       {/* Centered content */}
       <motion.div
@@ -251,44 +239,6 @@ function HeroSection() {
                 <span>For Investors</span>
                 <ArrowRight size={14} />
               </Link>
-            </div>
-          </FadeIn>
-
-          {/* Quick-path chips */}
-          <FadeIn delay={0.76} direction="up" className="mt-1">
-            <div className="flex flex-col items-center gap-2">
-              <span className="t-label text-white/25 tracking-[0.2em]">What do you need?</span>
-              <div className="flex flex-wrap justify-center gap-2">
-                {quickPaths.map(({ label, href }) => (
-                  <Link
-                    key={label}
-                    to={href}
-                    className="px-3 py-1.5 text-[11px] uppercase tracking-wider border border-white/15 text-white/40 hover:border-[#F2B705] hover:text-[#F2B705] transition-all duration-200 font-semibold"
-                  >
-                    {label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.82} direction="up" className="mt-6">
-            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-              {[
-                { val: '₹200Cr+', lbl: 'Facilitated' },
-                { val: '50+',     lbl: 'Founders' },
-                { val: '40+',     lbl: 'Lenders' },
-              ].map(({ val, lbl }) => (
-                <div key={lbl} className="flex flex-col items-center">
-                  <span
-                    className="font-display font-bold text-white leading-none"
-                    style={{ fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)' }}
-                  >
-                    {val}
-                  </span>
-                  <span className="t-label text-white/35 mt-1">{lbl}</span>
-                </div>
-              ))}
             </div>
           </FadeIn>
         </div>

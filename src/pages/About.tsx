@@ -99,13 +99,6 @@ function HeroSection() {
         background: 'linear-gradient(145deg, #0a1f21 0%, #0f2a2c 40%, #1a3538 70%, #2B2B2B 100%)',
       }}
     >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)',
-          backgroundSize: '36px 36px',
-        }}
-      />
       {/* Teal glow — bottom-left */}
       <div className="absolute pointer-events-none" style={{ zIndex: 1,
         bottom: '-25%', left: '-8%', width: 560, height: 360, borderRadius: '50%',

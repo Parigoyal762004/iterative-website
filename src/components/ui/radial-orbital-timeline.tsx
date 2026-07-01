@@ -90,7 +90,8 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
   const SIZE = isMobile ? 290 : 500
   const NODE_SIZE = isMobile ? 38 : 60
   const ICON_SIZE = isMobile ? 16 : 24
-  const CORE_SIZE = isMobile ? 44 : 66
+  const CORE_SIZE = isMobile ? 56 : 86
+  const LOGO_SIZE = isMobile ? 28 : 42
   const LABEL_SIZE = isMobile ? 9 : 11
 
   return (
@@ -105,7 +106,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
         <svg className="absolute inset-0 pointer-events-none" width={SIZE} height={SIZE}>
           <circle
             cx={SIZE / 2} cy={SIZE / 2} r={RADIUS}
-            fill="none" stroke={accentColor} strokeOpacity={0.15} strokeWidth={1}
+            fill="none" stroke={accentColor} strokeOpacity={0.42} strokeWidth={1.5}
             strokeDasharray="3 9"
           />
         </svg>
@@ -121,7 +122,12 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
             boxShadow: `0 0 24px ${accentColor}22`,
           }}
         >
-          <img src={logoImg} alt="Akro Ventures" className="w-8 h-8 object-contain rounded-full" style={{ filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
+          <img
+            src={logoImg}
+            alt="Akro Ventures"
+            className="object-contain rounded-full"
+            style={{ width: LOGO_SIZE, height: LOGO_SIZE, filter: 'brightness(0) invert(1)', opacity: 0.7 }}
+          />
           <div className="absolute inset-0 rounded-full" style={{ border: `1px solid ${accentColor}22`, animation: 'ping 2.5s cubic-bezier(0,0,0.2,1) infinite' }} />
         </div>
 

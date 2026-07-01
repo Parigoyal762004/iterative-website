@@ -150,22 +150,6 @@ function HeroSection() {
         </Suspense>
       </div>
 
-      {/* Subtle dot grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(242,183,5,0.04) 1px, transparent 0)',
-          backgroundSize: '40px 40px',
-          zIndex: 1,
-        }}
-      />
-      {/* Vertical grid lines */}
-      <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ zIndex: 1 }}>
-        {[25, 50, 75].map(pct => (
-          <div key={pct} className="absolute top-0 bottom-0 w-px"
-            style={{ left: `${pct}%`, background: 'rgba(255,255,255,0.04)' }} />
-        ))}
-      </div>
       {/* Mustard SVG glow — top-left bias */}
       <svg className="absolute pointer-events-none" aria-hidden="true"
         style={{ top: '-8%', left: '-5%', zIndex: 1 }}
