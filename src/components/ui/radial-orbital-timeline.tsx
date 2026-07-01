@@ -152,17 +152,17 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
                 className="rounded-full flex items-center justify-center"
                 style={{
                   width: NODE_SIZE, height: NODE_SIZE,
-                  background: isSelected ? accentColor : `${accentColor}2a`,
-                  border: `1.5px solid ${isSelected ? accentColor : accentColor + '55'}`,
-                  boxShadow: isSelected ? `0 0 18px ${accentColor}55` : 'none',
+                  background: isSelected ? accentColor : `${accentColor}e0`,
+                  border: `2px solid ${accentColor}`,
+                  boxShadow: isSelected ? `0 0 22px ${accentColor}88` : `0 0 12px ${accentColor}44`,
                   transition: 'background 0.3s, box-shadow 0.3s',
                 }}
               >
                 <NodeIcon
                   size={ICON_SIZE}
-                  strokeWidth={1.6}
-                  className={isSelected ? 'text-white' : ''}
-                  style={{ color: isSelected ? '#fff' : accentColor }}
+                  strokeWidth={1.9}
+                  className="text-white"
+                  style={{ color: '#fff' }}
                 />
               </div>
               <span

@@ -28,9 +28,9 @@ function FadeUp({
 
 // ── Category config ────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { id: 'all',               label: 'All',                color: '#2B2B2B' },
-  { id: 'fundraising',       label: 'Fundraising',         color: '#3F6F73' },
-  { id: 'market-view',       label: 'Market View',         color: '#2B2B2B' },
+  { id: 'all',               label: 'All',                color: 'hsl(var(--foreground))' },
+  { id: 'fundraising',       label: 'Fundraising',         color: 'hsl(var(--primary))' },
+  { id: 'market-view',       label: 'Market View',         color: 'hsl(var(--foreground))' },
   { id: 'deal-announcements',label: 'Deal Announcements',  color: '#F2B705' },
   { id: 'events',            label: 'Events',              color: '#7B68A6' },
   { id: 'spotlights',        label: 'Spotlights',          color: '#C4633F' },
@@ -208,7 +208,7 @@ function FeaturedCard({ article }: { article: typeof ARTICLES[0] }) {
                   fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
                   fontWeight: 700,
-                  color: '#2B2B2B',
+                  color: 'hsl(var(--foreground))',
                 }}
               >
                 {article.title}
@@ -279,7 +279,7 @@ function ArticleCard({ article, delay = 0 }: { article: typeof ARTICLES[0]; dela
               fontFamily: 'var(--font-display)',
               fontSize: '1.05rem',
               fontWeight: 700,
-              color: '#2B2B2B',
+              color: 'hsl(var(--foreground))',
             }}
           >
             {article.title}
@@ -400,7 +400,7 @@ export default function Insights() {
         />
         <div className="relative mx-auto max-w-4xl">
           <FadeUp>
-            <p className="t-label mb-3" style={{ color: '#3F6F73' }}>Insights</p>
+            <p className="t-label mb-3" style={{ color: 'hsl(var(--primary))' }}>Insights</p>
             <h1
               className="mb-3 text-white"
               style={{

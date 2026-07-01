@@ -73,18 +73,21 @@
 
   /* ─── Dark mode overrides ─────────────────────────────────────────────── */
   .dark {
-    --background:        0 0% 8%;
-    --foreground:        0 0% 93%;
-    --card:              0 0% 12%;
-    --card-foreground:   0 0% 93%;
-    --popover:           0 0% 12%;
-    --popover-foreground: 0 0% 93%;
-    --secondary:         0 0% 15%;
-    --secondary-foreground: 0 0% 93%;
-    --muted:             0 0% 15%;
-    --muted-foreground:  0 0% 56%;
-    --border:            0 0% 20%;
-    --input:             0 0% 20%;
+    --background:        200 6% 13%;      /* soft cool charcoal, not jet black */
+    --foreground:        0 0% 92%;
+    --card:              200 5% 17%;       /* elevated charcoal */
+    --card-foreground:   0 0% 92%;
+    --popover:           200 5% 17%;
+    --popover-foreground: 0 0% 92%;
+    --primary:           184 38% 54%;      /* brighter teal for dark surfaces */
+    --primary-foreground: 200 20% 10%;
+    --secondary:         200 5% 18%;
+    --secondary-foreground: 0 0% 92%;
+    --muted:             200 5% 18%;
+    --muted-foreground:  0 0% 66%;         /* lifted for readability */
+    --accent:            44 92% 54%;
+    --border:            200 4% 25%;
+    --input:             200 4% 25%;
     --shadow-sm:         0 1px 3px hsl(0 0% 0% / 0.35), 0 1px 2px hsl(0 0% 0% / 0.25);
     --shadow-md:         0 4px 16px hsl(0 0% 0% / 0.45), 0 2px 4px hsl(0 0% 0% / 0.25);
     --shadow-lg:         0 8px 32px hsl(0 0% 0% / 0.55), 0 4px 8px hsl(0 0% 0% / 0.3);

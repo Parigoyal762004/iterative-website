@@ -136,7 +136,7 @@ function HeroSection() {
     <section
       className="relative overflow-hidden flex items-center"
       style={{
-        minHeight: '72vh',
+        minHeight: '60vh',
         background: 'linear-gradient(145deg, #0e1208 0%, #1a1510 25%, #1e1a0e 55%, #2B2B2B 100%)',
       }}
     >
@@ -267,7 +267,7 @@ function BenefitsSection() {
                   fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(2rem, 3.5vw, 3rem)',
                   fontWeight: 700,
-                  color: '#2B2B2B',
+                  color: 'hsl(var(--foreground))',
                 }}
               >
                 What being part of the Akro network means.
@@ -291,7 +291,7 @@ function BenefitsSection() {
                     className="flex-shrink-0 h-9 w-9 rounded-sm flex items-center justify-center mt-0.5"
                     style={{ background: 'rgba(63,111,115,0.1)' }}
                   >
-                    <Icon size={16} style={{ color: '#3F6F73' }} />
+                    <Icon size={16} style={{ color: 'hsl(var(--primary))' }} />
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-foreground mb-1.5">{title}</h3>
@@ -317,7 +317,7 @@ function VettingSection() {
             <p className="t-label text-primary mb-3">Due Diligence</p>
             <h2
               className="text-3xl md:text-4xl font-bold leading-tight"
-              style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+              style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
             >
               A network you have to earn.
             </h2>
@@ -377,7 +377,7 @@ function DealFlowSection() {
           <p className="t-label text-primary mb-3">Process</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-3"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             How we bring deals to you.
           </h2>
@@ -391,7 +391,7 @@ function DealFlowSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {DEAL_FLOW_POINTS.map(({ n, title, body }) => (
               <div key={n} className="p-5 bg-secondary rounded-sm border-l-2" style={{ borderLeftColor: '#3F6F73' }}>
-                <span className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: '#3F6F73' }}>{n}</span>
+                <span className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: 'hsl(var(--primary))' }}>{n}</span>
                 <h3 className="font-bold text-foreground text-sm mb-1">{title}</h3>
                 <p className="text-muted-foreground text-xs leading-relaxed">{body}</p>
               </div>
@@ -502,7 +502,7 @@ function PortfolioSection() {
               <a
                 href="/portal"
                 className="inline-flex items-center gap-2 text-sm font-semibold transition-colors"
-                style={{ color: '#3F6F73' }}
+                style={{ color: 'hsl(var(--primary))' }}
               >
                 See how the portal works <ArrowRight size={14} />
               </a>
@@ -544,7 +544,7 @@ function DealTypesSection() {
           <p className="t-label text-primary mb-3">Deal Coverage</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-10"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             Deal types we work on.
           </h2>
@@ -569,7 +569,7 @@ function DealTypesSection() {
               <div key={heading} className="bg-background p-6 rounded-sm shadow-sm border border-border">
                 <p
                   className="text-xs font-bold uppercase tracking-widest mb-4"
-                  style={{ color: '#3F6F73' }}
+                  style={{ color: 'hsl(var(--primary))' }}
                 >
                   {heading}
                 </p>
@@ -634,13 +634,13 @@ function ApplicationForm() {
     }
   }
 
-  const inputCls = 'w-full border border-border rounded-sm px-4 py-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors bg-white'
+  const inputCls = 'w-full border border-border rounded-sm px-4 py-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors bg-background'
 
   if (submitted) {
     return (
       <div className="text-center py-16 max-w-md mx-auto">
         <div className="h-12 w-12 rounded-sm flex items-center justify-center mx-auto mb-4" style={{ background: '#3F6F73' + '18' }}>
-          <FileText size={22} style={{ color: '#3F6F73' }} />
+          <FileText size={22} style={{ color: 'hsl(var(--primary))' }} />
         </div>
         <h3
           className="text-2xl font-bold text-foreground mb-2"
@@ -733,7 +733,7 @@ function FAQSection() {
         <FadeUp>
           <h2
             className="text-3xl md:text-4xl font-bold text-center mb-10"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             Questions from serious investors.
           </h2>
@@ -820,7 +820,7 @@ export default function Investors() {
             <p className="t-label text-primary mb-3 text-center">Apply</p>
             <h2
               className="text-3xl md:text-4xl font-bold text-center mb-3"
-              style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+              style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
             >
               Apply to join the Akro investor network.
             </h2>

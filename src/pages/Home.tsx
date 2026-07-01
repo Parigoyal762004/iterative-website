@@ -14,6 +14,8 @@ import { Button } from '@/components/Button'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { ScrollReveal } from '@/components/motion/ScrollReveal'
 import { Stagger, StaggerItem } from '@/components/motion/Stagger'
+import rohitImg from '@/assets/rohit.jpg'
+import akshitaImg from '@/assets/akshita.jpg'
 
 // eslint-disable-next-line
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
@@ -84,7 +86,7 @@ function AnimatedStat({ prefix = '', target, suffix, label }: StatProps) {
     <div ref={ref}>
       <div
         className="font-display text-accent tabular-nums"
-        style={{ fontSize: 'clamp(1.75rem, 6vw, 4rem)', fontWeight: 700, lineHeight: 1.08, letterSpacing: '-0.02em' }}
+        style={{ fontSize: 'clamp(1.375rem, 4.5vw, 3rem)', fontWeight: 700, lineHeight: 1.08, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}
       >
         {prefix}{count}{suffix}
       </div>
@@ -875,7 +877,7 @@ function CtaSection() {
                 whileHover={{ scale: 1.03, transition: { duration: 0.3, ease: EASE } }}
               >
                 <img
-                  src="/team/rohit.png"
+                  src={rohitImg}
                   alt="Rohit Jain, Co-Founder"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"
@@ -894,7 +896,7 @@ function CtaSection() {
                 whileHover={{ scale: 1.03, transition: { duration: 0.3, ease: EASE } }}
               >
                 <img
-                  src="/team/akshita.png"
+                  src={akshitaImg}
                   alt="Akshita Chahande, Co-Founder"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"

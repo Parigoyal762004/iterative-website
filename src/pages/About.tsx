@@ -120,7 +120,7 @@ function HeroSection() {
       </svg>
       <div className="relative z-10 max-w-6xl mx-auto w-full pb-16 pt-36">
         <FadeUp delay={0.1}>
-          <p className="t-label mb-5" style={{ color: '#3F6F73' }}>About Akro</p>
+          <p className="t-label mb-5" style={{ color: 'hsl(var(--primary))' }}>About Akro</p>
         </FadeUp>
         <FadeUp delay={0.2}>
           <h1
@@ -159,7 +159,7 @@ function FoundingStorySection() {
                   fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(1.8rem, 3vw, 2.6rem)',
                   fontWeight: 700,
-                  color: '#2B2B2B',
+                  color: 'hsl(var(--foreground))',
                   lineHeight: 1.18,
                 }}
               >
@@ -268,7 +268,7 @@ function DifferentSection() {
           <p className="t-label text-primary mb-3">Why Akro</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-12"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             What makes us different.
           </h2>
@@ -312,7 +312,7 @@ function TeamSection() {
           <p className="t-label text-primary mb-3">The Team</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-2"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             The people behind Akro.
           </h2>
@@ -342,7 +342,7 @@ function TeamSection() {
                 >
                   {name}
                 </p>
-                <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#3F6F73' }}>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: 'hsl(var(--primary))' }}>
                   {title}
                 </p>
                 <p className="text-muted-foreground text-sm leading-relaxed">{bio}</p>

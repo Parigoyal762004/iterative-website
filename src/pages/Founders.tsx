@@ -136,7 +136,7 @@ function HeroSection() {
     <section
       className="relative overflow-hidden flex items-center"
       style={{
-        minHeight: '76vh',
+        minHeight: '62vh',
         background: 'linear-gradient(145deg, #0a1f21 0%, #0f2224 28%, #1a3538 60%, #2B2B2B 100%)',
       }}
     >
@@ -265,18 +265,18 @@ function ServiceSelector() {
                 className="h-10 w-10 rounded-sm flex items-center justify-center flex-shrink-0"
                 style={{ background: '#3F6F73' + '1a' }}
               >
-                <ActiveIcon size={18} style={{ color: '#3F6F73' }} />
+                <ActiveIcon size={18} style={{ color: 'hsl(var(--primary))' }} />
               </div>
               <span
                 className="text-xs font-bold uppercase tracking-widest"
-                style={{ color: '#3F6F73' }}
+                style={{ color: 'hsl(var(--primary))' }}
               >
                 {service.tag}
               </span>
             </div>
             <h3
               className="text-xl md:text-2xl font-bold mb-4 leading-snug"
-              style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+              style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
             >
               {service.fullName}
             </h3>
@@ -339,7 +339,7 @@ function ReadinessCalculator() {
           <p className="text-xs text-muted-foreground mb-3">Question {step + 1} of {total}</p>
           <h4
             className="text-xl font-bold mb-6 leading-snug"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             {QUIZ_QS[step].q}
           </h4>
@@ -442,7 +442,7 @@ function JourneyTimeline() {
                     fontFamily: 'var(--font-display)',
                     fontSize: '1.25rem',
                     fontWeight: 700,
-                    color: '#3F6F73',
+                    color: 'hsl(var(--primary))',
                   }}
                 >
                   {n}
@@ -480,7 +480,7 @@ function TrackASection() {
           <p className="t-label text-primary mb-3">For Startup Founders</p>
           <h2
             className="text-4xl md:text-5xl font-bold leading-tight mb-5"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             Strategy first. Capital follows.
           </h2>
@@ -500,7 +500,7 @@ function TrackASection() {
         <FadeUp>
           <h3
             className="text-2xl font-bold mb-12 text-center"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             The Founder Journey
           </h3>
@@ -572,7 +572,7 @@ function EMICalculator() {
             step={0.5}
             value={rate}
             onChange={e => setRate(Math.max(0, +e.target.value))}
-            className="w-full border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-primary"
+            className="w-full border border-border rounded-sm px-3 py-2 text-sm text-foreground bg-background focus:outline-none focus:border-primary"
           />
         </div>
 
@@ -583,7 +583,7 @@ function EMICalculator() {
           <select
             value={months}
             onChange={e => setMonths(+e.target.value)}
-            className="w-full border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-primary"
+            className="w-full border border-border rounded-sm px-3 py-2 text-sm text-foreground bg-background focus:outline-none focus:border-primary"
           >
             {TENURES.map(t => (
               <option key={t} value={t}>
@@ -598,7 +598,7 @@ function EMICalculator() {
             <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Monthly EMI</p>
             <p
               className="text-3xl font-bold"
-              style={{ fontFamily: 'var(--font-display)', color: '#3F6F73' }}
+              style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--primary))' }}
             >
               {fmt(emi)}
             </p>
@@ -654,7 +654,7 @@ function QuoteStrip() {
         >
           "The wrong capital at the wrong time is worse than no capital at all."
         </p>
-        <p className="mt-4 text-xs uppercase tracking-widest font-semibold" style={{ color: '#3F6F73' }}>
+        <p className="mt-4 text-xs uppercase tracking-widest font-semibold" style={{ color: 'hsl(var(--primary))' }}>
           Rohit Jain, Co-Founder
         </p>
       </div>
@@ -709,7 +709,7 @@ function TrackBSection() {
                   >
                     {s.name}
                   </span>
-                  {active === i && <ChevronRight size={14} style={{ color: '#2B2B2B', flexShrink: 0 }} />}
+                  {active === i && <ChevronRight size={14} style={{ color: 'hsl(var(--foreground))', flexShrink: 0 }} />}
                 </button>
               ))}
             </div>
@@ -759,7 +759,7 @@ function FAQSection() {
         <FadeUp>
           <h2
             className="text-3xl md:text-4xl font-bold text-center mb-10"
-            style={{ fontFamily: 'var(--font-display)', color: '#2B2B2B' }}
+            style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             Questions founders and business owners ask us.
           </h2>
