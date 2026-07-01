@@ -44,9 +44,18 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
   const [rotation, setRotation] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
   const [paused, setPaused] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const rafRef = useRef<number>(0)
   const lastRef = useRef<number>(0)
-  const RADIUS = 210
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const RADIUS = isMobile ? 118 : 210
   const SPEED = 0.008 // degrees per ms
 
   const animate = useCallback((ts: number) => {
@@ -78,7 +87,11 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
   }
 
   const selectedNode = nodes.find(n => n.id === selected)
-  const SIZE = 500
+  const SIZE = isMobile ? 290 : 500
+  const NODE_SIZE = isMobile ? 38 : 60
+  const ICON_SIZE = isMobile ? 16 : 24
+  const CORE_SIZE = isMobile ? 44 : 66
+  const LABEL_SIZE = isMobile ? 9 : 11
 
   return (
     <div className="flex flex-col items-center gap-5 w-full">
@@ -101,8 +114,8 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
         <div
           className="absolute rounded-full flex items-center justify-center"
           style={{
-            width: 66, height: 66,
-            left: SIZE / 2 - 33, top: SIZE / 2 - 33,
+            width: CORE_SIZE, height: CORE_SIZE,
+            left: SIZE / 2 - CORE_SIZE / 2, top: SIZE / 2 - CORE_SIZE / 2,
             background: `radial-gradient(circle, ${accentColor}44 0%, transparent 70%)`,
             border: `1px solid ${accentColor}55`,
             boxShadow: `0 0 24px ${accentColor}22`,
@@ -138,7 +151,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
               <div
                 className="rounded-full flex items-center justify-center"
                 style={{
-                  width: 60, height: 60,
+                  width: NODE_SIZE, height: NODE_SIZE,
                   background: isSelected ? accentColor : `${accentColor}2a`,
                   border: `1.5px solid ${isSelected ? accentColor : accentColor + '55'}`,
                   boxShadow: isSelected ? `0 0 18px ${accentColor}55` : 'none',
@@ -146,7 +159,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
                 }}
               >
                 <NodeIcon
-                  size={24}
+                  size={ICON_SIZE}
                   strokeWidth={1.6}
                   className={isSelected ? 'text-white' : ''}
                   style={{ color: isSelected ? '#fff' : accentColor }}
@@ -155,7 +168,7 @@ export function RadialOrbitalTimeline({ mode }: RadialOrbitalTimelineProps) {
               <span
                 className="whitespace-nowrap font-medium"
                 style={{
-                  fontSize: 11,
+                  fontSize: LABEL_SIZE,
                   letterSpacing: '0.04em',
                   color: isSelected ? '#fff' : 'rgba(255,255,255,0.55)',
                   transition: 'color 0.3s',
