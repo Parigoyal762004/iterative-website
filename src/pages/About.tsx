@@ -277,8 +277,8 @@ function DifferentSection() {
           {DIFFERENTIATORS.map(({ headline, body }, i) => (
             <FadeUp key={i} delay={i * 0.1}>
               <div
-                className="p-7 rounded-sm h-full"
-                style={{ background: '#F4F6F2', borderTop: '3px solid #3F6F73' }}
+                className="p-7 rounded-sm h-full bg-secondary"
+                style={{ borderTop: '3px solid #3F6F73' }}
               >
                 <h3
                   className="font-bold text-foreground mb-4 leading-snug"

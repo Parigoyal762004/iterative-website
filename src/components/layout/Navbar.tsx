@@ -76,7 +76,7 @@ export function Navbar() {
             className="flex items-center justify-between h-16"
             aria-label="Main navigation"
           >
-            <Logo />
+            <Logo dark={!scrolled || theme === 'dark'} />
 
             {/* Desktop nav links */}
             <ul className="hidden lg:flex items-center gap-1" role="list">
@@ -138,59 +138,47 @@ export function Navbar() {
               </a>
             </div>
 
-            {/* Mobile hamburger */}
+            {/* Mobile menu toggle */}
             <button
               className="lg:hidden flex items-center justify-center w-10 h-10 text-foreground"
-              onClick={() => setDrawerOpen(true)}
-              aria-label="Open menu"
+              onClick={() => setDrawerOpen(o => !o)}
+              aria-label={drawerOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={drawerOpen}
             >
-              <Menu size={22} strokeWidth={1.5} />
+              {drawerOpen ? <X size={22} strokeWidth={1.5} /> : <Menu size={22} strokeWidth={1.5} />}
             </button>
           </nav>
         </div>
       </header>
 
-      {/* Mobile Drawer — right side */}
+      {/* Mobile menu — top dropdown panel */}
       <AnimatePresence>
         {drawerOpen && (
           <>
-            {/* Backdrop */}
+            {/* Backdrop — dims the page below the panel */}
             <motion.div
               key="backdrop"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[60] bg-black/40"
+              className="fixed top-16 left-0 right-0 bottom-0 z-[60] bg-black/50 backdrop-blur-sm"
               onClick={() => setDrawerOpen(false)}
               aria-hidden="true"
             />
 
-            {/* Drawer panel */}
-            <motion.aside
-              key="drawer"
-              initial={{ x: '100%' }}
-              animate={{ x: '0%' }}
-              exit={{ x: '100%' }}
+            {/* Dropdown panel */}
+            <motion.div
+              key="dropdown"
+              initial={{ y: '-100%' }}
+              animate={{ y: '0%' }}
+              exit={{ y: '-100%' }}
               transition={{ duration: 0.35, ease: EASE }}
-              className="fixed top-0 right-0 bottom-0 z-[70] w-[320px] bg-charcoal flex flex-col"
+              className="fixed top-16 left-0 right-0 z-[70] bg-charcoal shadow-2xl rounded-b-2xl overflow-y-auto"
+              style={{ maxHeight: 'calc(100vh - 4rem)' }}
               aria-label="Mobile navigation"
             >
-              {/* Drawer header */}
-              <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-                <Logo />
-                <button
-                  onClick={() => setDrawerOpen(false)}
-                  className="w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
-                  aria-label="Close menu"
-                >
-                  <X size={20} strokeWidth={1.5} />
-                </button>
-              </div>
-
-              {/* Drawer nav */}
-              <nav className="flex-1 px-6 py-8 overflow-y-auto">
+              <nav className="px-6 py-7">
                 <ul className="space-y-1" role="list">
                   {navLinks.map(({ label, href }) => (
                     <li key={href}>
@@ -198,7 +186,7 @@ export function Navbar() {
                         to={href}
                         className={({ isActive }) =>
                           cn(
-                            'block py-3 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] transition-colors duration-200 border-b border-white/8',
+                            'block py-3 text-[0.9375rem] font-semibold uppercase tracking-[0.1em] transition-colors duration-200 border-b border-white/8',
                             isActive ? 'text-accent' : 'text-white/70 hover:text-white'
                           )
                         }
@@ -210,14 +198,14 @@ export function Navbar() {
                   <li>
                     <Link
                       to="/login"
-                      className="block py-3 text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors duration-200 border-b border-white/8"
+                      className="block py-3 text-[0.9375rem] font-semibold uppercase tracking-[0.1em] text-white/40 hover:text-white/70 transition-colors duration-200 border-b border-white/8"
                     >
                       Login
                     </Link>
                   </li>
                 </ul>
 
-                <div className="mt-10 flex flex-col gap-3">
+                <div className="mt-7 flex flex-col gap-3">
                   <a href={CALENDLY} target="_blank" rel="noreferrer" className="block">
                     <Button size="lg" className="w-full justify-center">
                       Book a Call
@@ -236,15 +224,14 @@ export function Navbar() {
                     {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                   </button>
                 </div>
-              </nav>
 
-              {/* Drawer footer */}
-              <div className="px-6 py-5 border-t border-white/10">
-                <p className="text-[0.6875rem] text-white/30 uppercase tracking-[0.15em]">
-                  Zero upfront fees · RBI compliant
-                </p>
-              </div>
-            </motion.aside>
+                <div className="mt-6 pt-5 border-t border-white/10">
+                  <p className="text-[0.6875rem] text-white/30 uppercase tracking-[0.15em]">
+                    Zero upfront fees · RBI compliant
+                  </p>
+                </div>
+              </nav>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
