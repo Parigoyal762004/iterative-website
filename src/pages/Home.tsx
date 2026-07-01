@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowLeft, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowRight, ArrowLeft, ArrowUpRight, ChevronDown, TrendingUp, Rocket, Ship, Layers } from 'lucide-react'
 import { RadialOrbitalTimeline } from '@/components/ui/radial-orbital-timeline'
 import {
   motion,
   AnimatePresence,
   useInView,
-  useScroll,
-  useTransform,
   useReducedMotion,
 } from 'framer-motion'
 import { Button } from '@/components/Button'
@@ -20,7 +18,6 @@ import akshitaImg from '@/assets/akshita.jpg'
 // eslint-disable-next-line
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
 const EASE = [0.22, 1, 0.36, 1] as const
-const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4'
 
 // ── Vertical slide word ticker ────────────────────────────────────────────────
 const TICKER_WORDS = ['conviction', 'precision', 'clarity', 'purpose', 'resolve']
@@ -96,14 +93,6 @@ function AnimatedStat({ prefix = '', target, suffix, label }: StatProps) {
 }
 
 // ── Data ──────────────────────────────────────────────────────────────────────
-const quickPaths = [
-  { label: 'Working Capital',     href: '/founders' },
-  { label: 'Project Funding',     href: '/founders' },
-  { label: 'Startup Fundraising', href: '/founders' },
-  { label: 'FDI / ECB',          href: '/founders' },
-  { label: 'For Investors',       href: '/investors' },
-]
-
 const OUTCOMES_CAROUSEL = [
   {
     label: 'Project Finance · Hyderabad',
@@ -176,181 +165,237 @@ const stats = [
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION 1 — HERO (centered, cinematic)
 // ─────────────────────────────────────────────────────────────────────────────
+// Capital-solution cards that rotate as the hero centerpiece
+const HERO_CARDS = [
+  { key: 'CAPITAL',  num: '01', title: 'Business & Working Capital', line: 'Unsecured and secured facilities matched to your cashflow.',       Icon: TrendingUp, bg: '#0e2725', panel: '#17403d', accent: '#7CC3B8' },
+  { key: 'FUNDING',  num: '02', title: 'Startup Fundraising',        line: 'Pre-seed to growth. Narrative, model, and the right investors.',   Icon: Rocket,     bg: '#2a2410', panel: '#453c15', accent: '#F2B705' },
+  { key: 'EXPORTS',  num: '03', title: 'Export & Trade Finance',     line: 'Up to 90% of invoice value unlocked on day zero.',                 Icon: Ship,       bg: '#0d272a', panel: '#164043', accent: '#7CC3B8' },
+  { key: 'PROJECTS', num: '04', title: 'Project & Structured Funding', line: 'Milestone-based drawdowns for large-scale builds.',               Icon: Layers,     bg: '#241f2b', panel: '#3a3248', accent: '#D4B24A' },
+]
+
 function HeroSection() {
-  const sectionRef = useRef<HTMLElement>(null)
   const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const ghostY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '20%'])
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', reduced ? '0%' : '-8%'])
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const navigate = useCallback((dir: 'next' | 'prev') => {
+    if (isAnimating) return
+    setIsAnimating(true)
+    setActiveIndex(prev => dir === 'next' ? (prev + 1) % 4 : (prev + 3) % 4)
+    setTimeout(() => setIsAnimating(false), 650)
+  }, [isAnimating])
+
+  // Auto-advance, pauses on interaction
+  const [paused, setPaused] = useState(false)
+  useEffect(() => {
+    if (paused || reduced) return
+    const t = setInterval(() => navigate('next'), 4200)
+    return () => clearInterval(t)
+  }, [paused, reduced, navigate])
+
+  const active = HERO_CARDS[activeIndex]
+  const center = activeIndex
+  const leftI  = (activeIndex + 3) % 4
+  const rightI = (activeIndex + 1) % 4
+
+  const STAGE_H = isMobile ? 340 : 480
+
+  function getRole(i: number): 'center' | 'left' | 'right' | 'back' {
+    if (i === center) return 'center'
+    if (i === leftI)  return 'left'
+    if (i === rightI) return 'right'
+    return 'back'
+  }
+
+  function cardStyle(i: number): React.CSSProperties {
+    const role = getRole(i)
+    const data = HERO_CARDS[i]
+    const base: React.CSSProperties = {
+      position: 'absolute',
+      aspectRatio: '3 / 4',
+      backgroundColor: data.panel,
+      borderRadius: 4,
+      transition: reduced ? 'none' : CAROUSEL_TRANS,
+      willChange: reduced ? 'auto' : 'transform, filter, opacity',
+      overflow: 'hidden',
+      boxShadow: '0 24px 60px rgba(0,0,0,0.4)',
+    }
+    switch (role) {
+      case 'center': return { ...base, left: '50%', bottom: '4%', height: '90%', transform: 'translateX(-50%) scale(1)', filter: 'none', opacity: 1, zIndex: 20 }
+      case 'left':   return { ...base, left: isMobile ? '14%' : '18%', bottom: '10%', height: '52%', transform: 'translateX(-50%) scale(1)', filter: 'blur(2px)', opacity: 0.5, zIndex: 10 }
+      case 'right':  return { ...base, left: isMobile ? '86%' : '82%', bottom: '10%', height: '52%', transform: 'translateX(-50%) scale(1)', filter: 'blur(2px)', opacity: 0.5, zIndex: 10 }
+      default:       return { ...base, left: '50%', bottom: '14%', height: '40%', transform: 'translateX(-50%) scale(1)', filter: 'blur(4px)', opacity: 0.28, zIndex: 5 }
+    }
+  }
 
   return (
-    <section ref={sectionRef} className="relative bg-charcoal overflow-hidden min-h-screen flex flex-col" aria-label="Hero">
-
-      {/* Background video */}
-      <video
-        src={HERO_VIDEO}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        style={{ filter: 'blur(10px) saturate(0.82)', transform: 'scale(1.08)' }}
-        aria-hidden="true"
-      />
-      {/* Directional overlay — warm-teal light from upper-left, not a flat scrim */}
+    <section
+      className="relative overflow-hidden min-h-screen flex flex-col"
+      aria-label="Hero"
+      style={{ backgroundColor: active.bg, transition: 'background-color 650ms cubic-bezier(0.4,0,0.2,1)' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Accent glow that shifts with the active card */}
       <div
-        className="absolute inset-0 z-[1]"
-        style={{ background: 'linear-gradient(118deg, rgba(16,18,18,0.94) 0%, rgba(23,40,41,0.80) 46%, rgba(34,34,34,0.93) 100%)' }}
+        className="absolute pointer-events-none"
+        style={{
+          top: '-10%', right: '-5%', width: '55%', height: '70%', borderRadius: '50%',
+          background: `radial-gradient(ellipse, ${active.accent}22 0%, transparent 70%)`,
+          transition: 'background 650ms ease', zIndex: 1,
+        }}
         aria-hidden="true"
       />
       {/* Film grain */}
       <div className="grain-layer absolute inset-0 z-[2] pointer-events-none" style={{ mixBlendMode: 'overlay' }} aria-hidden="true" />
 
-      {/* Giant stencil ghost word */}
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 z-[2] pointer-events-none select-none flex justify-start"
-        style={{ y: ghostY }}
-      >
-        <span
-          className="font-stencil"
-          style={{
-            fontSize: 'clamp(120px, 30vw, 470px)',
-            fontWeight: 700,
-            lineHeight: 0.78,
-            color: '#ffffff',
-            opacity: 0.06,
-            letterSpacing: '-0.03em',
-            whiteSpace: 'nowrap',
-            transform: 'translateY(12%)',
-            paddingLeft: '1.5vw',
-          }}
-        >
-          CAPITAL
-        </span>
-      </motion.div>
+      {/* Giant stencil ghost word — changes with the active card */}
+      <div className="absolute inset-0 z-[2] pointer-events-none select-none overflow-hidden" aria-hidden="true">
+        <div className="absolute right-0 lg:right-[6%] top-[16%] lg:top-[10%]">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={active.key}
+              className="font-stencil block"
+              initial={reduced ? {} : { opacity: 0, y: 20 }}
+              animate={{ opacity: 0.07, y: 0 }}
+              exit={reduced ? {} : { opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: EASE }}
+              style={{ fontSize: 'clamp(90px, 20vw, 320px)', fontWeight: 700, lineHeight: 0.8, color: '#ffffff', letterSpacing: '-0.03em', whiteSpace: 'nowrap' }}
+            >
+              {active.key}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+      </div>
 
-      {/* Content — bottom-weighted, left aligned */}
-      <motion.div style={{ y: contentY }} className="relative z-10 flex-1 flex flex-col justify-end">
-        <div className="mx-auto w-full max-w-[1280px] px-6 pb-14 pt-36">
+      {/* Content grid */}
+      <div className="relative z-10 flex-1 mx-auto w-full max-w-[1280px] px-6 pt-24 pb-12 grid lg:grid-cols-[1fr_1.05fr] gap-8 lg:gap-10 items-center">
 
-          {/* Eyebrow */}
-          <FadeIn delay={0.1} direction="up">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="t-label text-accent">Capital Advisory</span>
-              <span className="h-px w-8 bg-white/25" />
-              <span className="t-label text-white/35">Since 2023</span>
-            </div>
-          </FadeIn>
-
-          {/* Headline */}
+        {/* Left — headline + CTAs */}
+        <div className="order-2 lg:order-1">
           <h1
             className="font-display text-white"
-            style={{ fontSize: 'clamp(2.75rem, 7vw, 5.75rem)', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.02em', maxWidth: '16ch' }}
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 700, lineHeight: 1.02, letterSpacing: '-0.02em', maxWidth: '15ch' }}
           >
             <span className="block" style={{ overflow: 'hidden' }}>
-              <motion.span
-                style={{ display: 'inline-block' }}
-                initial={reduced ? {} : { opacity: 0, y: 54 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
-              >
+              <motion.span style={{ display: 'inline-block' }} initial={reduced ? {} : { opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}>
                 Capital, structured
               </motion.span>
             </span>
             <span className="block" style={{ overflow: 'hidden' }}>
-              <motion.span
-                style={{ display: 'inline-block' }}
-                initial={reduced ? {} : { opacity: 0, y: 54 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: EASE, delay: 0.3 }}
-              >
+              <motion.span style={{ display: 'inline-block' }} initial={reduced ? {} : { opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE, delay: 0.24 }}>
                 with <WordTicker />.
               </motion.span>
             </span>
           </h1>
 
-          {/* Lower band — subtext + CTAs on the left, stats strip on the right */}
-          <div className="mt-8 flex flex-col gap-9 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-xl">
-              <FadeIn delay={0.5} direction="up">
-                <p className="t-body-l text-white/55 leading-relaxed">
-                  We advise Indian founders on capital structure, lender selection,
-                  and deal architecture. Strategy first, paperwork second.
-                </p>
-              </FadeIn>
-              <FadeIn delay={0.62} direction="up">
-                <div className="flex flex-wrap items-center gap-4 mt-7">
-                  <Link to="/founders" className="btn-slide btn-slide-teal">
-                    <span>For Founders</span>
-                    <ArrowRight size={14} />
-                  </Link>
-                  <Link to="/investors" className="btn-slide btn-slide-mustard">
-                    <span>For Investors</span>
-                    <ArrowRight size={14} />
-                  </Link>
-                </div>
-              </FadeIn>
-              <FadeIn delay={0.72} direction="up">
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-6">
-                  {quickPaths.map(({ label, href }, i) => (
-                    <span key={label} className="flex items-center gap-x-5">
-                      {i > 0 && <span className="h-3 w-px bg-white/15" aria-hidden="true" />}
-                      <Link
-                        to={href}
-                        className="text-[11px] uppercase tracking-[0.14em] text-white/40 hover:text-[#F2B705] transition-colors duration-200 font-semibold"
-                      >
-                        {label}
-                      </Link>
-                    </span>
-                  ))}
-                </div>
-              </FadeIn>
-            </div>
+          <FadeIn delay={0.42} direction="up">
+            <p className="t-body-l text-white/60 leading-relaxed mt-6 max-w-md">
+              We advise Indian founders on capital structure, lender selection,
+              and deal architecture. Strategy first, paperwork second.
+            </p>
+          </FadeIn>
 
-            {/* Stats strip — editorial data block */}
-            <FadeIn delay={0.78} direction="up">
-              <div className="flex items-end gap-8 lg:gap-10 border-t border-white/10 pt-5 lg:border-t-0 lg:pt-0">
-                {[
-                  { val: '₹200Cr+', lbl: 'Facilitated' },
-                  { val: '50+',     lbl: 'Founders' },
-                  { val: '40+',     lbl: 'Lenders' },
-                ].map(({ val, lbl }) => (
-                  <div key={lbl} className="flex flex-col">
-                    <span
-                      className="font-display font-bold text-white leading-none tabular-nums"
-                      style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2rem)' }}
+          <FadeIn delay={0.54} direction="up">
+            <div className="flex flex-wrap items-center gap-4 mt-8">
+              <Link to="/founders" className="btn-slide btn-slide-teal">
+                <span>For Founders</span>
+                <ArrowRight size={14} />
+              </Link>
+              <Link to="/investors" className="btn-slide btn-slide-mustard">
+                <span>For Investors</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* Right — rotating card stage */}
+        <div className="order-1 lg:order-2 flex flex-col items-center gap-6">
+          <div className="relative w-full" style={{ height: STAGE_H, overflow: 'hidden' }}>
+            {HERO_CARDS.map((card, i) => {
+              const role = getRole(i)
+              const isCenter = role === 'center'
+              const CardIcon = card.Icon
+              return (
+                <button
+                  key={card.key}
+                  aria-label={card.title}
+                  onClick={() => { if (!isCenter && !isAnimating) { setActiveIndex(i) ; setIsAnimating(true); setTimeout(() => setIsAnimating(false), 650) } }}
+                  style={{ ...cardStyle(i), cursor: isCenter ? 'default' : 'pointer' }}
+                >
+                  <div className="h-full w-full flex flex-col p-5 sm:p-6 text-left">
+                    <div className="flex items-center justify-between">
+                      <span className="font-stencil text-white/25" style={{ fontSize: isCenter ? '2.25rem' : '1.25rem', lineHeight: 1 }}>{card.num}</span>
+                      <span
+                        className="flex items-center justify-center rounded-full"
+                        style={{ width: isCenter ? 46 : 30, height: isCenter ? 46 : 30, background: card.accent }}
+                      >
+                        <CardIcon size={isCenter ? 22 : 15} strokeWidth={2} style={{ color: '#141414' }} />
+                      </span>
+                    </div>
+                    <div className="flex-1" />
+                    {isCenter && (
+                      <span className="t-label mb-2" style={{ color: card.accent }}>Capital Solution</span>
+                    )}
+                    <h3
+                      className="font-display text-white leading-tight"
+                      style={{ fontSize: isCenter ? 'clamp(1.25rem, 2.4vw, 1.9rem)' : '0.95rem', fontWeight: 700 }}
                     >
-                      {val}
-                    </span>
-                    <span className="t-label text-white/35 mt-2">{lbl}</span>
+                      {card.title}
+                    </h3>
+                    {isCenter && (
+                      <p className="text-white/65 leading-relaxed mt-2" style={{ fontSize: '0.85rem' }}>
+                        {card.line}
+                      </p>
+                    )}
                   </div>
-                ))}
-              </div>
-            </FadeIn>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Nav row */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate('prev')}
+              aria-label="Previous solution"
+              className="w-11 h-11 flex items-center justify-center rounded-full border border-white/25 text-white/80 hover:text-white hover:border-white transition-colors"
+              style={{ background: 'rgba(255,255,255,0.06)' }}
+            >
+              <ArrowLeft size={18} strokeWidth={2} />
+            </button>
+            <div className="flex items-center gap-1.5">
+              {HERO_CARDS.map((c, i) => (
+                <span key={c.key} className="h-1 rounded-full transition-all duration-300" style={{ width: i === activeIndex ? 22 : 6, background: i === activeIndex ? active.accent : 'rgba(255,255,255,0.3)' }} />
+              ))}
+            </div>
+            <button
+              onClick={() => navigate('next')}
+              aria-label="Next solution"
+              className="w-11 h-11 flex items-center justify-center rounded-full border border-white/25 text-white/80 hover:text-white hover:border-white transition-colors"
+              style={{ background: 'rgba(255,255,255,0.06)' }}
+            >
+              <ArrowRight size={18} strokeWidth={2} />
+            </button>
           </div>
         </div>
-      </motion.div>
-
-      {/* Right vertical index — editorial marker */}
-      <div
-        className="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
-        style={{ writingMode: 'vertical-rl' }}
-        aria-hidden="true"
-      >
-        <span className="t-label text-white/25 tracking-[0.3em]">PUNE · INDIA</span>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.9, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={16} className="text-white/25" />
+      <div className="relative z-10 flex justify-center pb-6">
+        <motion.div animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.9, ease: 'easeInOut' }}>
+          <ChevronDown size={16} className="text-white/30" />
         </motion.div>
       </div>
-
     </section>
   )
 }
