@@ -105,6 +105,11 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: none;      /* Firefox — native scrollbar hidden, replaced by the slim side progress indicator */
+    -ms-overflow-style: none;   /* legacy Edge/IE */
+  }
+  html::-webkit-scrollbar {
+    display: none;              /* Chrome, Safari, Opera */
   }
 
   body {
@@ -240,6 +245,17 @@
     transform: scaleX(0);
     transform-origin: left;
     background: hsl(var(--accent));
+    z-index: 100;
+    will-change: transform;
+    pointer-events: none;
+  }
+  .scroll-progress-vertical {
+    position: fixed;
+    top: 0; right: 0;
+    width: 3px; height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: hsl(var(--primary));
     z-index: 100;
     will-change: transform;
     pointer-events: none;

@@ -22,6 +22,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const progressRef = useRef<HTMLDivElement>(null)
+  const progressVerticalRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
   const { theme, toggleTheme } = useTheme()
 
@@ -31,16 +32,16 @@ export function Navbar() {
   // Scroll-aware background + progress bar — direct DOM for perf
   useEffect(() => {
     const bar = progressRef.current
+    const barVertical = progressVerticalRef.current
 
     function onScroll() {
       const sy = window.scrollY
       setScrolled(sy > 40)
 
-      if (bar) {
-        const docH = document.documentElement.scrollHeight - window.innerHeight
-        const pct = docH > 0 ? sy / docH : 0
-        bar.style.transform = `scaleX(${pct})`
-      }
+      const docH = document.documentElement.scrollHeight - window.innerHeight
+      const pct = docH > 0 ? sy / docH : 0
+      if (bar) bar.style.transform = `scaleX(${pct})`
+      if (barVertical) barVertical.style.transform = `scaleY(${pct})`
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -62,12 +63,19 @@ export function Navbar() {
         className="scroll-progress"
         aria-hidden="true"
       />
+      <div
+        ref={progressVerticalRef}
+        className="scroll-progress-vertical"
+        aria-hidden="true"
+      />
 
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           scrolled
-            ? 'bg-background border-b border-border shadow-sm'
+            ? theme === 'dark'
+              ? 'bg-[#0a0b0c] border-b border-white/10 shadow-lg'
+              : 'bg-background border-b border-border shadow-sm'
             : 'bg-black/55 backdrop-blur-md'
         )}
       >
