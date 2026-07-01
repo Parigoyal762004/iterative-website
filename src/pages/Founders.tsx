@@ -409,7 +409,7 @@ function JourneyTimeline() {
   return (
     <div ref={ref} className="relative">
       {/* Connector line */}
-      <div className="absolute top-[28px] left-[calc(12.5%+16px)] right-[calc(12.5%+16px)] h-px hidden lg:block" style={{ background: 'rgba(63,111,115,0.15)', zIndex: 0 }}>
+      <div className="absolute top-[28px] left-[28px] right-[calc(25%-46px)] h-px hidden lg:block" style={{ background: 'rgba(63,111,115,0.15)', zIndex: 0 }}>
         <motion.div
           className="h-full"
           style={{ background: 'linear-gradient(90deg, #3F6F73, rgba(63,111,115,0.4))', transformOrigin: 'left' }}
@@ -557,7 +557,7 @@ function EMICalculator() {
             className="w-full accent-[#F2B705]"
           />
           <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>₹1 L</span><span>₹50 Cr</span>
+            <span>₹1 L</span><span>₹5 Cr</span>
           </div>
         </div>
 

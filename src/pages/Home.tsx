@@ -82,7 +82,10 @@ function AnimatedStat({ prefix = '', target, suffix, label }: StatProps) {
   const { count, ref } = useCountUp(target)
   return (
     <div ref={ref}>
-      <div className="t-display-l font-display text-accent tabular-nums leading-none">
+      <div
+        className="font-display text-accent tabular-nums"
+        style={{ fontSize: 'clamp(1.75rem, 6vw, 4rem)', fontWeight: 700, lineHeight: 1.08, letterSpacing: '-0.02em' }}
+      >
         {prefix}{count}{suffix}
       </div>
       <div className="t-label text-muted-foreground mt-3">{label}</div>
@@ -409,7 +412,7 @@ function OutcomesCarousel() {
   const back   = (activeIndex + 2) % 4
 
   // Reduced height so nav + view-all are visible without scrolling
-  const STAGE_H = isMobile ? 400 : 520
+  const STAGE_H = isMobile ? 480 : 520
 
   function getRole(i: number): 'center' | 'left' | 'right' | 'back' {
     if (i === center) return 'center'
@@ -435,7 +438,7 @@ function OutcomesCarousel() {
       case 'center': return {
         ...base,
         left: '50%',
-        height: isMobile ? '64%' : '82%',
+        height: isMobile ? '70%' : '82%',
         bottom: 0,
         transform: `translateX(-50%) scale(${isMobile ? 1.0 : 1.12})`,
         filter: 'none',
@@ -535,7 +538,7 @@ function OutcomesCarousel() {
                   style={{
                     fontFamily: 'var(--font-display)',
                     fontSize: isCenter
-                      ? 'clamp(2.25rem, 5vw, 4rem)'
+                      ? (isMobile ? 'clamp(1.5rem, 5vw, 4rem)' : 'clamp(2.25rem, 5vw, 4rem)')
                       : 'clamp(1.125rem, 2.5vw, 1.75rem)',
                     fontWeight: 700,
                     color: 'white',
@@ -765,7 +768,7 @@ function StatsSection() {
           {stats.map((stat, i) => (
             <motion.div
               key={i}
-              className="bg-white px-8 py-10"
+              className="bg-white px-4 py-6 sm:px-8 sm:py-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
