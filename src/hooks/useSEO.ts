@@ -1,9 +1,15 @@
 import { useEffect } from 'react'
 
+interface FAQItem {
+  q: string
+  a: string
+}
+
 interface SEOProps {
   title: string
   description: string
   path: string
+  faqs?: FAQItem[]
 }
 
 function setMeta(nameOrProp: 'name' | 'property', key: string, content: string) {
@@ -16,7 +22,9 @@ function setMeta(nameOrProp: 'name' | 'property', key: string, content: string) 
   tag.setAttribute('content', content)
 }
 
-export function useSEO({ title, description, path }: SEOProps) {
+const FAQ_SCRIPT_ID = 'faq-structured-data'
+
+export function useSEO({ title, description, path, faqs }: SEOProps) {
   useEffect(() => {
     const fullTitle = `${title} | Akro Ventures`
     const url = `https://akroventures.com${path}`
@@ -36,5 +44,28 @@ export function useSEO({ title, description, path }: SEOProps) {
       document.head.appendChild(canonical)
     }
     canonical.setAttribute('href', url)
-  }, [title, description, path])
+
+    // FAQPage structured data — lets AI answer engines (Google AI Overview,
+    // ChatGPT, Perplexity) extract and cite these Q&A pairs directly.
+    document.getElementById(FAQ_SCRIPT_ID)?.remove()
+    if (faqs && faqs.length > 0) {
+      const script = document.createElement('script')
+      script.id = FAQ_SCRIPT_ID
+      script.type = 'application/ld+json'
+      script.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(({ q, a }) => ({
+          '@type': 'Question',
+          name: q,
+          acceptedAnswer: { '@type': 'Answer', text: a },
+        })),
+      })
+      document.head.appendChild(script)
+    }
+
+    return () => {
+      document.getElementById(FAQ_SCRIPT_ID)?.remove()
+    }
+  }, [title, description, path, faqs])
 }

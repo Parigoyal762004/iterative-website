@@ -792,6 +792,7 @@ export default function Investors() {
     title: 'For Investors — Curated Deal Flow & Verified Capital Access',
     description: 'Join the Akro Ventures investor network for curated, pre-vetted deal flow across equity and structured credit, from ₹50L to ₹50Cr+. Right founder, right capital, right investor.',
     path: '/investors',
+    faqs: FAQS,
   })
   return (
     <>

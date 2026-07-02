@@ -813,6 +813,7 @@ export default function Founders() {
     title: 'For Founders — Business Loans, Fundraising & Loan Readiness',
     description: 'Unsecured business loans, startup fundraising, FDI/ECB, export factoring, project funding, and loan readiness audits for Indian founders and growing businesses. Strategy first, paperwork second.',
     path: '/founders',
+    faqs: FAQS,
   })
   return (
     <>
