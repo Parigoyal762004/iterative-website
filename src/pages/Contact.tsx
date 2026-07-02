@@ -23,6 +23,7 @@ import { Link } from "react-router-dom";
 import MagneticButton from "@/components/MagneticButton";
 import useReveal from "@/hooks/useReveal";
 import { supabase } from "@/lib/supabase";
+import { useSEO } from "@/hooks/useSEO";
 
 const industries = ["SaaS", "Manufacturing", "D2C", "Fintech", "Healthcare", "Logistics", "Other"];
 const fundingPills = ["₹10L", "₹50L", "₹1Cr", "₹5Cr", "₹10Cr", "₹25Cr", "₹50Cr+"];
@@ -31,6 +32,11 @@ type FormState = { name: string; email: string; phone: string; company: string; 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
 
 const Contact = () => {
+  useSEO({
+    title: "Contact Akro Ventures",
+    description: "Get in touch with Akro Ventures for business loans, startup fundraising, or investor network access. Zero upfront fees, RBI compliant.",
+    path: "/contact",
+  });
   useReveal();
   const [step, setStep] = useState(0);
   const [status, setStatus] = useState<SubmitStatus>("idle");

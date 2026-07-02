@@ -16,6 +16,7 @@ import { ScrollReveal } from '@/components/motion/ScrollReveal'
 import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 import rohitImg from '@/assets/rohit.jpg'
 import akshitaImg from '@/assets/akshita.jpg'
+import { useSEO } from '@/hooks/useSEO'
 
 // eslint-disable-next-line
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
@@ -827,6 +828,11 @@ function CtaSection() {
 // Page
 // ─────────────────────────────────────────────────────────────────────────────
 export default function Home() {
+  useSEO({
+    title: 'Business Loans, Startup Fundraising & Capital Advisory',
+    description: 'Akro Ventures pairs Indian founders with the right capital and the right investors: unsecured business loans, startup fundraising, project finance, and FDI/ECB advisory. Right founder, right capital, right investor.',
+    path: '/',
+  })
   return (
     <>
       <HeroSection />

@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import rohitImg from '@/assets/rohit.jpg'
 import akshitaImg from '@/assets/akshita.jpg'
 import pariImg from '@/assets/pari.jpeg'
+import { useSEO } from '@/hooks/useSEO'
 
 const CelestialSphere = lazy(() =>
   import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere }))
@@ -377,6 +378,11 @@ function CtaStrip() {
 }
 
 export default function About() {
+  useSEO({
+    title: 'About Akro Ventures — Our Story & Team',
+    description: 'Akro Ventures was built on one thesis: right founder, right capital, right investor. Meet the team behind India\'s capital advisory for ambitious founders.',
+    path: '/about',
+  })
   return (
     <>
       <HeroSection />

@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import { ArrowRight, FileText, Users, Mail, TrendingUp, Bell, BarChart2, ChevronDown } from 'lucide-react'
 import { CardStack } from '@/components/ui/card-stack'
 import { supabase } from '@/lib/supabase'
+import { useSEO } from '@/hooks/useSEO'
 const CelestialSphere = lazy(() => import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere })))
 
 // ── Fade-up helper ──────────────────────────────────────────────────────────
@@ -787,6 +788,11 @@ function CtaStrip() {
 
 // ── Page ───────────────────────────────────────────────────────────────────
 export default function Investors() {
+  useSEO({
+    title: 'For Investors — Curated Deal Flow & Verified Capital Access',
+    description: 'Join the Akro Ventures investor network for curated, pre-vetted deal flow across equity and structured credit, from ₹50L to ₹50Cr+. Right founder, right capital, right investor.',
+    path: '/investors',
+  })
   return (
     <>
       <HeroSection />

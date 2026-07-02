@@ -4,6 +4,7 @@ import {
   ArrowRight, Target, TrendingUp, FileText, BookOpen, Users,
   Globe, Landmark, ChevronDown, ChevronRight,
 } from 'lucide-react'
+import { useSEO } from '@/hooks/useSEO'
 
 const CALENDLY = 'https://calendly.com/akroventures-info/30-min-stand-up-call'
 const HERO_VIDEO = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4'
@@ -158,22 +159,22 @@ function HeroSection() {
       </svg>
 
       {/* Left-aligned content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-24">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-20 pb-14 md:pt-28 md:pb-20">
         <div className="max-w-2xl">
           <FadeUp delay={0.2}>
             <h1
               className="mb-6"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
+                fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
                 fontWeight: 700,
                 fontStyle: 'italic',
                 color: 'white',
-                lineHeight: 1.05,
+                lineHeight: 1.08,
                 letterSpacing: '-0.025em',
               }}
             >
-              We don't just connect you<br />to investors. We make sure<br />you're ready for them.
+              We don't just connect you to investors. We make sure you're ready for them.
             </h1>
           </FadeUp>
 
@@ -808,6 +809,11 @@ function CtaStrip() {
 
 // ── Page ───────────────────────────────────────────────────────────────────
 export default function Founders() {
+  useSEO({
+    title: 'For Founders — Business Loans, Fundraising & Loan Readiness',
+    description: 'Unsecured business loans, startup fundraising, FDI/ECB, export factoring, project funding, and loan readiness audits for Indian founders and growing businesses. Strategy first, paperwork second.',
+    path: '/founders',
+  })
   return (
     <>
       <HeroSection />

@@ -1,6 +1,7 @@
 import { useState, useRef, useMemo } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Search, Clock, Calendar } from 'lucide-react'
+import { useSEO } from '@/hooks/useSEO'
 
 function FadeUp({
   children,
@@ -358,6 +359,11 @@ function NewsletterStrip() {
 
 // ── Page ───────────────────────────────────────────────────────────────────
 export default function Insights() {
+  useSEO({
+    title: 'Insights — Fundraising & Capital Advisory Articles',
+    description: 'Deal flow, market views, and fundraising intelligence from Akro Ventures. Practical insights for Indian founders raising business loans, equity, or structured credit.',
+    path: '/insights',
+  })
   const [activeCategory, setActiveCategory] = useState<CategoryId>('all')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
