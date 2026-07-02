@@ -4,6 +4,7 @@ import { ArrowRight, FileText, Users, Mail, TrendingUp, Bell, BarChart2, Chevron
 import { CardStack } from '@/components/ui/card-stack'
 import { supabase } from '@/lib/supabase'
 import { useSEO } from '@/hooks/useSEO'
+import logoIconImg from '@/assets/logo-icon.png'
 const CelestialSphere = lazy(() => import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere })))
 
 // ── Fade-up helper ──────────────────────────────────────────────────────────
@@ -224,7 +225,7 @@ function NetworkMarquee() {
                 <span
                   key={i}
                   className="mx-8 shrink-0 whitespace-nowrap"
-                  style={{ ...b.style, color: 'rgba(0,0,0,0.38)' }}
+                  style={{ ...b.style, color: 'hsl(var(--foreground) / 0.38)' }}
                 >
                   {b.label}
                 </span>
@@ -522,55 +523,112 @@ function PortfolioSection() {
 }
 
 // ── Deal Types ─────────────────────────────────────────────────────────────
+const DEAL_COVERAGE_PILLARS = [
+  { label: 'Sectors',    items: ['Healthcare & Hospitals', 'Artificial Intelligence', 'B2B SaaS', 'Manufacturing'] },
+  { label: 'Stages',     items: ['Pre-Seed', 'Seed', 'Pre-Series A', 'Series A & Growth'] },
+  { label: 'Deal Types', items: ['Equity Raise', 'Structured Debt', 'Debt Syndication', 'Co-Investment'] },
+]
+
+const COVERAGE_LINE_GRADIENT = 'linear-gradient(180deg, #3F6F73, #F2B705 70%, transparent)'
+
 function DealTypesSection() {
   return (
-    <section className="section-y bg-secondary">
-      <div className="mx-auto max-w-4xl px-6">
+    <section className="section-y bg-secondary overflow-hidden">
+      <div className="mx-auto max-w-5xl px-6">
         <FadeUp>
           <p className="t-label text-primary mb-3">Deal Coverage</p>
           <h2
-            className="text-3xl md:text-4xl font-bold mb-10"
+            className="text-3xl md:text-4xl font-bold mb-16"
             style={{ fontFamily: 'var(--font-display)', color: 'hsl(var(--foreground))' }}
           >
             Deal types we work on.
           </h2>
         </FadeUp>
 
+        {/* Desktop — rising staircase */}
         <FadeUp delay={0.1}>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[
-              {
-                heading: 'Sectors',
-                items: ['Healthcare & Hospitals', 'Artificial Intelligence', 'B2B SaaS', 'Manufacturing'],
-              },
-              {
-                heading: 'Stages',
-                items: ['Pre-Seed', 'Seed', 'Pre-Series A', 'Series A & Growth'],
-              },
-              {
-                heading: 'Deal Types',
-                items: ['Equity Raise', 'Structured Debt', 'Debt Syndication', 'Co-Investment'],
-              },
-            ].map(({ heading, items }) => (
-              <div key={heading} className="bg-background p-6 rounded-sm shadow-sm border border-border">
-                <p
-                  className="text-xs font-bold uppercase tracking-widest mb-4"
-                  style={{ color: 'hsl(var(--primary))' }}
+          <div className="hidden sm:block relative" style={{ height: '23vw', color: 'hsl(var(--foreground))' }}>
+            {DEAL_COVERAGE_PILLARS.map((pillar, i) => (
+              <div
+                key={pillar.label}
+                className="absolute flex flex-col items-center"
+                style={{ left: `${4 + i * 33}%`, bottom: `${5 + i * 6}vw` }}
+              >
+                <div
+                  className="flex items-center gap-2 rounded-full whitespace-nowrap"
+                  style={{
+                    background: 'hsl(var(--background))',
+                    border: '1px solid hsl(var(--border))',
+                    fontSize: 15,
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-display)',
+                    padding: '0.65vw 1.3vw',
+                    boxShadow: 'var(--shadow-sm)',
+                  }}
                 >
-                  {heading}
-                </p>
-                <ul className="space-y-2">
-                  {items.map(item => (
-                    <li key={item} className="text-sm text-foreground flex items-center gap-2">
-                      <span className="h-1 w-1 rounded-full flex-shrink-0" style={{ background: '#F2B705' }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                  <img src={logoIconImg} alt="" style={{ width: '1.2vw', minWidth: 16, height: 'auto' }} />
+                  {pillar.label}
+                </div>
+                <div className="relative flex flex-col items-center" style={{ marginTop: 8 }}>
+                  <div style={{ width: 1, height: '10vw', backgroundImage: COVERAGE_LINE_GRADIENT }} />
+                  <div className="absolute top-2 left-4 flex flex-col items-start gap-2">
+                    {pillar.items.map(item => (
+                      <span key={item} className="whitespace-nowrap text-muted-foreground" style={{ fontSize: 13 }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </FadeUp>
+
+        {/* Mobile — alternating flow */}
+        <div className="flex flex-col sm:hidden w-full" style={{ color: 'hsl(var(--foreground))' }}>
+          {DEAL_COVERAGE_PILLARS.map((pillar, i) => {
+            const isRight = i % 2 !== 0
+            return (
+              <FadeUp key={pillar.label} delay={0.1 + i * 0.08}>
+                <div className="flex flex-col pb-2" style={{ alignItems: isRight ? 'flex-end' : 'flex-start' }}>
+                  <div
+                    className="inline-flex items-center gap-2 rounded-full whitespace-nowrap"
+                    style={{
+                      background: 'hsl(var(--background))',
+                      border: '1px solid hsl(var(--border))',
+                      fontSize: 14,
+                      fontWeight: 700,
+                      fontFamily: 'var(--font-display)',
+                      padding: '10px 16px',
+                    }}
+                  >
+                    <img src={logoIconImg} alt="" style={{ width: 15, height: 'auto' }} />
+                    {pillar.label}
+                  </div>
+                  <div className="flex w-full" style={{ flexDirection: isRight ? 'row-reverse' : 'row' }}>
+                    <div
+                      style={{
+                        width: 1, flexShrink: 0, minHeight: 100,
+                        backgroundImage: COVERAGE_LINE_GRADIENT,
+                        marginLeft: isRight ? 0 : 20, marginRight: isRight ? 20 : 0,
+                      }}
+                    />
+                    <div
+                      className="flex flex-col gap-2 pt-2 pb-2"
+                      style={{ alignItems: isRight ? 'flex-end' : 'flex-start', paddingLeft: isRight ? 0 : 16, paddingRight: isRight ? 16 : 0 }}
+                    >
+                      {pillar.items.map(item => (
+                        <span key={item} className="text-muted-foreground" style={{ fontSize: 13 }}>
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </FadeUp>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

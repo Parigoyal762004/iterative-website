@@ -10,7 +10,7 @@ const buttonVariants = cva(
     'border transition-colors duration-200',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     'disabled:opacity-50 disabled:cursor-not-allowed',
-    'rounded-none', // sharp corners — 2px via tailwind config default
+    'rounded-[8px]',
     'whitespace-nowrap select-none',
   ].join(' '),
   {
@@ -36,8 +36,8 @@ const buttonVariants = cva(
       },
       size: {
         sm: 'h-8 px-4 text-[0.625rem]',
-        md: 'h-10 px-6',
-        lg: 'h-12 px-8 text-[0.75rem]',
+        md: 'h-9 px-5',
+        lg: 'h-11 px-7 text-[0.75rem]',
       },
     },
     defaultVariants: {
