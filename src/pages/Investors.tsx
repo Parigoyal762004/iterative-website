@@ -2,6 +2,7 @@ import { useState, useRef, lazy, Suspense } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, FileText, Users, Mail, TrendingUp, Bell, BarChart2, ChevronDown } from 'lucide-react'
 import { CardStack } from '@/components/ui/card-stack'
+import { supabase } from '@/lib/supabase'
 const CelestialSphere = lazy(() => import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere })))
 
 // ── Fade-up helper ──────────────────────────────────────────────────────────
@@ -595,19 +596,17 @@ function ApplicationForm() {
     setLoading(true)
     setError('')
     try {
-      const { createClient } = await import('@supabase/supabase-js')
-      const supabase = createClient(
-        import.meta.env.VITE_SUPABASE_URL,
-        import.meta.env.VITE_SUPABASE_ANON_KEY
-      )
-      const { error: err } = await supabase.from('investor_applications').insert({
+      const { error: err } = await supabase.from('portal_applications').insert({
         name: form.name,
         email: form.email,
         phone: form.phone || null,
-        investor_type: form.investorType,
-        investment_range: form.ticketSize,
-        sectors_of_interest: sectors,
-        background_note: form.background || null,
+        applicant_type: 'investor',
+        metadata: {
+          investor_type: form.investorType,
+          investment_range: form.ticketSize,
+          sectors_of_interest: sectors,
+          background_note: form.background || null,
+        },
       })
       if (err) throw err
       setSubmitted(true)
