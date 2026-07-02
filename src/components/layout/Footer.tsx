@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Linkedin, Instagram, Mail, Phone, MapPin, MessageCircle } from 'lucide-react'
-import footerLogoImg from '@/assets/footer_logo.png'
+import footerLogoImg from '@/assets/logo-dark-mode.png'
 
 const XLogo = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
