@@ -5,6 +5,7 @@ import { CardStack } from '@/components/ui/card-stack'
 import { supabase } from '@/lib/supabase'
 import { useSEO } from '@/hooks/useSEO'
 import logoIconImg from '@/assets/logo-icon.png'
+import { InvestorCardCarousel } from '@/components/ui/investor-card-carousel'
 const CelestialSphere = lazy(() => import('@/components/ui/celestial-sphere').then(m => ({ default: m.CelestialSphere })))
 
 // ── Fade-up helper ──────────────────────────────────────────────────────────
@@ -234,6 +235,27 @@ function NetworkMarquee() {
           </div>
         </div>
       </div>
+    </section>
+  )
+}
+
+// ── Network Showcase (3D card carousel) ────────────────────────────────────
+function NetworkShowcase() {
+  return (
+    <section className="bg-charcoal section-y overflow-hidden" aria-label="Who's in the network">
+      <div className="mx-auto max-w-6xl px-6 text-center">
+        <p className="t-label text-accent mb-3">The Network</p>
+        <h2
+          className="text-3xl md:text-4xl font-bold mb-2"
+          style={{ fontFamily: 'var(--font-display)', color: 'white' }}
+        >
+          Who you'll be investing alongside.
+        </h2>
+        <p className="text-white/50 max-w-lg mx-auto mb-4" style={{ fontSize: '0.9375rem' }}>
+          Seven kinds of capital, one curated network. Move your cursor over the cards.
+        </p>
+      </div>
+      <InvestorCardCarousel />
     </section>
   )
 }
@@ -856,6 +878,7 @@ export default function Investors() {
     <>
       <HeroSection />
       <NetworkMarquee />
+      <NetworkShowcase />
       <BenefitsSection />
       <VettingSection />
       <DealFlowSection />
