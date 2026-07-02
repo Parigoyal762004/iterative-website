@@ -35,8 +35,34 @@ const StartupConsultationTool = lazy(() => import('./pages/tools/StartupConsulta
 const FdiEcbTool              = lazy(() => import('./pages/tools/FdiEcbTool'))
 
 const PageFallback = () => (
-  <div className="min-h-[60vh] bg-background flex items-center justify-center">
-    <div className="w-6 h-6 border-2 border-accent border-t-transparent rounded-full animate-spin opacity-40" />
+  <div className="bg-background" aria-hidden="true">
+    {/* Hero block */}
+    <div className="bg-charcoal px-6 pt-32 pb-20">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="skeleton-shimmer h-3 w-32 rounded-full mb-6" />
+        <div className="skeleton-shimmer h-10 sm:h-14 w-full max-w-xl rounded-md mb-4" />
+        <div className="skeleton-shimmer h-10 sm:h-14 w-2/3 max-w-md rounded-md mb-8" />
+        <div className="skeleton-shimmer h-4 w-full max-w-lg rounded-full mb-2" />
+        <div className="skeleton-shimmer h-4 w-3/4 max-w-md rounded-full mb-8" />
+        <div className="flex gap-3">
+          <div className="skeleton-shimmer h-11 w-36 rounded-sm" />
+          <div className="skeleton-shimmer h-11 w-36 rounded-sm" />
+        </div>
+      </div>
+    </div>
+
+    {/* Content block */}
+    <div className="px-6 py-16">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="skeleton-shimmer h-3 w-24 rounded-full mb-4" />
+        <div className="skeleton-shimmer h-8 w-1/2 max-w-sm rounded-md mb-10" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {[0, 1, 2].map(i => (
+            <div key={i} className="skeleton-shimmer h-44 rounded-sm" />
+          ))}
+        </div>
+      </div>
+    </div>
   </div>
 )
 

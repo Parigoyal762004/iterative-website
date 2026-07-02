@@ -268,6 +268,22 @@
     background: hsl(var(--color-border));
     border-radius: var(--radius);
   }
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+    background: hsl(var(--muted));
+  }
+  .skeleton-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.06), transparent);
+    animation: skeleton-sweep 1.6s ease-in-out infinite;
+  }
+  @keyframes skeleton-sweep {
+    100% { transform: translateX(100%); }
+  }
 }
 
 /* ─── WhatsApp pulse ring ────────────────────────────────────────────────── */
